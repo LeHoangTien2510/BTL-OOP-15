@@ -1,4 +1,4 @@
-module org.example.btloop15 {
+module com.example.library {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -8,7 +8,9 @@ module org.example.btloop15 {
     requires net.synedra.validatorfx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
-
-    opens org.example.btloop15 to javafx.fxml;
-    exports org.example.btloop15;
+    opens com.example.library to javafx.fxml;
+    exports com.example.library;
+    exports Objects;
+    opens Objects to javafx.fxml;
+    opens Controller to javafx.fxml;
 }

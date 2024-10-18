@@ -1,4 +1,4 @@
-package org.example.btloop15;
+package com.example.library;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
