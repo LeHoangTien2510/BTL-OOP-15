@@ -23,7 +23,7 @@ public class RunLogin extends Application {
     }
 
     public static void main(String[] args) {
-        launch();// Phương thức launch sẽ khởi chạy ứng dụng JavaFX
+        launch(args);// Phương thức launch sẽ khởi chạy ứng dụng JavaFX
     }
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(FXMLLoader.load(Main.class.getResource(fxml)));

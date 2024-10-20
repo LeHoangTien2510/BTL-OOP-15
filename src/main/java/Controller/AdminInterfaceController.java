@@ -7,24 +7,38 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class AdminInterfaceController {
 
     @FXML
     private void handleLogOutButtonAction(ActionEvent event) {
         try {
-            // Tải giao diện đăng nhập
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/login.fxml"));
-            Parent loginRoot = loader.load();
-
-            // Lấy Stage hiện tại
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(loginRoot));
-            stage.setTitle("Đăng nhập");
-            stage.show();
+
+            // Hiển thị hộp thoại xác nhận đăng xuất
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.initOwner(stage);
+            alert.setTitle("Đăng xuất");
+            alert.setHeaderText("Bạn muốn đăng xuất?");
+            alert.setContentText("Bạn có muốn lưu dữ liệu trước khi đăng xuất?");
+
+            // Chờ người dùng phản hồi
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                // Tải giao diện đăng nhập
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/login.fxml"));
+                Parent loginRoot = loader.load();
+
+                stage.setScene(new Scene(loginRoot));
+                stage.setTitle("Đăng nhập");
+                stage.show();
+            }
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện đăng nhập.");
             e.printStackTrace();
@@ -38,4 +52,7 @@ public class AdminInterfaceController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+
+
 }
