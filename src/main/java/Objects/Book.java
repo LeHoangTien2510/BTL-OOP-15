@@ -2,7 +2,7 @@ package Objects;
 
 import java.util.Objects;
 
-public class Book {
+public class    Book {
     private String title;
     private String author;
     private String genre;

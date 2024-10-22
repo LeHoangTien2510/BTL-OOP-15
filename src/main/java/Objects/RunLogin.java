@@ -14,7 +14,7 @@ public class RunLogin extends Application {
     public void start(Stage stage) throws IOException {
         // Load tệp FXML
         FXMLLoader fxmlLoader = new FXMLLoader(RunLogin.class.getResource("/com/example/library/login.fxml"));
-        scene = new Scene(fxmlLoader.load(), 600, 400);
+        scene = new Scene(fxmlLoader.load(),700, 400);
         // Thiết lập tiêu đề cửa sổ
         stage.setTitle("Thư viện");
         // Đặt scene cho stage và hiển thị giao diện

@@ -29,22 +29,44 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
         User user = loginService.login(username, password);
-        if (user != null) {
-            showAlert(AlertType.INFORMATION, "Đăng nhập thành công", "Chào mừng " + user.getName());
+
+        // Kiểm tra nếu tài khoản là admin và mật khẩu là 0000
+        if ("admin".equals(username) && "admin123".equals(password)) {
+            showAlert(AlertType.INFORMATION, "Đăng nhập thành công", "Chào mừng Admin");
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/admin_interface.fxml"));
                 Scene scene = new Scene(loader.load());
                 Stage stage = (Stage) usernameField.getScene().getWindow();
                 stage.setScene(scene);
-                stage.setTitle("Quản lý thư viện");
+                stage.setTitle("Quản lý thư viện (Admin)");
+
+                stage.centerOnScreen();
                 stage.show();
             } catch (IOException e) {
-                showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện đăng ký.");
+                showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện admin.");
                 e.printStackTrace();
             }
         } else {
+            // Xử lý đăng nhập cho người dùng khác
 
-            showAlert(AlertType.ERROR, "Đăng nhập thất bại", "Tên đăng nhập hoặc mật khẩu không đúng");
+            if (user != null) {
+                showAlert(AlertType.INFORMATION, "Đăng nhập thành công", "Chào mừng " + user.getName());
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/user_interface.fxml"));
+                    Scene scene = new Scene(loader.load());
+                    Stage stage = (Stage) usernameField.getScene().getWindow();
+                    stage.setScene(scene);
+                    stage.setTitle("Quản lý thư viện");
+
+                    stage.centerOnScreen();  // Hiển thị cửa sổ ở giữa màn hình
+                    stage.show();
+                } catch (IOException e) {
+                    showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện người dùng.");
+                    e.printStackTrace();
+                }
+            } else {
+                showAlert(AlertType.ERROR, "Đăng nhập thất bại", "Tên đăng nhập hoặc mật khẩu không đúng");
+            }
         }
     }
 
@@ -57,6 +79,8 @@ public class LoginController {
             Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Đăng ký");
+
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện đăng ký.");

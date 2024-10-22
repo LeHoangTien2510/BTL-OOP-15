@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #f4f2ec;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UserController">
+    <children>
+        <HBox prefHeight="50.0" prefWidth="1361.0" style="-fx-background-color: #0e3746;" styleClass="white-background" stylesheets="@../../../CssFile/AdminInterface.css">
+            <children>
+                <Label alignment="CENTER" prefHeight="54.0" prefWidth="308.0" text="LIBRARY" textFill="#f4f2ec">
+                    <font>
+                        <Font size="34.0" />
+                    </font>
+                </Label>
+                <Separator orientation="VERTICAL" prefHeight="61.0" prefWidth="4.0" style="-fx-background-color: #0e3746;" />
+                <HBox alignment="CENTER" prefHeight="54.0" prefWidth="491.0">
+                    <children>
+                        <TextField prefHeight="27.0" prefWidth="321.0" promptText="Search" style="-fx-background-radius: 10;" stylesheets="@../../../CssFile/AdminInterface.css">
+                            <font>
+                                <Font size="13.0" />
+                            </font>
+                        </TextField>
+                        <ImageView fitHeight="29.0" fitWidth="134.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../java/img/findIcon.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <HBox prefHeight="54.0" prefWidth="206.0" />
+                    </children>
+                </HBox>
+                <HBox alignment="TOP_RIGHT" prefHeight="54.0" prefWidth="515.0">
+                    <children>
+                        <ImageView fitHeight="53.0" fitWidth="100.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../java/img/user_icon.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </HBox>
+            </children>
+        </HBox>
+        <AnchorPane layoutX="613.0" layoutY="237.0" prefHeight="465.0" prefWidth="544.0" style="-fx-background-color: #e9e1e1; -fx-background-radius: 10;">
+            <children>
+                <Button layoutX="10.0" layoutY="163.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="185.0" style="-fx-background-color: #3f95ce; -fx-background-radius: 50;" text="Hiển thị người dùng" textFill="#e9e1e1" />
+                <Button layoutX="98.0" layoutY="96.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="185.0" style="-fx-background-color: #3f95ce; -fx-background-radius: 50;" text="Hiển thị toàn bộ sách" textFill="WHITE" />
+                <Button layoutX="97.0" layoutY="37.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="185.0" style="-fx-background-color: #3f95ce; -fx-background-radius: 50;" text="Cập nhật sách" textFill="WHITE" />
+                <Button layoutX="59.0" layoutY="1.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="185.0" style="-fx-background-color: #3f95ce; -fx-background-radius: 50;" text="Thêm sách" textFill="#e9e1e1" />
+            </children></AnchorPane>
+        <VBox layoutY="53.0" prefHeight="670.0" prefWidth="268.0" spacing="10.0" style="-fx-background-color: #0e3746;">
+            <children>
+                <VBox prefHeight="165.0" prefWidth="268.0">
+                    <children>
+                        <Label prefHeight="38.0" prefWidth="252.0" text="Your Book" textFill="#f4f2ec">
+                            <font>
+                                <Font size="19.0" />
+                            </font>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="39.0" prefWidth="207.0">
+                            <children>
+                                <ImageView fitHeight="35.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../../java/img/BorrowingBook.png" />
+                                    </image>
+                                </ImageView>
+                                <Label prefHeight="20.0" prefWidth="129.0" text="Borrowing Book" textFill="#f4f2ec">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets left="10.0" />
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="39.0" prefWidth="207.0" styleClass="mouse-moved">
+                            <children>
+                                <ImageView fitHeight="35.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../../java/img/BorrowingBook.png" />
+                                    </image>
+                                </ImageView>
+                                <Label prefHeight="20.0" prefWidth="129.0" text="Favorites" textFill="#f4f2ec">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets left="10.0" />
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="39.0" prefWidth="207.0">
+                            <children>
+                                <ImageView fitHeight="35.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../../java/img/BorrowingBook.png" />
+                                    </image>
+                                </ImageView>
+                                <Label prefHeight="20.0" prefWidth="129.0" text="History" textFill="#f4f2ec">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets left="10.0" />
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+                <VBox prefHeight="165.0" prefWidth="268.0">
+                    <children>
+                        <Separator prefWidth="200.0" />
+                        <Label prefHeight="38.0" prefWidth="252.0" text="Explore" textFill="#f4f2ec">
+                            <font>
+                                <Font size="19.0" />
+                            </font>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="39.0" prefWidth="207.0">
+                            <children>
+                                <ImageView fitHeight="35.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../../java/img/BorrowingBook.png" />
+                                    </image>
+                                </ImageView>
+                                <Label prefHeight="20.0" prefWidth="129.0" text="Full book" textFill="#f4f2ec">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets left="10.0" />
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="39.0" prefWidth="207.0">
+                            <children>
+                                <ImageView fitHeight="35.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../../java/img/BorrowingBook.png" />
+                                    </image>
+                                </ImageView>
+                                <Label prefHeight="20.0" prefWidth="129.0" text="Most View" textFill="#f4f2ec">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets left="10.0" />
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="39.0" prefWidth="207.0">
+                            <children>
+                                <ImageView fitHeight="35.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../../java/img/BorrowingBook.png" />
+                                    </image>
+                                </ImageView>
+                                <Label prefHeight="20.0" prefWidth="129.0" text="History" textFill="#f4f2ec">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets left="10.0" />
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+                <VBox prefHeight="165.0" prefWidth="268.0">
+                    <children>
+                        <Separator prefWidth="200.0" />
+                        <Label prefHeight="38.0" prefWidth="252.0" text="Operation" textFill="#f4f2ec">
+                            <font>
+                                <Font size="19.0" />
+                            </font>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="39.0" prefWidth="207.0">
+                            <children>
+                                <ImageView fitHeight="35.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../../java/img/BorrowingBook.png" />
+                                    </image>
+                                </ImageView>
+                                <Label prefHeight="20.0" prefWidth="129.0" text="Borrow Book" textFill="#f4f2ec">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets left="10.0" />
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="39.0" prefWidth="207.0">
+                            <children>
+                                <ImageView fitHeight="35.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../../java/img/BorrowingBook.png" />
+                                    </image>
+                                </ImageView>
+                                <Label prefHeight="20.0" prefWidth="129.0" text="Drop off" textFill="#f4f2ec">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets left="10.0" />
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="39.0" prefWidth="207.0">
+                            <children>
+                                <ImageView fitHeight="35.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../../java/img/BorrowingBook.png" />
+                                    </image>
+                                </ImageView>
+                                <Label prefHeight="20.0" prefWidth="129.0" text="Borrowed Book List" textFill="#f4f2ec">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets left="10.0" />
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Button fx:id="handleLogOutButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleLogOutButtonAction" style="-fx-background-color: #be2623;" text="LOG OUT" textFill="#f4f2ec">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
