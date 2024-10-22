@@ -28,64 +28,29 @@ public class LoginController {
     private void handleLogin(ActionEvent event) {
         String username = usernameField.getText();
         String password = passwordField.getText();
+        if (username.isEmpty() || password.isEmpty()) {
+            showAlert(AlertType.ERROR, "Lỗi", "Vui lòng nhập tên đăng nhập và mật khẩu.");
+            return;
+        }
         User user = loginService.login(username, password);
 
-        // Kiểm tra nếu tài khoản là admin và mật khẩu là 0000
-        if ("admin".equals(username) && "admin123".equals(password)) {
-            showAlert(AlertType.INFORMATION, "Đăng nhập thành công", "Chào mừng Admin");
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/admin_interface.fxml"));
-                Scene scene = new Scene(loader.load());
-                Stage stage = (Stage) usernameField.getScene().getWindow();
-                stage.setScene(scene);
-                stage.setTitle("Quản lý thư viện (Admin)");
+        if (user != null) {
+            showAlert(AlertType.INFORMATION, "Đăng nhập thành công", "Chào mừng " + user.getName());
 
-                stage.centerOnScreen();
-                stage.show();
-            } catch (IOException e) {
-                showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện admin.");
-                e.printStackTrace();
+            // Kiểm tra loại người dùng (admin hoặc student)
+            if (user.getUserType().equalsIgnoreCase("admin")) {
+                loadScene("/com/example/library/admin_interface.fxml", "Quản lý thư viện(admin)");
+            } else {
+                loadScene("/com/example/library/user_interface.fxml", "Quản lý thư viện(user");
             }
         } else {
-            // Xử lý đăng nhập cho người dùng khác
-
-            if (user != null) {
-                showAlert(AlertType.INFORMATION, "Đăng nhập thành công", "Chào mừng " + user.getName());
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/user_interface.fxml"));
-                    Scene scene = new Scene(loader.load());
-                    Stage stage = (Stage) usernameField.getScene().getWindow();
-                    stage.setScene(scene);
-                    stage.setTitle("Quản lý thư viện");
-
-                    stage.centerOnScreen();  // Hiển thị cửa sổ ở giữa màn hình
-                    stage.show();
-                } catch (IOException e) {
-                    showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện người dùng.");
-                    e.printStackTrace();
-                }
-            } else {
-                showAlert(AlertType.ERROR, "Đăng nhập thất bại", "Tên đăng nhập hoặc mật khẩu không đúng");
-            }
+            showAlert(AlertType.ERROR, "Đăng nhập thất bại", "Tên đăng nhập hoặc mật khẩu không đúng");
         }
     }
 
     @FXML
     private void handleRegisterButtonAction() {
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/signup.fxml"));
-            Scene scene = new Scene(loader.load());
-            Stage stage = (Stage) usernameField.getScene().getWindow();
-            stage.setScene(scene);
-            stage.setTitle("Đăng ký");
-
-            stage.centerOnScreen();
-            stage.show();
-        } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện đăng ký.");
-            e.printStackTrace();
-        }
+        loadScene("/com/example/library/signup.fxml", "Đăng ký");
     }
 
     private void showAlert(AlertType alertType, String title, String message) {
@@ -94,5 +59,19 @@ public class LoginController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void loadScene(String fxmlPath, String title) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Scene scene = new Scene(loader.load());
+            Stage stage = (Stage) usernameField.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle(title);
+            stage.show();
+        } catch (IOException e) {
+            showAlert(AlertType.ERROR, "Lỗi", "Không thể tải giao diện.");
+            e.printStackTrace();
+        }
     }
 }

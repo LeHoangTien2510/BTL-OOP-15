@@ -9,20 +9,15 @@ public class User {
     private String userType;
     private long id;
     ArrayList<Book> borrowedBooks=new ArrayList<>();
-    public User(String name, String password,long id, String userType) {
+    public User(String name, String username, String password, long id, String userType) {
         this.name = name;
+        this.username = username; // Thêm dòng này
         this.password = password;
         this.id = id;
         this.userType = userType;
         this.borrowedBooks = new ArrayList<>();
     }
 
-    public User(String name, String password) {
-        this.name = name;
-        this.password = password;
-        this.userType = "user";
-        this.borrowedBooks = new ArrayList<>();
-    }
 
     public String getName(){
         return name;

@@ -55,7 +55,7 @@ public class SignUpController {
             return;
         }
         // Đăng ký người dùng
-        boolean isRegistered = loginService.register(username, password,studentId, "student"); // Giả định user type là "student"
+        boolean isRegistered = loginService.register(username,fullName, password, studentId, "student");
 
         if (isRegistered) {
             showAlert(Alert.AlertType.INFORMATION, "Thành công", "Đăng ký thành công!");
