@@ -1,0 +1,5 @@
+Cài đặt môi trường JDBC(SQLite)
+Bước 1: tải file tại https://www.sqlite.org/2024/sqlite-tools-win-x64-3460100.zip
+Bước 2:copy file zip vừa tải vào ổ C, sau đó chọn extract to "sqlite-tools-win-x64-3460100"
+Bước 3:vào edit the system eviroment variables -> chọn eviroment variables
+ở phần system variables (nửa dưới) tìm variable Path, click đúp vào -> chọn new rồi paste đường dẫn C:\sqlite-tools-win-x64-3460100 rồi ok
