@@ -169,7 +169,7 @@
             <VBox prefHeight="200.0" prefWidth="100.0" />
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="handleLogOutButton" mnemonicParsing="false" onAction="#handleLogOutButtonAction" style="-fx-background-color: #be2623;" text="LOG OUT" textFill="#f4f2ec">
+                  <Button fx:id="handleLogOutButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleLogOutButtonAction" style="-fx-background-color: #be2623;" text="LOG OUT" textFill="#f4f2ec">
                      <font>
                         <Font size="19.0" />
                      </font>

@@ -85,8 +85,13 @@ public class SignUpController {
 
     private void closeWindow() {
         Stage stage = (Stage) usernameField.getScene().getWindow();
-        stage.close();
+        if (stage != null) {
+            stage.close();
+        } else {
+            System.out.println("Stage is null. Unable to close the window.");
+        }
     }
+
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);

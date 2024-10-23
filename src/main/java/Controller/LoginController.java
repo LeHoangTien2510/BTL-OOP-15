@@ -68,6 +68,7 @@ public class LoginController {
             Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle(title);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
             showAlert(AlertType.ERROR, "Lỗi", "Không thể tải giao diện.");

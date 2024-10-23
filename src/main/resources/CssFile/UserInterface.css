@@ -1,0 +1,8 @@
+.mouse-moved: hover {
+    -fx-background-color: #43616D;
+}
+
+.transparent {
+    -fx-background-color: rgba(0,0,0,0);
+}
+

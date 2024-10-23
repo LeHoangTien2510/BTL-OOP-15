@@ -7,6 +7,15 @@ public class Book {
     private String author;
     private String genre;
     private int quantity;
+    private String ImageSrc;
+
+    public Book() {
+        this.title = "";
+        this.author = "";
+        this.genre = "";
+        this.quantity = 0;
+        this.ImageSrc = "";
+    }
 
     public Book(String title, String author,String genre, int quantity) {
         this.title = title;
@@ -14,9 +23,17 @@ public class Book {
         this.genre = genre;
         this.quantity = quantity;
     }
+
+    public Book(String title, String author,String genre, int quantity, String imageSrc) {
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.quantity = quantity;
+        this.ImageSrc = imageSrc;
+    }
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true; // So sánh địa chỉ bộ nhớ
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Book book = (Book) o;
@@ -60,6 +77,10 @@ public class Book {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public String getImageSrc() { return ImageSrc; }
+
+    public void setImageSrc(String ImageSrc) { this.ImageSrc = ImageSrc; }
 
     public void printInfo() {
         System.out.println("Tên sách: " + getTitle() + ", Tác giả: " + getAuthor() +

@@ -2,6 +2,7 @@ package Objects;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -12,18 +13,15 @@ public class RunLogin extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        // Load tệp FXML
-        FXMLLoader fxmlLoader = new FXMLLoader(RunLogin.class.getResource("/com/example/library/login.fxml"));
-        scene = new Scene(fxmlLoader.load(),700, 400);
-        // Thiết lập tiêu đề cửa sổ
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/library/login.fxml"));
+        scene = new Scene(root,700, 400);
         stage.setTitle("Thư viện");
-        // Đặt scene cho stage và hiển thị giao diện
         stage.setScene(scene);
         stage.show();
     }
 
     public static void main(String[] args) {
-        launch(args);// Phương thức launch sẽ khởi chạy ứng dụng JavaFX
+        launch(args);
     }
 
 }
