@@ -8,7 +8,8 @@ public class User {
     private String password;
     private String userType;
     private long id;
-    ArrayList<Book> borrowedBooks=new ArrayList<>();
+    ArrayList<Book> borrowedBooks = new ArrayList<>();
+
     public User(String name, String username, String password, long id, String userType) {
         this.name = name;
         this.username = username; // Thêm dòng này

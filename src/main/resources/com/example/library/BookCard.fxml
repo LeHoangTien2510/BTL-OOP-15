@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="185.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.BookCardController">
+<HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="185.0" prefWidth="351.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.BookCardController">
    <children>
-      <ImageView fx:id="bookImage" fitHeight="155.0" fitWidth="155.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="bookImage" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../image/JamesStewartCalculus7E.jpg" />
          </image>
@@ -36,7 +36,7 @@
                   <Insets left="10.0" />
                </padding>
             </Label>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="108.0" prefWidth="322.0">
                <children>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                      <children>
@@ -48,7 +48,7 @@
                         <Label fx:id="quantity" text=" 10 remaining" />
                      </children>
                   </VBox>
-                  <Button fx:id="borrowButton" alignment="CENTER" mnemonicParsing="false" prefHeight="59.0" prefWidth="110.0" text="BORROW NOW" />
+                  <Button fx:id="borrowButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleBorrowButtonAction" prefHeight="59.0" prefWidth="102.0" text="BORROW NOW" />
                </children>
             </HBox>
          </children>

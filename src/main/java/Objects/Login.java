@@ -11,6 +11,8 @@ import java.util.Set;
 
 public class Login {
     static Connection connection;
+    private static User currentUser;
+
     public Login() {
         connection = SqliteConnection.Connector();
         if (connection == null) {
@@ -87,4 +89,7 @@ public class Login {
         return false;  // Trả về false nếu ID không tồn tại hoặc có lỗi
     }
 
+    public static User getCurrentUser() {
+        return currentUser;
+    }
 }

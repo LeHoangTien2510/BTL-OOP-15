@@ -9,11 +9,13 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #f4f2ec;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UserController">
+<AnchorPane prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #f4f2ec;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UserController">
     <children>
         <HBox prefHeight="50.0" prefWidth="1361.0" style="-fx-background-color: #0e3746;" styleClass="white-background" stylesheets="@../../../CssFile/AdminInterface.css">
             <children>
@@ -53,7 +55,7 @@
                 </HBox>
             </children>
         </HBox>
-        <VBox layoutY="53.0" prefHeight="670.0" prefWidth="268.0" spacing="10.0" style="-fx-background-color: #0e3746;">
+        <VBox alignment="TOP_CENTER" layoutY="53.0" prefHeight="747.0" prefWidth="268.0" spacing="10.0" style="-fx-background-color: #0e3746;">
             <children>
                 <VBox prefHeight="165.0" prefWidth="268.0">
                     <children>
@@ -118,51 +120,6 @@
                 <VBox prefHeight="165.0" prefWidth="268.0">
                     <children>
                         <Separator prefWidth="200.0" />
-                        <Label prefHeight="38.0" prefWidth="252.0" text="Explore" textFill="#f4f2ec">
-                            <font>
-                                <Font size="19.0" />
-                            </font>
-                        </Label>
-                        <HBox alignment="CENTER" prefHeight="39.0" prefWidth="207.0" styleClass="mouse-moved" stylesheets="@../../../CssFile/UserInterface.css">
-                            <children>
-                                <ImageView fitHeight="35.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../../../../java/img/BorrowingBook.png" />
-                                    </image>
-                                </ImageView>
-                                <Label prefHeight="20.0" prefWidth="129.0" text="Full book" textFill="#f4f2ec">
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets left="10.0" />
-                                    </HBox.margin>
-                                </Label>
-                            </children>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="39.0" prefWidth="207.0" styleClass="mouse-moved" stylesheets="@../../../CssFile/UserInterface.css">
-                            <children>
-                                <ImageView fitHeight="35.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../../../../java/img/BorrowingBook.png" />
-                                    </image>
-                                </ImageView>
-                                <Label prefHeight="20.0" prefWidth="129.0" text="Most View" textFill="#f4f2ec">
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets left="10.0" />
-                                    </HBox.margin>
-                                </Label>
-                            </children>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="39.0" prefWidth="207.0" styleClass="mouse-moved" stylesheets="@../../../CssFile/UserInterface.css" />
-                    </children>
-                </VBox>
-                <VBox prefHeight="165.0" prefWidth="268.0">
-                    <children>
-                        <Separator prefWidth="200.0" />
                         <Label prefHeight="38.0" prefWidth="252.0" text="Operation" textFill="#f4f2ec">
                             <font>
                                 <Font size="19.0" />
@@ -202,23 +159,6 @@
                                 </Label>
                             </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="39.0" prefWidth="207.0" styleClass="mouse-moved" stylesheets="@../../../CssFile/UserInterface.css">
-                            <children>
-                                <ImageView fitHeight="35.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../../../../java/img/BorrowingBook.png" />
-                                    </image>
-                                </ImageView>
-                                <Label prefHeight="20.0" prefWidth="129.0" text="Borrowed Book List" textFill="#f4f2ec">
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets left="10.0" />
-                                    </HBox.margin>
-                                </Label>
-                            </children>
-                        </HBox>
                     </children>
                 </VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
@@ -232,22 +172,42 @@
             </VBox>
             </children>
         </VBox>
-      <VBox layoutX="269.0" layoutY="55.0" prefHeight="667.0" prefWidth="1094.0">
+      <VBox layoutX="269.0" layoutY="55.0" prefHeight="745.0" prefWidth="1094.0">
          <children>
-            <Label alignment="CENTER" prefHeight="66.0" prefWidth="150.0" text="New Book">
+            <Label prefHeight="40.0" prefWidth="226.0" text="Recommend for you">
                <font>
-                  <Font size="17.0" />
+                  <Font name="System Bold" size="17.0" />
                </font>
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding>
             </Label>
-            <ScrollPane prefHeight="240.0" prefWidth="57.0" styleClass="transparent" stylesheets="@../../../CssFile/UserInterface.css">
+            <ScrollPane prefHeight="200.0" prefWidth="1053.0" styleClass="transparent" stylesheets="@../../../CssFile/UserInterface.css">
                <VBox.margin>
                   <Insets left="20.0" right="20.0" />
                </VBox.margin>
                <content>
-                  <HBox fx:id="BookCardLayout" prefHeight="226.0" prefWidth="1074.0" />
+                  <HBox fx:id="BookCardLayout" prefHeight="200.0" prefWidth="1058.0" spacing="10.0" />
+               </content>
+            </ScrollPane>
+            <Label prefHeight="31.0" prefWidth="255.0" text="All Books">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </Label>
+            <ScrollPane prefHeight="394.0" prefWidth="1053.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="20.0" right="20.0" />
+               </VBox.margin>
+               <content>
+                  <GridPane fx:id="bookContainer" prefHeight="9.0" prefWidth="0.0">
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                  </GridPane>
                </content>
             </ScrollPane>
          </children>

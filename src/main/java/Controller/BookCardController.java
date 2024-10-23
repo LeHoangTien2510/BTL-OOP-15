@@ -1,6 +1,9 @@
 package Controller;
 
 import Objects.Book;
+import Objects.Login;
+import Objects.User;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,9 +26,6 @@ public class BookCardController {
     private Label bookTitle;
 
     @FXML
-    private Button borrowButton;
-
-    @FXML
     private Label genre;
 
     @FXML
@@ -34,7 +34,7 @@ public class BookCardController {
     @FXML
     private ImageView rating;
 
-    private String[] colors = {"#38D7E7", "#F9F7F1", "#EE316B", "#842D72"};
+    private String[] colors = {"#0C5776", "#2D99AE", "#BCFEFE", "#D8DAD0"};
 
     public void setData(Book book) {
         String imagePath = book.getImageSrc();
@@ -47,5 +47,23 @@ public class BookCardController {
         quantity.setText(String.valueOf(book.getQuantity()) + " " + "remaining");
 
         hbox.setStyle("-fx-background-color: " + colors[(int) (Math.random() * colors.length)]);
+    }
+
+    @FXML
+    private Button borrowButton;
+    private Book book;
+    private User user;
+
+    @FXML
+    private void handleBorrowButtonAction(ActionEvent event) {
+        User currentUser = Login.getCurrentUser();
+
+        if (currentUser != null) {
+            currentUser.borrowedBook(book);
+            borrowButton.setDisable(true);
+            System.out.println("Đã mượn sách: " + book.getTitle());
+        } else {
+            System.out.println("Người dùng không tồn tại.");
+        }
     }
 }
