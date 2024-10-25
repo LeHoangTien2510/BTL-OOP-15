@@ -23,5 +23,4 @@ public class RunLogin extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
 }

@@ -41,13 +41,14 @@ public class User {
     }
 
 
-    public void borrowedBook(Book book){
-        if(borrowedBooks.contains(book)){
+    public boolean borrowedBook(Book book) {
+        if (borrowedBooks.contains(book)) {
             System.out.println("Bạn đã mượn quyển sách này rồi");
-        }
-        else{
+            return false;
+        } else {
             borrowedBooks.add(book);
             System.out.println("Mượn sách thành công");
+            return true;
         }
     }
 
@@ -63,15 +64,14 @@ public class User {
 
     public void printUserInfo() {
         int numberOfBooks = borrowedBooks.size();
-        if(numberOfBooks == 0) {
+        if (numberOfBooks == 0) {
             System.out.println("Bạn chưa mượn cuốn sách nào");
-        }
-        else{
-        System.out.println("Tên: " + name);
-        System.out.println("Sách đã mượn:");
-        for (Book b : borrowedBooks) {
-            b.printInfo();
-        }
+        } else {
+            System.out.println("Tên: " + name);
+            System.out.println("Sách đã mượn:");
+            for (Book b : borrowedBooks) {
+                b.printInfo();
+            }
         }
     }
 }
