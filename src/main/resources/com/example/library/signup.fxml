@@ -3,39 +3,63 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SignUpController">
-    <children>
-        <Text fill="#3f95ce" layoutX="14.0" layoutY="-147.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" text="Thư viện" textAlignment="CENTER" wrappingWidth="159.80731201171875" x="200.0" y="200.0" AnchorPane.bottomAnchor="337.96484375" AnchorPane.leftAnchor="214.0" AnchorPane.rightAnchor="235.33333333333337" AnchorPane.topAnchor="14.15234375">
-            <font>
-                <Font size="36.0" />
-            </font>
-            <effect>
-                <Blend />
-            </effect>
-        </Text>
-        <Line endX="178.80728149414062" endY="-143.33334350585938" layoutX="257.0" layoutY="212.0" startX="-99.85939025878906" startY="-143.33334350585938" />
-        <TextField fx:id="usernameField" layoutX="180.0" layoutY="183.0" prefHeight="33.0" prefWidth="256.0" promptText="Tên đăng nhập" />
-        <Button layoutX="187.0" layoutY="333.0" mnemonicParsing="false" onAction="#handleSignupButtonAction" prefHeight="33.0" prefWidth="236.0" style="-fx-background-color: #3f95ce; -fx-background-radius: 50;" text="Đăng ký" textFill="WHITE" />
-      <TextField fx:id="fullNameField" layoutX="177.0" layoutY="134.0" prefHeight="33.0" prefWidth="256.0" promptText="Họ và tên" />
-      <TextField fx:id="studentIdField" layoutX="176.0" layoutY="86.0" prefHeight="33.0" prefWidth="256.0" promptText="Mã số sinh viên" />
-      <PasswordField fx:id="passwordField" layoutX="180.0" layoutY="231.0" prefHeight="33.0" prefWidth="256.0" promptText="Mật khẩu" />
-      <PasswordField fx:id="confirmPasswordField" layoutX="180.0" layoutY="281.0" prefHeight="33.0" prefWidth="256.0" promptText="Nhập lại mật khẩu" />
-      <Button layoutX="14.0" layoutY="14.0" minHeight="41.0" minWidth="43.0" mnemonicParsing="false" onAction="#handleCancelButtonAction" prefHeight="41.0" prefWidth="43.0" style="-fx-background-radius: 50; -fx-min-width: 20; -fx-min-height: 20;">
-         <graphic>
-            <ImageView fitHeight="29.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" style="-fx-image: 1;">
+<AnchorPane xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SignUpController">
+   <children>
+      <AnchorPane prefHeight="500.0" prefWidth="705.0" style="-fx-background-color: #fff;">
+         <children>
+            <Button layoutX="189.0" layoutY="407.0" mnemonicParsing="false" onAction="#handleCancelButtonAction" style="-fx-background-color: transperent;" text="Đã có tài khoản? Đăng nhập" textFill="#3f95ce" />
+            <TextField fx:id="usernameField" layoutX="107.0" layoutY="210.0" promptText="User Name" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
+            <PasswordField fx:id="passwordField" layoutX="107.0" layoutY="250.0" promptText="Password" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
+            <ImageView fitHeight="31.0" fitWidth="29.0" layoutX="68.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../java/img/pngtree-back-vector-icon-png-image_470452.jpg" />
+                  <Image url="@../../../image/user_icon.png" />
                </image>
             </ImageView>
-         </graphic>
-      </Button>
-    </children>
+            <ImageView fitHeight="29.0" fitWidth="25.0" layoutX="70.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../image/key.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="144.0" layoutY="350.0" mnemonicParsing="false" onAction="#handleSignupButtonAction" prefHeight="37.0" prefWidth="76.0" style="-fx-background-color: #0598ff;" text="Sign Up" textFill="WHITE" />
+            <AnchorPane layoutX="360.0" prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #0598ff;">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../image/open-book.png" />
+                     </image>
+                  </ImageView>
+                  <Text fill="WHITE" layoutX="100.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Library Management" wrappingWidth="155.7403793334961">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+            <TextField fx:id="studentIdField" layoutX="107.0" layoutY="130.0" promptText="ID" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
+            <TextField fx:id="fullNameField" layoutX="107.0" layoutY="170.0" promptText="Full Name" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
+            <PasswordField fx:id="confirmPasswordField" layoutX="107.0" layoutY="290.0" promptText="Re-Password" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
+            <ImageView fitHeight="31.0" fitWidth="29.0" layoutX="72.0" layoutY="168.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../image/name.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="29.0" layoutX="70.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../image/student-card.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="29.0" fitWidth="25.0" layoutX="70.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../image/reset-password.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
 </AnchorPane>
