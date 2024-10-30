@@ -8,6 +8,7 @@ public class Book {
     private String genre;
     private int quantity;
     private String ImageSrc;
+    private String id;
 
     public Book() {
         this.title = "";
@@ -15,6 +16,7 @@ public class Book {
         this.genre = "";
         this.quantity = 0;
         this.ImageSrc = "";
+        this.id = "";
     }
 
     public Book(String title, String author,String genre, int quantity) {

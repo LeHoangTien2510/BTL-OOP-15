@@ -32,7 +32,7 @@ public class Login {
                 String name = resultSet.getString("name");
                 String userType = resultSet.getString("userType");
 
-                currentUser = new User(name, username, password, id, userType);
+                currentUser = new User(name, username, password, userType);
                 return currentUser;
             }
         } catch (SQLException e) {

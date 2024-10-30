@@ -1,5 +1,9 @@
 package Objects;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class User {
@@ -10,13 +14,11 @@ public class User {
     private long id;
     ArrayList<Book> borrowedBooks = new ArrayList<>();
 
-    public User(String name, String username, String password, long id, String userType) {
+    public User(String name, String username, String password, String userType) {
         this.name = name;
-        this.username = username; // Thêm dòng này
+        this.username = username;
         this.password = password;
-        this.id = id;
         this.userType = userType;
-        this.borrowedBooks = new ArrayList<>();
     }
 
 
@@ -38,6 +40,11 @@ public class User {
 
     public long getId(){
         return id;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+        updateUserInDatabase("password", password);
     }
 
 
@@ -71,6 +78,27 @@ public class User {
             System.out.println("Sách đã mượn:");
             for (Book b : borrowedBooks) {
                 b.printInfo();
+            }
+        }
+    }
+    private void updateUserInDatabase(String column, String value) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            conn = DriverManager.getConnection("jdbc:sqlite:Library.db");
+            String sql = "UPDATE user SET " + column + " = ? WHERE id = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, value);
+            stmt.setLong(2, this.id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }

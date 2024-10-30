@@ -2,6 +2,7 @@ package Controller;
 
 import Objects.Book;
 import Objects.Login;
+import Objects.SqliteConnection;
 import Objects.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +14,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.sql.Connection;
 
 public class BookCardController {
     @FXML
@@ -63,6 +66,7 @@ public class BookCardController {
     @FXML
     private void handleBorrowButtonAction(ActionEvent event) {
         User currentUser = Login.getCurrentUser();
+        Connection conn = SqliteConnection.Connector();
         if (currentUser != null) {
             boolean success = currentUser.borrowedBook(book);
             currentUser.borrowedBook(book);
