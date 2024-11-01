@@ -17,14 +17,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
+import Objects.User;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.*;
+import Objects.Login;
 
 public class UserController implements Initializable {
     @FXML
@@ -66,7 +64,7 @@ public class UserController implements Initializable {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
+    Connection conn = SqliteConnection.Connector();
     @FXML
     private HBox BookCardLayout;
 
@@ -142,6 +140,29 @@ public class UserController implements Initializable {
 
         return bookList;
     }
+
+    public List<Book> handleBorrowingButton(ActionEvent actionEvent) {
+        List<Book> bookList = new ArrayList<>();
+        User currentUser = Login.getCurrentUser();
+        int id = currentUser.getId();
+        try (Connection connection = SqliteConnection.Connector()) {
+            String query = "SELECT title, author, genre FROM borrowed_books WHERE id = ?";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                Book book = new Book();
+                book.setTitle(resultSet.getString("title"));
+                book.setAuthor("By" + " " + resultSet.getString("author"));
+                book.setGenre(resultSet.getString("genre"));
+                bookList.add(book);
+            }
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể lấy dữ liệu sách từ SQLite.");
+            e.printStackTrace();
+        }
+        return bookList;
+    }
+
 
 
 }
