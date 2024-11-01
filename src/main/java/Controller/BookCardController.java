@@ -16,6 +16,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class BookCardController {
     @FXML
@@ -41,12 +44,12 @@ public class BookCardController {
 
     @FXML
     private Button borrowButton;
-
+    Connection conn = SqliteConnection.Connector();
     private Book book;
-    private User user;
-
+    User currentUser = Login.getCurrentUser();
     private String[] colors = {"#0C5776", "#2D99AE", "#BCFEFE", "#D8DAD0"};
-
+    String findTitle;
+    int id;
     public void setData(Book book) {
         this.book = book;
         String imagePath = book.getImageSrc();
@@ -59,34 +62,36 @@ public class BookCardController {
         quantity.setText(String.valueOf(book.getQuantity()) + " " + "remaining");
 
         hbox.setStyle("-fx-background-color: " + colors[(int) (Math.random() * colors.length)]);
+        findTitle = bookTitle.getText();
+        id = book.getBookIdFromBookCard(findTitle);
     }
-
 
 
     @FXML
     private void handleBorrowButtonAction(ActionEvent event) {
-        User currentUser = Login.getCurrentUser();
-        Connection conn = SqliteConnection.Connector();
-        if (currentUser != null) {
-            boolean success = currentUser.borrowedBook(book);
-            currentUser.borrowedBook(book);
-
-            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.initOwner(stage);
-            if (success) {
-                alert.setTitle("Borrow Book");
-                alert.setHeaderText("Mượn sách thành công");
-                alert.setContentText("Bạn đã mượn cuốn sách: " + book.getTitle());
+        String insertQuery = "INSERT INTO borrowed_books(user_id, book_id) VALUES(?, ?)";
+        try (PreparedStatement preparedStatement = conn.prepareStatement(insertQuery)) {
+            // Gán giá trị cho các tham số
+            preparedStatement.setInt(1, currentUser.getId());
+            preparedStatement.setInt(2, id);
+            // Thực hiện câu lệnh SQL
+            int result = preparedStatement.executeUpdate();
+            if (result > 0) {
+                showAlert(Alert.AlertType.INFORMATION, "Borrowed Book" , "Borrowed " + findTitle + " Successfully");
             } else {
-                alert.setTitle("Borrow Book");
-                alert.setHeaderText("Không thể mượn sách");
-                alert.setContentText("Bạn đã mượn cuốn sách này trước đó.");
+                showAlert(Alert.AlertType.ERROR, "Borrowed Book" , "Lỗi, không mượn được sách");
             }
-            alert.showAndWait();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Failed to add record.");
 
-        } else {
-            System.out.println("Người dùng không tồn tại.");
         }
+    }
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

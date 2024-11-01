@@ -1,9 +1,6 @@
 package Objects;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class User {
@@ -11,7 +8,7 @@ public class User {
     private String username;
     private String password;
     private String userType;
-    private long id;
+    private int id;
     ArrayList<Book> borrowedBooks = new ArrayList<>();
 
     public User(String name, String username, String password, String userType) {
@@ -38,8 +35,24 @@ public class User {
         return userType;
     }
 
-    public long getId(){
-        return id;
+    public int getId(){
+        String query = "SELECT id FROM user WHERE username = ?";
+        int userId = -1;
+        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:Library.db");
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                userId = rs.getInt("id");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        return userId;
     }
 
     public void setPassword(String password) {

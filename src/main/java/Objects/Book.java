@@ -1,5 +1,9 @@
 package Objects;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class Book {
@@ -33,6 +37,7 @@ public class Book {
         this.quantity = quantity;
         this.ImageSrc = imageSrc;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -87,5 +92,22 @@ public class Book {
     public void printInfo() {
         System.out.println("Tên sách: " + getTitle() + ", Tác giả: " + getAuthor() +
                 ", Thể loại: " + genre + ", Số sách còn lại: " + getQuantity());
+    }
+
+    Connection conn = SqliteConnection.Connector();
+    public int getBookIdFromBookCard(String bookTitle) {
+        int result = -1;
+        String selectQuery = "SELECT book_id FROM book WHERE title = ?";
+        try (PreparedStatement preparedStatement = conn.prepareStatement(selectQuery)) {
+            preparedStatement.setString(1, bookTitle);  // Sử dụng biến mặc định bookTitle
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    result = resultSet.getInt("book_id");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
