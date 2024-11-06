@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -24,7 +25,7 @@ import java.sql.*;
 import java.util.*;
 import Objects.Login;
 
-public class UserController implements Initializable {
+public class UserController {
     @FXML
     private void handleLogOutButtonAction(ActionEvent event) {
         try {
@@ -66,79 +67,21 @@ public class UserController implements Initializable {
     }
     Connection conn = SqliteConnection.Connector();
     @FXML
-    private HBox BookCardLayout;
+    private AnchorPane UserView;
 
     @FXML
-    private GridPane bookContainer;
+    private void handleDashBoardButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/library/DashBoard.fxml"));
+            AnchorPane dashBoardView = fxmlLoader.load();
 
-    private List<Book> recommendBook;
-    private List<Book> allBook;
+            UserView.getChildren().clear();
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        recommendBook = new ArrayList<>(getBookFromDatabase());
-        Collections.shuffle(recommendBook);
-        List<Book> limitedRecommendBooks = recommendBook.subList(0, Math.min(recommendBook.size(), 7));
-
-        allBook = new ArrayList<>(getBookFromDatabase());
-        int column = 0;
-        int row = 1;
-
-        try{
-            for (Book book : limitedRecommendBooks) {
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("/com/example/library/BookCard.fxml"));
-                HBox bookCardBox = fxmlLoader.load();
-
-                BookCardController bookCardController = fxmlLoader.getController();
-                bookCardController.setData(book);
-                BookCardLayout.getChildren().add(bookCardBox);
-            }
-
-            for (Book book : allBook) {
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("/com/example/library/BookCard.fxml"));
-                HBox bookCardBox = fxmlLoader.load();
-
-                BookCardController bookCardController = fxmlLoader.getController();
-                bookCardController.setData(book);
-
-                if (column == 4) {
-                    column = 0;
-                    row++;
-                }
-                bookContainer.add(bookCardBox, column++, row);
-                GridPane.setMargin(bookCardBox, new Insets(10, 0, 0, 0));
-            }
-        } catch (IOException exception) {
-            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải sách.");
-            exception.printStackTrace();
-        }
-    }
-
-    private List<Book> getBookFromDatabase() {
-        List<Book> bookList = new ArrayList<>();
-
-        try (Connection connection = SqliteConnection.Connector()) {
-            String query = "SELECT title, author, genre, imageSrc, quantity FROM Book";
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-
-            while (resultSet.next()) {
-                Book book = new Book();
-                book.setTitle(resultSet.getString("title"));
-                book.setAuthor("By" + " " + resultSet.getString("author"));
-                book.setGenre(resultSet.getString("genre"));
-                book.setImageSrc(resultSet.getString("imageSrc"));
-                book.setQuantity(resultSet.getInt("quantity"));
-                bookList.add(book);
-            }
-        } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể lấy dữ liệu sách từ SQLite.");
+            UserView.getChildren().add(dashBoardView);
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện Dashboard.");
             e.printStackTrace();
         }
-
-        return bookList;
     }
 
     public List<Book> handleBorrowingButton(ActionEvent actionEvent) {
