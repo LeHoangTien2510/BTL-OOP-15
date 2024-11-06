@@ -32,7 +32,6 @@ public class Borrowing_BookController implements Initializable {
         borrowingBook = new ArrayList<>(getBorrowingBook());
         int column = 0;
         int row = 1;
-
         try{
             for (Book book : borrowingBook) {
                 FXMLLoader fxmlLoader = new FXMLLoader();

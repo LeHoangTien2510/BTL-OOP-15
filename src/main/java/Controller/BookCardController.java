@@ -75,6 +75,7 @@ public class BookCardController {
 
     @FXML
     private void handleBorrowButtonAction(ActionEvent event) {
+
         String insertQuery = "INSERT INTO borrowed_books(user_id, book_id, title, author, genre, imageSrc) VALUES(?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = conn.prepareStatement(insertQuery)) {
             // Gán giá trị cho các tham số
