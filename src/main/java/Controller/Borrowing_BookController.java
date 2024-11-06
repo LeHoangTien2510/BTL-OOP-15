@@ -68,7 +68,7 @@ public class Borrowing_BookController implements Initializable {
         int id = currentUser.getId();
         System.out.println(id);
         try (Connection connection = SqliteConnection.Connector()) {
-            String query = "SELECT title, author, genre FROM borrowed_books WHERE user_id = ?";
+            String query = "SELECT title, author, genre, imageSrc FROM borrowed_books WHERE user_id = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
@@ -78,6 +78,7 @@ public class Borrowing_BookController implements Initializable {
                 book.setTitle(resultSet.getString("title"));
                 book.setAuthor("By" + " " + resultSet.getString("author"));
                 book.setGenre(resultSet.getString("genre"));
+                book.setImageSrc(resultSet.getString("imageSrc"));
                 bookList.add(book);
             }
         } catch (SQLException e) {

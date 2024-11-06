@@ -52,6 +52,7 @@ public class BookCardController {
     int id;
     String findAuthor;
     String findGenre;
+    String findImageSrc;
     public void setData(Book book) {
         this.book = book;
         String imagePath = book.getImageSrc();
@@ -68,12 +69,13 @@ public class BookCardController {
         id = book.getBookIdFromBookCard(findTitle);
         findAuthor = author.getText();
         findGenre = genre.getText();
+        findImageSrc = imagePath;
     }
 
 
     @FXML
     private void handleBorrowButtonAction(ActionEvent event) {
-        String insertQuery = "INSERT INTO borrowed_books(user_id, book_id, title, author, genre) VALUES(?, ?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO borrowed_books(user_id, book_id, title, author, genre, imageSrc) VALUES(?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = conn.prepareStatement(insertQuery)) {
             // Gán giá trị cho các tham số
             preparedStatement.setInt(1, currentUser.getId());
@@ -81,6 +83,7 @@ public class BookCardController {
             preparedStatement.setString(3, findTitle);
             preparedStatement.setString(4, findAuthor);
             preparedStatement.setString(5, findGenre);
+            preparedStatement.setString(6, findImageSrc);
             // Thực hiện câu lệnh SQL
             int result = preparedStatement.executeUpdate();
             if (result > 0) {
