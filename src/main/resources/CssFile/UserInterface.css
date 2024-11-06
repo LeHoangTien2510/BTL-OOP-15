@@ -6,3 +6,6 @@
     -fx-background-color: rgba(0,0,0,0);
 }
 
+.radius {
+    -fx-background-radius: 10;
+}
