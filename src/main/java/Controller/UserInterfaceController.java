@@ -1,33 +1,36 @@
 package Controller;
 
-import Objects.Book;
-import Objects.SqliteConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import Objects.User;
+import Objects.Login;
 
 import java.io.IOException;
-import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.*;
 
-public class UserController {
+public class UserInterfaceController {
+    @FXML
+    private AnchorPane UserView;
+
+    @FXML
+    private Button UserProfileButton;
+    User currentUser = Login.getCurrentUser();
+
+    @FXML
+    private void initialize() {
+        if (currentUser != null) {
+            UserProfileButton.setText(currentUser.getName());
+        }
+    }
+
     @FXML
     private void handleLogOutButtonAction(ActionEvent event) {
         try {
@@ -69,9 +72,6 @@ public class UserController {
     }
 
     @FXML
-    private AnchorPane UserView;
-
-    @FXML
     private void handleDashBoardButtonAction(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/library/DashBoard.fxml"));
@@ -86,5 +86,18 @@ public class UserController {
         }
     }
 
+    @FXML
+    private void handleUserProfileButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/library/UserProfile.fxml"));
+            AnchorPane dashBoardView = fxmlLoader.load();
 
+            UserView.getChildren().clear();
+
+            UserView.getChildren().add(dashBoardView);
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện Dashboard.");
+            e.printStackTrace();
+        }
+    }
 }

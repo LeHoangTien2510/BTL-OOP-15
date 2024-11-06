@@ -1,15 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="750.0" prefWidth="1094.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.library.UserProfile">
+<AnchorPane prefHeight="660.0" prefWidth="1051.0" style="-fx-background-color: #EEEEEE;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UserProfileController">
    <children>
-      <VBox layoutX="-5.0" layoutY="1.0" prefHeight="750.0" prefWidth="1094.0">
+      <VBox alignment="TOP_CENTER" layoutX="52.0" layoutY="37.0" prefHeight="582.0" prefWidth="442.0" spacing="20.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 40;">
          <children>
-            <Label prefHeight="130.0" prefWidth="311.0" text="Profile " />
+            <Circle fill="DODGERBLUE" radius="100.0" stroke="BLACK" strokeType="INSIDE">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Circle>
+            <Label text="Full Name">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_LEFT" prefHeight="69.0" prefWidth="407.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="106.0" prefWidth="169.0" text="ID">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Pane prefHeight="100.0" prefWidth="220.0">
+                     <children>
+                        <TextField layoutX="27.0" layoutY="15.0" prefHeight="39.0" prefWidth="166.0" promptText="userid" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Pane>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="69.0" prefWidth="407.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="106.0" prefWidth="169.0" text="Password">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Pane prefHeight="100.0" prefWidth="220.0">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <children>
+                        <PasswordField layoutX="39.0" layoutY="24.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <Button mnemonicParsing="false" prefHeight="56.0" prefWidth="155.0" text="Save Changes">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
+         </children>
+      </VBox>
+      <VBox alignment="CENTER_LEFT" layoutX="569.0" layoutY="42.0" prefHeight="192.0" prefWidth="430.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 40;">
+         <children>
+            <Label text="5">
+               <font>
+                  <Font size="49.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="40.0" />
+               </VBox.margin>
+            </Label>
+            <Label text="Books Borrowed">
+               <font>
+                  <Font name="System Bold" size="35.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="40.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+      <VBox alignment="CENTER_LEFT" layoutX="559.0" layoutY="335.0" prefHeight="203.0" prefWidth="460.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 40;">
+         <children>
+            <Label text="5">
+               <font>
+                  <Font size="49.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="40.0" />
+               </VBox.margin>
+            </Label>
+            <Label text="All Borrowing">
+               <font>
+                  <Font name="System Bold" size="35.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="40.0" />
+               </VBox.margin>
+            </Label>
          </children>
       </VBox>
    </children>

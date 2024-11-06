@@ -9,16 +9,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="185.0" prefWidth="351.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.BookCardController">
+<HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="320.0" style="-fx-background-radius: 20; -fx-background-color: #557B83;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.BookCardController">
    <children>
-      <ImageView fx:id="bookImage" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="bookImage" fitHeight="110.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../image/JamesStewartCalculus7E.jpg" />
          </image>
       </ImageView>
-      <VBox alignment="CENTER_LEFT" prefHeight="186.0" prefWidth="226.0" spacing="5.0">
+      <VBox alignment="CENTER_LEFT" prefHeight="122.0" prefWidth="214.0">
          <children>
-            <Label fx:id="bookTitle" prefHeight="50.0" prefWidth="226.0" text="James Stewart Calculus 7th Edition">
+            <Label fx:id="bookTitle" prefHeight="18.0" prefWidth="221.0" text="James Stewart Calculus 7th Edition" textFill="WHITE">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -26,32 +26,50 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="author" prefHeight="50.0" prefWidth="226.0" text="By James Stewart">
+            <Label fx:id="author" prefHeight="20.0" prefWidth="214.0" text="By James Stewart" textFill="WHITE">
                <padding>
                   <Insets left="10.0" />
                </padding>
             </Label>
-            <Label fx:id="genre" prefHeight="50.0" prefWidth="237.0" text="Mathematics Textbook">
+            <Label fx:id="genre" prefHeight="20.0" prefWidth="214.0" text="Mathematics Textbook" textFill="WHITE">
                <padding>
                   <Insets left="10.0" />
                </padding>
             </Label>
-            <HBox alignment="CENTER" prefHeight="108.0" prefWidth="322.0">
+            <HBox alignment="CENTER" prefHeight="59.0" prefWidth="214.0">
                <children>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="101.0" spacing="10.0">
                      <children>
-                        <ImageView fx:id="rating" fitHeight="30.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="rating" fitHeight="30.0" fitWidth="77.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../../image/5starrating.png" />
                            </image>
+                           <VBox.margin>
+                              <Insets left="1.0" />
+                           </VBox.margin>
                         </ImageView>
-                        <Label fx:id="quantity" text=" 10 remaining" />
+                        <Label fx:id="quantity" prefHeight="18.0" prefWidth="99.0" text=" 10 remaining" textFill="WHITE" />
+                     </children>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <VBox prefHeight="30.0" prefWidth="98.0" />
+                        <Button fx:id="borrowButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleBorrowButtonAction" prefHeight="27.0" prefWidth="98.0" style="-fx-background-radius: 20; -fx-background-color: #39AEA9;" text="BORROW NOW&#10;" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="11.0" />
+                           </font>
+                        </Button>
                      </children>
                   </VBox>
-                  <Button fx:id="borrowButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleBorrowButtonAction" prefHeight="59.0" prefWidth="102.0" text="BORROW NOW" />
                </children>
             </HBox>
          </children>
       </VBox>
    </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
 </HBox>

@@ -47,7 +47,7 @@ public class BookCardController {
     Connection conn = SqliteConnection.Connector();
     private Book book;
     User currentUser = Login.getCurrentUser();
-    private String[] colors = {"#0C5776", "#2D99AE", "#BCFEFE", "#D8DAD0"};
+    private String[] colors = {"#0C5776", "#2D99AE", "#557B83", "#A2D5AB"};
     String findTitle;
     int id;
     public void setData(Book book) {

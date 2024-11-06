@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="714.0" prefWidth="1098.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DashBoardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1018.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DashBoardController">
    <children>
-      <VBox layoutX="8.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="714.0" prefWidth="1098.0">
+      <VBox layoutX="8.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="652.0" prefWidth="998.0">
          <children>
-            <VBox prefHeight="745.0" prefWidth="1094.0">
+            <VBox prefHeight="623.0" prefWidth="986.0">
                <children>
                   <Label prefHeight="40.0" prefWidth="226.0" text="Recommend for you">
                      <font>
@@ -24,12 +24,12 @@
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </padding>
                   </Label>
-                  <ScrollPane prefHeight="200.0" prefWidth="1053.0" styleClass="transparent" stylesheets="@../../../CssFile/UserInterface.css">
+                  <ScrollPane prefHeight="240.0" prefWidth="960.0" styleClass="transparent" stylesheets="@../../../CssFile/UserInterface.css">
                      <VBox.margin>
                         <Insets left="20.0" right="20.0" />
                      </VBox.margin>
                      <content>
-                        <HBox fx:id="BookCardLayout" prefHeight="200.0" prefWidth="1058.0" spacing="10.0" />
+                        <HBox fx:id="BookCardLayout" prefHeight="205.0" prefWidth="946.0" spacing="20.0" style="-fx-background-radius: 20;" />
                      </content>
                   </ScrollPane>
                   <Label prefHeight="31.0" prefWidth="255.0" text="All Books">
@@ -40,7 +40,7 @@
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </padding>
                   </Label>
-                  <ScrollPane prefHeight="355.0" prefWidth="1058.0">
+                  <ScrollPane prefHeight="355.0" prefWidth="968.0">
                      <VBox.margin>
                         <Insets bottom="10.0" left="20.0" right="20.0" />
                      </VBox.margin>
