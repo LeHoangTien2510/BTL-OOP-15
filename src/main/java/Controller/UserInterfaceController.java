@@ -21,13 +21,13 @@ public class UserInterfaceController {
     private AnchorPane UserView;
 
     @FXML
-    private Button UserProfileButton;
+    private Button UserProfileDisplayNameButton;
     User currentUser = Login.getCurrentUser();
 
     @FXML
     private void initialize() {
         if (currentUser != null) {
-            UserProfileButton.setText(currentUser.getName());
+            UserProfileDisplayNameButton.setText(currentUser.getName());
         }
     }
 

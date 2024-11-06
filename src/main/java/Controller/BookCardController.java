@@ -52,6 +52,8 @@ public class BookCardController {
     int id;
     String findAuthor;
     String findGenre;
+    String findImageSrc;
+
     public void setData(Book book) {
         this.book = book;
         String imagePath = book.getImageSrc();
@@ -68,30 +70,51 @@ public class BookCardController {
         id = book.getBookIdFromBookCard(findTitle);
         findAuthor = author.getText();
         findGenre = genre.getText();
+        findImageSrc = imagePath;
     }
 
+    public boolean isBookAlreadyBorrowed() throws SQLException {
+        String query = "SELECT COUNT(*) FROM borrowed_books WHERE user_id = ? AND book_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, currentUser.getId());
+            stmt.setInt(2, id);
+
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
+        }
+        return false;
+    }
 
     @FXML
-    private void handleBorrowButtonAction(ActionEvent event) {
-        String insertQuery = "INSERT INTO borrowed_books(user_id, book_id, title, author, genre) VALUES(?, ?, ?, ?, ?)";
-        try (PreparedStatement preparedStatement = conn.prepareStatement(insertQuery)) {
-            // Gán giá trị cho các tham số
-            preparedStatement.setInt(1, currentUser.getId());
-            preparedStatement.setInt(2, id);
-            preparedStatement.setString(3, findTitle);
-            preparedStatement.setString(4, findAuthor);
-            preparedStatement.setString(5, findGenre);
-            // Thực hiện câu lệnh SQL
-            int result = preparedStatement.executeUpdate();
-            if (result > 0) {
-                showAlert(Alert.AlertType.INFORMATION, "Borrowed Book" , "Borrowed " + findTitle + " Successfully");
-            } else {
-                showAlert(Alert.AlertType.ERROR, "Borrowed Book" , "Lỗi, không mượn được sách");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Failed to add recordadjajsdjajdajdsaj.");
+    private void handleBorrowButtonAction(ActionEvent event) throws SQLException {
+        if(isBookAlreadyBorrowed()) {
+            showAlert(Alert.AlertType.INFORMATION, "lỗi" , "Đã mượn sách này rồi");
+        }
+        else {
+            String insertQuery = "INSERT INTO borrowed_books(user_id, book_id, title, author, genre, imageSrc) VALUES(?, ?, ?, ?, ?, ?)";
+            try (PreparedStatement preparedStatement = conn.prepareStatement(insertQuery)) {
+                // Gán giá trị cho các tham số
+                preparedStatement.setInt(1, currentUser.getId());
+                preparedStatement.setInt(2, id);
+                preparedStatement.setString(3, findTitle);
+                preparedStatement.setString(4, findAuthor);
+                preparedStatement.setString(5, findGenre);
+                preparedStatement.setString(6, findImageSrc);
+                // Thực hiện câu lệnh SQL
+                int result = preparedStatement.executeUpdate();
+                if (result > 0) {
+                    showAlert(Alert.AlertType.INFORMATION, "Borrowed Book", "Borrowed " + findTitle + " Successfully");
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Borrowed Book", "Lỗi, không mượn được sách");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("Failed to add recordadjajsdjajdajdsaj.");
 
+            }
         }
     }
     private void showAlert(Alert.AlertType alertType, String title, String message) {
