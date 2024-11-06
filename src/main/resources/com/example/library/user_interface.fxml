@@ -36,7 +36,7 @@
                      </font>
                   </Label>
                   <Button fx:id="DashBoardButton" mnemonicParsing="false" onAction="#handleDashBoardButtonAction" text="DASHBOARD" />
-                  <Button mnemonicParsing="false" text="BORROWING BOOK" />
+                  <Button mnemonicParsing="false" onAction="#handleBorrowingBookButton" text="BORROWING BOOK" />
                   <Button mnemonicParsing="false" text="Button" />
                </children>
             </VBox>

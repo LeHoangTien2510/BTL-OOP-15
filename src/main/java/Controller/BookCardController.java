@@ -50,6 +50,8 @@ public class BookCardController {
     private String[] colors = {"#0C5776", "#2D99AE", "#557B83", "#A2D5AB"};
     String findTitle;
     int id;
+    String findAuthor;
+    String findGenre;
     public void setData(Book book) {
         this.book = book;
         String imagePath = book.getImageSrc();
@@ -64,16 +66,21 @@ public class BookCardController {
         hbox.setStyle("-fx-background-color: " + colors[(int) (Math.random() * colors.length)]);
         findTitle = bookTitle.getText();
         id = book.getBookIdFromBookCard(findTitle);
+        findAuthor = author.getText();
+        findGenre = genre.getText();
     }
 
 
     @FXML
     private void handleBorrowButtonAction(ActionEvent event) {
-        String insertQuery = "INSERT INTO borrowed_books(user_id, book_id) VALUES(?, ?)";
+        String insertQuery = "INSERT INTO borrowed_books(user_id, book_id, title, author, genre) VALUES(?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = conn.prepareStatement(insertQuery)) {
             // Gán giá trị cho các tham số
             preparedStatement.setInt(1, currentUser.getId());
             preparedStatement.setInt(2, id);
+            preparedStatement.setString(3, findTitle);
+            preparedStatement.setString(4, findAuthor);
+            preparedStatement.setString(5, findGenre);
             // Thực hiện câu lệnh SQL
             int result = preparedStatement.executeUpdate();
             if (result > 0) {
@@ -83,7 +90,7 @@ public class BookCardController {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Failed to add record.");
+            System.out.println("Failed to add recordadjajsdjajdajdsaj.");
 
         }
     }
