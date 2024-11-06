@@ -84,28 +84,19 @@ public class UserController {
         }
     }
 
-    public List<Book> handleBorrowingButton(ActionEvent actionEvent) {
-        List<Book> bookList = new ArrayList<>();
-        User currentUser = Login.getCurrentUser();
-        int id = currentUser.getId();
-        try (Connection connection = SqliteConnection.Connector()) {
-            String query = "SELECT title, author, genre FROM borrowed_books WHERE id = ?";
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-            while (resultSet.next()) {
-                Book book = new Book();
-                book.setTitle(resultSet.getString("title"));
-                book.setAuthor("By" + " " + resultSet.getString("author"));
-                book.setGenre(resultSet.getString("genre"));
-                bookList.add(book);
-            }
-        } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể lấy dữ liệu sách từ SQLite.");
+    @FXML
+    private void handleBorrowingBookButton(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/library/borrowing_books.fxml"));
+            AnchorPane dashBoardView = fxmlLoader.load();
+
+            UserView.getChildren().clear();
+
+            UserView.getChildren().add(dashBoardView);
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện Borrowing_books.");
             e.printStackTrace();
         }
-        return bookList;
     }
-
-
 
 }
