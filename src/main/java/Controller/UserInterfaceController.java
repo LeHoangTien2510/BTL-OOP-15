@@ -87,6 +87,21 @@ public class UserInterfaceController {
     }
 
     @FXML
+    private void handleBorrowingBookButton(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/library/borrowing_books.fxml"));
+            AnchorPane dashBoardView = fxmlLoader.load();
+
+            UserView.getChildren().clear();
+
+            UserView.getChildren().add(dashBoardView);
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện Borrowing_books.");
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     private void handleUserProfileButtonAction(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/library/UserProfile.fxml"));
