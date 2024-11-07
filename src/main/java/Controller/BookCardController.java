@@ -49,6 +49,7 @@ public class BookCardController {
     private Book book;
     User currentUser = Login.getCurrentUser();
     private String[] colors = {"#0C5776", "#2D99AE", "#557B83", "#A2D5AB"};
+
     String findTitle;
     int id;
     String findAuthor;
@@ -101,7 +102,7 @@ public class BookCardController {
                 preparedStatement.setInt(1, currentUser.getId());
                 preparedStatement.setInt(2, id);
                 preparedStatement.setString(3, findTitle);
-                preparedStatement.setString(4, findAuthor.replace("By", "").trim());
+                preparedStatement.setString(4, findAuthor);
                 preparedStatement.setString(5, findGenre);
                 preparedStatement.setString(6, findImageSrc);
                 // Thực hiện câu lệnh SQL
@@ -118,6 +119,7 @@ public class BookCardController {
             }
         }
     }
+
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

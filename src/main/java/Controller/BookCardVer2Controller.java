@@ -59,5 +59,6 @@ public class BookCardVer2Controller {
         bookTitle.setText(book.getTitle());
         bookAuthor.setText(book.getAuthor());
         bookGenre.setText(book.getGenre());
+
     }
 }

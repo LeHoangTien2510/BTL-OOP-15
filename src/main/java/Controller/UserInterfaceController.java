@@ -32,6 +32,9 @@ public class UserInterfaceController {
     }
 
     @FXML
+    private Button searchButton;
+
+    @FXML
     private void handleLogOutButtonAction(ActionEvent event) {
         try {
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -105,6 +108,21 @@ public class UserInterfaceController {
     private void handleUserProfileButtonAction(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/library/UserProfile.fxml"));
+            AnchorPane dashBoardView = fxmlLoader.load();
+
+            UserView.getChildren().clear();
+
+            UserView.getChildren().add(dashBoardView);
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện Dashboard.");
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleSearchBookButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/library/SearchBook.fxml"));
             AnchorPane dashBoardView = fxmlLoader.load();
 
             UserView.getChildren().clear();

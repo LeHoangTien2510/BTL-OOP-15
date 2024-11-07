@@ -52,7 +52,7 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="bookGenre" prefHeight="8.0" prefWidth="116.0" text="Mathematic TextBook" textFill="WHITE" />
+                        <Label fx:id="bookGenre" alignment="CENTER" prefHeight="8.0" prefWidth="116.0" text="Mathematic TextBook" textFill="WHITE" />
                         <Button alignment="CENTER" mnemonicParsing="false" prefHeight="48.0" prefWidth="230.0" style="-fx-background-color: #263b58; -fx-background-radius: 40;" text="RETURN" textFill="WHITE">
                            <VBox.margin>
                               <Insets />

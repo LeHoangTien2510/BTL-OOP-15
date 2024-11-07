@@ -10,6 +10,6 @@
     -fx-background-color: #F3F3F3;
 }
 
-.mouse-moved: hover {
+.mouse-moved:hover {
     -fx-background-color: #43616D;
 }
