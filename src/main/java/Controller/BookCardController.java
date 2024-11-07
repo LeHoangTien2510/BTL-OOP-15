@@ -44,6 +44,7 @@ public class BookCardController {
 
     @FXML
     private Button borrowButton;
+
     Connection conn = SqliteConnection.Connector();
     private Book book;
     User currentUser = Login.getCurrentUser();
@@ -100,7 +101,7 @@ public class BookCardController {
                 preparedStatement.setInt(1, currentUser.getId());
                 preparedStatement.setInt(2, id);
                 preparedStatement.setString(3, findTitle);
-                preparedStatement.setString(4, findAuthor);
+                preparedStatement.setString(4, findAuthor.replace("By", "").trim());
                 preparedStatement.setString(5, findGenre);
                 preparedStatement.setString(6, findImageSrc);
                 // Thực hiện câu lệnh SQL
