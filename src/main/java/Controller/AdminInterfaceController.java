@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -15,6 +16,8 @@ import java.util.Optional;
 
 public class AdminInterfaceController {
 
+    @FXML
+    Label addBook;
     @FXML
     private void handleLogOutButtonAction(ActionEvent event) {
         try {
@@ -55,6 +58,20 @@ public class AdminInterfaceController {
         alert.showAndWait();
     }
 
-
+    @FXML
+    private void handleAddBookButtonAction(ActionEvent event){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/AddBook.fxml"));
+            Scene scene = new Scene(loader.load());
+            Stage stage = (Stage) addBook.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Add Book");
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện.");
+            e.printStackTrace();
+        }
+    }
 
 }
