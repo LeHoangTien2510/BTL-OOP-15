@@ -90,10 +90,46 @@ public class BookCardController {
         return false;
     }
 
+    public boolean notEnoughBooks() throws SQLException {
+        String query = "SELECT COUNT(*) FROM borrowed_books WHERE book_id = ?";
+        int count = 0;
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+            if (count >= getBookQuantity()) {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    }
+
+    public int getBookQuantity() throws SQLException {
+        String query = "SELECT quantity FROM book WHERE book_id = ?";
+        int quantity = -1;
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                quantity = resultSet.getInt("quantity");
+            }
+        }
+        return quantity;
+    }
+
     @FXML
     private void handleBorrowButtonAction(ActionEvent event) throws SQLException {
         if(isBookAlreadyBorrowed()) {
-            showAlert(Alert.AlertType.INFORMATION, "lỗi" , "Đã mượn sách này rồi");
+            showAlert(Alert.AlertType.INFORMATION, "Error" , "You have already borrowed this book");
+        }
+        else if (notEnoughBooks()) {
+            showAlert(Alert.AlertType.INFORMATION, "Error" , "Not enough books in library");
         }
         else {
             String insertQuery = "INSERT INTO borrowed_books(user_id, book_id, title, author, genre, imageSrc) VALUES(?, ?, ?, ?, ?, ?)";
@@ -114,7 +150,7 @@ public class BookCardController {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
-                System.out.println("Failed to add recordadjajsdjajdajdsaj.");
+                System.out.println("Failed to add record.");
 
             }
         }
