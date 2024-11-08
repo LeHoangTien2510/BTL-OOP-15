@@ -120,7 +120,7 @@
                               <Image url="@../../../../java/img/BorrowingBook.png" />
                            </image>
                         </ImageView>
-                        <Label prefHeight="20.0" prefWidth="129.0" text="Add Book" textFill="#f4f2ec">
+                        <Label fx:id="addBook" prefHeight="20.0" prefWidth="129.0" text="Add Book" textFill="#f4f2ec">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -128,6 +128,7 @@
                               <Insets left="10.0" />
                            </HBox.margin>
                         </Label>
+                        <Button mnemonicParsing="false" onAction="#handleAddBookButtonAction" text="Button" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="39.0" prefWidth="207.0" styleClass="mouse-moved" stylesheets="@../../../CssFile/AdminInterface.css">
