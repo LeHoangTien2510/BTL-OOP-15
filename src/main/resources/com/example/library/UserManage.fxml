@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UserManageController">
+    <TableView fx:id="userTable" prefHeight="400.0" prefWidth="600.0">
+        <columns>
+            <TableColumn fx:id="nameColumn" prefWidth="183.3333181142807" text="Name" />
+            <TableColumn fx:id="usernameColumn" prefWidth="123.33329772949219" text="Username" />
+            <TableColumn fx:id="passwordColumn" prefWidth="140.66668701171875" text="Password" />
+            <TableColumn fx:id="userTypeColumn" prefWidth="64.00003051757812" text="User Type" />
+            <TableColumn fx:id="deleteColumn" prefWidth="89.33328247070312" text="Delete" />
+        </columns>
+    </TableView>
+
+</AnchorPane>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DeleteBookController">
+   <children>
+      <TableView fx:id="bookTable" layoutX="-5.0" layoutY="64.0" prefHeight="321.0" prefWidth="610.0">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" />
+            <TableColumn fx:id="titleColumn" text="Title" />
+            <TableColumn fx:id="authorColumn" text="Author" />
+            <TableColumn fx:id="genreColumn" text="Genre" />
+            <TableColumn fx:id="quantityColumn" text="Quantity" />
+            <TableColumn fx:id="deleteColumn" prefWidth="75.0" text="Delete" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

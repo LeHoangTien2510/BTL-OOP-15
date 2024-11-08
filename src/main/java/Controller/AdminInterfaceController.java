@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -63,11 +64,46 @@ public class AdminInterfaceController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/AddBook.fxml"));
             Scene scene = new Scene(loader.load());
-            Stage stage = (Stage) addBook.getScene().getWindow();
-            stage.setScene(scene);
-            stage.setTitle("Add Book");
-            stage.centerOnScreen();
-            stage.show();
+            Stage newStage = new Stage();
+            newStage.setScene(scene);
+            newStage.setTitle("Add Book");
+            newStage.initModality(Modality.APPLICATION_MODAL); // Đặt chế độ để chặn tương tác với cửa sổ chính
+            newStage.centerOnScreen();
+            newStage.show();
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện.");
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleDeleteBookButtonAction(ActionEvent event){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/DeleteBook.fxml"));
+            Scene scene = new Scene(loader.load());
+            Stage newStage = new Stage();
+            newStage.setScene(scene);
+            newStage.setTitle("Delete Book");
+            newStage.initModality(Modality.APPLICATION_MODAL); // Đặt chế độ để chặn tương tác với cửa sổ chính
+            newStage.centerOnScreen();
+            newStage.show();
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện.");
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleUserManageButtonAction(ActionEvent event){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/UserManage.fxml"));
+            Scene scene = new Scene(loader.load());
+            Stage newStage = new Stage();
+            newStage.setScene(scene);
+            newStage.setTitle("Manage User");
+            newStage.initModality(Modality.APPLICATION_MODAL); // Đặt chế độ để chặn tương tác với cửa sổ chính
+            newStage.centerOnScreen();
+            newStage.show();
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện.");
             e.printStackTrace();

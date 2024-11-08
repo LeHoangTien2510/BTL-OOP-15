@@ -52,13 +52,6 @@
             </HBox>
          </children>
       </HBox>
-      <AnchorPane layoutX="613.0" layoutY="237.0" prefHeight="465.0" prefWidth="544.0" style="-fx-background-color: #e9e1e1; -fx-background-radius: 10;">
-         <children>
-            <Button layoutX="10.0" layoutY="163.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="185.0" style="-fx-background-color: #3f95ce; -fx-background-radius: 50;" text="Hiển thị người dùng" textFill="#e9e1e1" />
-            <Button layoutX="98.0" layoutY="96.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="185.0" style="-fx-background-color: #3f95ce; -fx-background-radius: 50;" text="Hiển thị toàn bộ sách" textFill="WHITE" />
-            <Button layoutX="97.0" layoutY="37.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="185.0" style="-fx-background-color: #3f95ce; -fx-background-radius: 50;" text="Cập nhật sách" textFill="WHITE" />
-            <Button layoutX="59.0" layoutY="1.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="185.0" style="-fx-background-color: #3f95ce; -fx-background-radius: 50;" text="Thêm sách" textFill="#e9e1e1" />
-         </children></AnchorPane>
       <VBox layoutY="53.0" prefHeight="670.0" prefWidth="268.0" spacing="10.0" style="-fx-background-color: #0e3746;">
          <children>
             <VBox prefHeight="165.0" prefWidth="268.0">
@@ -146,6 +139,7 @@
                               <Insets left="10.0" />
                            </HBox.margin>
                         </Label>
+                        <Button mnemonicParsing="false" onAction="#handleDeleteBookButtonAction" text="Button" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="39.0" prefWidth="207.0" styleClass="mouse-moved" stylesheets="@../../../CssFile/AdminInterface.css">
@@ -163,6 +157,7 @@
                               <Insets left="10.0" />
                            </HBox.margin>
                         </Label>
+                        <Button mnemonicParsing="false" onAction="#handleUserManageButtonAction" text="Button" />
                      </children>
                   </HBox>
                </children>

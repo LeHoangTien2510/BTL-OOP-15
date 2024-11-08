@@ -12,7 +12,7 @@ public class Book {
     private String genre;
     private int quantity;
     private String ImageSrc;
-    private String id;
+    private int id;
 
     public Book() {
         this.title = "";
@@ -20,7 +20,7 @@ public class Book {
         this.genre = "";
         this.quantity = 0;
         this.ImageSrc = "";
-        this.id = "";
+        this.id = 0;
     }
 
     public Book(String title, String author,String genre, int quantity) {
@@ -36,6 +36,14 @@ public class Book {
         this.genre = genre;
         this.quantity = quantity;
         this.ImageSrc = imageSrc;
+    }
+
+    public Book(int id, String title, String author,String genre, int quantity) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.quantity = quantity;
     }
 
     @Override
@@ -88,6 +96,10 @@ public class Book {
     public String getImageSrc() { return ImageSrc; }
 
     public void setImageSrc(String ImageSrc) { this.ImageSrc = ImageSrc; }
+
+    public int getId() {
+        return id;
+    }
 
     public void printInfo() {
         System.out.println("Tên sách: " + getTitle() + ", Tác giả: " + getAuthor() +
