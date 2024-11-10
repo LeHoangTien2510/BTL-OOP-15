@@ -101,7 +101,7 @@ public class UserManageController {
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
             String query = "DELETE FROM user WHERE username = ?";
-
+            String query2 = "DELETE FROM borrowed_books WHERE id = ?";
             try (Connection conn = SqliteConnection.Connector();
                  PreparedStatement pstmt = conn.prepareStatement(query)) {
 

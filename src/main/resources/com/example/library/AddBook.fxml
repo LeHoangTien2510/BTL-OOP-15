@@ -1,18 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AddBookController">
-   <children>
-      <TextField fx:id="titleTextField" layoutX="226.0" layoutY="63.0" promptText="Title" />
-      <TextField fx:id="authorTextField" layoutX="226.0" layoutY="120.0" promptText="Author" />
-      <TextField fx:id="genreTextField" layoutX="226.0" layoutY="188.0" promptText="Genre" />
-      <TextField fx:id="quantityTextField" layoutX="226.0" layoutY="248.0" promptText="Quantity" />
-      <Label layoutX="226.0" layoutY="313.0" text="Ảnh" />
-      <Button layoutX="262.0" layoutY="309.0" mnemonicParsing="false" onAction="#handleSrcButtonAction" text="Đường dẫn" />
-      <Button layoutX="274.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleAddBookButtonAction" text="Thêm sách" />
-   </children>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #f4f2ec;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AddBookController">
+    <children>
+        <!-- Container -->
+        <VBox alignment="CENTER" spacing="15.0" layoutX="150.0" layoutY="30.0" prefWidth="300.0" style="-fx-padding: 20; -fx-background-color: #ffffff; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 5);">
+            <children>
+                <!-- Title TextField -->
+                <TextField fx:id="titleTextField" promptText="Title" style="-fx-font-size: 14px; -fx-background-radius: 10;" />
+                <!-- Author TextField -->
+                <TextField fx:id="authorTextField" promptText="Author" style="-fx-font-size: 14px; -fx-background-radius: 10;" />
+                <!-- Genre TextField -->
+                <TextField fx:id="genreTextField" promptText="Genre" style="-fx-font-size: 14px; -fx-background-radius: 10;" />
+                <!-- Quantity TextField -->
+                <TextField fx:id="quantityTextField" promptText="Quantity" style="-fx-font-size: 14px; -fx-background-radius: 10;" />
+                <!-- Image Section -->
+                <VBox alignment="CENTER" spacing="10.0">
+                    <Label text="Ảnh" style="-fx-font-size: 14px;" />
+                    <Button mnemonicParsing="false" onAction="#handleSrcButtonAction" text="Đường dẫn" style="-fx-background-color: #1e88e5; -fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-background-radius: 8;" />
+                    <!-- Image Preview -->
+                    <ImageView fx:id="previewImageView" fitHeight="100.0" fitWidth="100.0" preserveRatio="true" style="-fx-border-color: #cccccc; -fx-border-width: 1; -fx-border-radius: 5;" />
+                </VBox>
+                <!-- Add Book Button -->
+                <Button mnemonicParsing="false" onAction="#handleAddBookButtonAction" text="Thêm sách" style="-fx-background-color: #4caf50; -fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-background-radius: 8;" />
+            </children>
+        </VBox>
+    </children>
 </AnchorPane>

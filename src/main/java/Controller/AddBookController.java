@@ -5,6 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -28,6 +30,9 @@ public class AddBookController {
     @FXML
     private TextField quantityTextField;
 
+    @FXML
+    private ImageView previewImageView;
+
     private String imageSrc;
 
     public String chooseImage() {
@@ -38,18 +43,25 @@ public class AddBookController {
         );
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
-            String absolutePath = selectedFile.getAbsolutePath();
-            // Đường dẫn tương đối (giả sử thư mục `image` là nơi lưu ảnh)
-            String relativePath = absolutePath.substring(absolutePath.indexOf("image"));
-            return "/" + relativePath.replace("\\", "/");  // Chuyển dấu `\` thành `/`
+            return selectedFile.toURI().toString();
+
         }
         return null;
     }
 
     @FXML
     public void handleSrcButtonAction(ActionEvent event) {
-        imageSrc = chooseImage();
-        System.out.println("Image src: " + imageSrc);
+        // Gọi hàm chooseImage() để lấy đường dẫn ảnh
+        String imagePath = chooseImage();
+        if (imagePath != null) {
+            imageSrc = imagePath.substring(imagePath.indexOf("/image/"));
+            // Hiển thị ảnh trong ImageView
+            Image image = new Image(imagePath);
+            previewImageView.setImage(image);
+            System.out.println(imageSrc);
+        } else {
+            System.out.println("Không có ảnh nào được chọn.");
+        }
     }
 
     @FXML
