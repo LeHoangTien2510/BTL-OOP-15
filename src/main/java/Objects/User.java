@@ -18,6 +18,14 @@ public class User {
         this.userType = userType;
     }
 
+    public User(int id, String name, String username, String password, String userType) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.userType = userType;
+    }
+
 
     public String getName(){
         return name;
@@ -36,6 +44,10 @@ public class User {
     }
 
     public int getId(){
+        return id;
+    }
+
+    public int getIdFromDb(){
         String query = "SELECT id FROM user WHERE username = ?";
         int userId = -1;
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:Library.db");

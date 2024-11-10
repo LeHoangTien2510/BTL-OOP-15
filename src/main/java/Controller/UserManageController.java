@@ -18,6 +18,8 @@ public class UserManageController {
     @FXML
     private TableView<User> userTable;
     @FXML
+    private TableColumn<User, Integer> idColumn;
+    @FXML
     private TableColumn<User, String> nameColumn;
     @FXML
     private TableColumn<User, String> usernameColumn;
@@ -33,6 +35,7 @@ public class UserManageController {
     @FXML
     public void initialize() {
         // Thiết lập các cột
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
         passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
@@ -68,7 +71,7 @@ public class UserManageController {
     }
 
     private void loadUserData() {
-        String query = "SELECT name, username, password, userType FROM user";
+        String query = "SELECT id, name, username, password, userType FROM user";
 
         try (Connection conn = SqliteConnection.Connector();
              Statement stmt = conn.createStatement();
@@ -76,6 +79,7 @@ public class UserManageController {
 
             while (rs.next()) {
                 userList.add(new User(
+                        rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("username"),
                         rs.getString("password"),
@@ -100,13 +104,20 @@ public class UserManageController {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            String query = "DELETE FROM user WHERE username = ?";
-            String query2 = "DELETE FROM borrowed_books WHERE id = ?";
-            try (Connection conn = SqliteConnection.Connector();
-                 PreparedStatement pstmt = conn.prepareStatement(query)) {
+            String deleteBorrowedBooksQuery = "DELETE FROM borrowed_books WHERE user_id = ?";
+            String deleteUserQuery  = "DELETE FROM user WHERE id = ?";
+            try (Connection conn = SqliteConnection.Connector()) {
+                // Xóa thông tin trong bảng borrowed_books
+                try (PreparedStatement pstmt = conn.prepareStatement(deleteBorrowedBooksQuery)) {
+                    pstmt.setInt(1, user.getId());
+                    pstmt.executeUpdate();
+                }
 
-                pstmt.setString(1, user.getUsername());
-                pstmt.executeUpdate();
+                // Xóa người dùng trong bảng user
+                try (PreparedStatement pstmt = conn.prepareStatement(deleteUserQuery)) {
+                    pstmt.setInt(1, user.getId());
+                    pstmt.executeUpdate();
+                }
 
                 // Xóa người dùng khỏi TableView
                 userList.remove(user);

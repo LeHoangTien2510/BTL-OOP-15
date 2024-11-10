@@ -78,7 +78,7 @@ public class BookCardController {
     public boolean isBookAlreadyBorrowed() throws SQLException {
         String query = "SELECT COUNT(*) FROM borrowed_books WHERE user_id = ? AND book_id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, currentUser.getId());
+            stmt.setInt(1, currentUser.getIdFromDb());
             stmt.setInt(2, id);
 
             ResultSet resultSet = stmt.executeQuery();
@@ -135,7 +135,7 @@ public class BookCardController {
             String insertQuery = "INSERT INTO borrowed_books(user_id, book_id, title, author, genre, imageSrc) VALUES(?, ?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = conn.prepareStatement(insertQuery)) {
                 // Gán giá trị cho các tham số
-                preparedStatement.setInt(1, currentUser.getId());
+                preparedStatement.setInt(1, currentUser.getIdFromDb());
                 preparedStatement.setInt(2, id);
                 preparedStatement.setString(3, findTitle);
                 preparedStatement.setString(4, findAuthor);

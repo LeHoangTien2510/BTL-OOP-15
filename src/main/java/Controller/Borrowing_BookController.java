@@ -93,7 +93,7 @@ public class Borrowing_BookController implements Initializable {
     public List<Book> getBorrowingBook() {
         List<Book> bookList = new ArrayList<>();
         User currentUser = Login.getCurrentUser();
-        int id = currentUser.getId();
+        int id = currentUser.getIdFromDb();
         System.out.println(id);
         try (Connection connection = SqliteConnection.Connector()) {
             String query = "SELECT title, author, genre, imageSrc FROM borrowed_books WHERE user_id = ?";
