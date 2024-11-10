@@ -5,6 +5,7 @@ import Objects.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -40,12 +41,35 @@ public class UserManageController {
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
         passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
         userTypeColumn.setCellValueFactory(new PropertyValueFactory<>("userType"));
-
-
+        userTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         addDeleteButtonToTable();
-
+        alignColumnsCenter();
         loadUserData();
     }
+
+    private void alignColumnsCenter() {
+        // Xác định các cột cần căn giữa
+        TableColumn<User, Object>[] columnsToCenter = new TableColumn[]{idColumn,nameColumn, userTypeColumn, usernameColumn, passwordColumn};
+
+        for (TableColumn<User, Object> column : columnsToCenter) {
+            column.setCellFactory(col -> {
+                return new TableCell<User, Object>() {
+                    @Override
+                    protected void updateItem(Object item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || item == null) {
+                            setText(null); // Không hiển thị nội dung nếu ô trống
+                        } else {
+                            setText(item.toString()); // Hiển thị nội dung của cột
+                        }
+                        setAlignment(Pos.CENTER); // Căn giữa nội dung
+                    }
+                };
+            });
+        }
+    }
+
+
 
     private void addDeleteButtonToTable() {
         deleteColumn.setCellFactory(param -> new TableCell<>() {
@@ -56,6 +80,7 @@ public class UserManageController {
                     User user = getTableView().getItems().get(getIndex());
                     deleteUser(user);
                 });
+                deleteButton.setStyle("-fx-background-color: #ff4d4d; -fx-text-fill: white; -fx-font-size: 12px;");
             }
 
             @Override

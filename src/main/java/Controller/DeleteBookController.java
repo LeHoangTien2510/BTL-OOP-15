@@ -33,6 +33,9 @@ public class DeleteBookController {
     @FXML
     private TableColumn<Book, Void> deleteColumn;
 
+    @FXML
+    private TableColumn<Book, Void> editQuantityColumn;
+
     private ObservableList<Book> bookList = FXCollections.observableArrayList();
 
     public void initialize() {
@@ -43,6 +46,7 @@ public class DeleteBookController {
         genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         addDeleteButtonToTable();
+        addEditQuantityButtonToTable();
         loadBookData();
     }
 
@@ -59,6 +63,7 @@ public class DeleteBookController {
                             Book book = getTableView().getItems().get(getIndex());
                             deleteBook(book);
                         });
+                        deleteButton.setStyle("-fx-background-color: #ff4d4d; -fx-text-fill: white; -fx-font-size: 12px;");
                     }
 
                     @Override
@@ -76,6 +81,78 @@ public class DeleteBookController {
 
         deleteColumn.setCellFactory(cellFactory);
     }
+
+    private void addEditQuantityButtonToTable() {
+        Callback<TableColumn<Book, Void>, TableCell<Book, Void>> cellFactory = new Callback<>() {
+            @Override
+            public TableCell<Book, Void> call(final TableColumn<Book, Void> param) {
+                return new TableCell<>() {
+
+                    private final Button editButton = new Button("Edit");
+
+                    {
+                        editButton.setOnAction(event -> {
+                            Book book = getTableView().getItems().get(getIndex());
+                            editBookQuantity(book); // Gọi phương thức chỉnh sửa số lượng
+                        });
+                        editButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 12px;");
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(editButton);
+                        }
+                    }
+                };
+            }
+        };
+
+        editQuantityColumn.setCellFactory(cellFactory);
+    }
+
+    private void editBookQuantity(Book book) {
+        TextInputDialog dialog = new TextInputDialog(String.valueOf(book.getQuantity()));
+        dialog.setTitle("Chỉnh sửa số lượng");
+        dialog.setHeaderText("Chỉnh sửa số lượng sách");
+        dialog.setContentText("Nhập số lượng mới:");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            try {
+                int newQuantity = Integer.parseInt(result.get());
+                if (newQuantity < 0) {
+                    showAlert(Alert.AlertType.WARNING, "Lỗi", "Số lượng không thể âm!");
+                    return;
+                }
+
+                // Cập nhật cơ sở dữ liệu
+                String query = "UPDATE book SET quantity = ? WHERE book_id = ?";
+                try (Connection conn = SqliteConnection.Connector();
+                     PreparedStatement pstmt = conn.prepareStatement(query)) {
+                    pstmt.setInt(1, newQuantity);
+                    pstmt.setInt(2, book.getId());
+                    pstmt.executeUpdate();
+                }
+
+                // Cập nhật số lượng trong TableView
+                book.setQuantity(newQuantity);
+                bookTable.refresh(); // Làm mới bảng
+
+                showAlert(Alert.AlertType.INFORMATION, "Thành công", "Số lượng sách đã được cập nhật!");
+
+            } catch (NumberFormatException e) {
+                showAlert(Alert.AlertType.ERROR, "Lỗi", "Vui lòng nhập một số hợp lệ!");
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể cập nhật số lượng. Vui lòng thử lại!");
+            }
+        }
+    }
+
 
     private void deleteBook(Book book) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

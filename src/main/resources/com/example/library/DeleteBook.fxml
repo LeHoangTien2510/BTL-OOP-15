@@ -17,6 +17,8 @@
                 <TableColumn fx:id="genreColumn" text="Genre" prefWidth="100.0" />
                 <TableColumn fx:id="quantityColumn" text="Quantity" prefWidth="80.0" />
                 <TableColumn fx:id="deleteColumn" text="Delete" prefWidth="80.0" />
+                <TableColumn fx:id="editQuantityColumn" text="Edit Quantity" prefWidth="120.0" />
+
             </columns>
 
             <style>

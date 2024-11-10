@@ -12,7 +12,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
    <left>
-      <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #0598ff;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="500.0" prefWidth="851.0" style="-fx-background-color: #0598ff;" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -28,7 +28,7 @@
       </AnchorPane>
    </left>
    <right>
-      <AnchorPane prefHeight="500.0" prefWidth="705.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="639.0" prefWidth="390.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
          <children>
             <Button layoutX="175.0" layoutY="357.0" mnemonicParsing="false" onAction="#handleRegisterButtonAction" style="-fx-background-color: transperent;" text="Chưa có tài khoản? Đăng ký" textFill="#3f95ce" />
             <TextField fx:id="usernameField" layoutX="100.0" layoutY="182.0" promptText="User Name" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
