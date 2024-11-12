@@ -12,6 +12,7 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AddBookController {
@@ -63,6 +64,22 @@ public class AddBookController {
             System.out.println("Không có ảnh nào được chọn.");
         }
     }
+    public boolean alreadyAdded(String title, String author) {
+        String query = "SELECT COUNT(*) FROM book WHERE title = ? AND author = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, title);
+            stmt.setString(2, author);
+
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count >= 1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Xử lý ngoại lệ hoặc ghi log tại đây
+        }
+        return false;
+    }
 
     @FXML
     public void handleAddBookButtonAction(ActionEvent event) {
@@ -70,6 +87,10 @@ public class AddBookController {
         String author = authorTextField.getText();
         String genre = genreTextField.getText();
         String quantity = quantityTextField.getText();
+        if(alreadyAdded(title, author)) {
+            showAlert(Alert.AlertType.ERROR,"Adding book failed","Book is already added");
+        }
+            else{
         String insertQuery = "INSERT INTO book(title, author, genre, quantity, imageSrc) VALUES(?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = conn.prepareStatement(insertQuery)) {
             // Gán giá trị cho các tham số
@@ -88,7 +109,7 @@ public class AddBookController {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Failed to add record.");
-
+        }
         }
     }
 
