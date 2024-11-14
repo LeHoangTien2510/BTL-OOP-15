@@ -53,7 +53,11 @@ public class SearchBookController implements Initializable {
     Connection conn = SqliteConnection.Connector();
     private Book book;
     User currentUser = Login.getCurrentUser();
-
+    String findTitle;
+    int id;
+    String findAuthor;
+    String findGenre;
+    String findImageSrc;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -71,7 +75,6 @@ public class SearchBookController implements Initializable {
 
         int column = 0;
         int row = 1;
-
         for (Book book : allBooks) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/library/BookCardVer2.fxml"));
@@ -93,6 +96,94 @@ public class SearchBookController implements Initializable {
                 e.printStackTrace();
             }
         }
+    }
+
+    public boolean isBookAlreadyBorrowed() throws SQLException {
+        String query = "SELECT COUNT(*) FROM borrowed_books WHERE user_id = ? AND book_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, currentUser.getIdFromDb());
+            stmt.setInt(2, id);
+
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
+        }
+        return false;
+    }
+
+    @FXML
+    private void handleBorrowButtonAction(ActionEvent event) throws SQLException {
+        if (book != null) {
+            id = book.getId();
+            findTitle = book.getTitle();
+            findAuthor = book.getAuthor();
+            findGenre = book.getGenre();
+            findImageSrc = book.getImageSrc();
+        }
+        if(isBookAlreadyBorrowed()) {
+            showAlert(Alert.AlertType.INFORMATION, "Error" , "You have already borrowed this book");
+        }
+        else if (notEnoughBooks()) {
+            showAlert(Alert.AlertType.INFORMATION, "Error" , "Not enough books in library");
+        }
+        else {
+            String insertQuery = "INSERT INTO borrowed_books(user_id, book_id, title, author, genre, imageSrc) VALUES(?, ?, ?, ?, ?, ?)";
+            try (PreparedStatement preparedStatement = conn.prepareStatement(insertQuery)) {
+                // Gán giá trị cho các tham số
+                preparedStatement.setInt(1, currentUser.getIdFromDb());
+                preparedStatement.setInt(2, id);
+                preparedStatement.setString(3, findTitle);
+                preparedStatement.setString(4, findAuthor);
+                preparedStatement.setString(5, findGenre);
+                preparedStatement.setString(6, findImageSrc);
+                // Thực hiện câu lệnh SQL
+                int result = preparedStatement.executeUpdate();
+                if (result > 0) {
+                    showAlert(Alert.AlertType.INFORMATION, "Borrowed Book", "Borrowed " + findTitle + " Successfully");
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Borrowed Book", "Lỗi, không mượn được sách");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("Failed to add record.");
+
+            }
+        }
+    }
+
+    public boolean notEnoughBooks() throws SQLException {
+        String query = "SELECT COUNT(*) FROM borrowed_books WHERE book_id = ?";
+        int count = 0;
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+            if (count >= getBookQuantity()) {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    }
+
+    public int getBookQuantity() throws SQLException {
+        String query = "SELECT quantity FROM book WHERE book_id = ?";
+        int quantity = -1;
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                quantity = resultSet.getInt("quantity");
+            }
+        }
+        return quantity;
     }
 
     @FXML
@@ -155,12 +246,13 @@ public class SearchBookController implements Initializable {
     private List<Book> getAllBooks() {
         List<Book> bookList = new ArrayList<>();
         try (Connection connection = SqliteConnection.Connector()) {
-            String query = "SELECT title, author, genre, imageSrc, quantity FROM Book";
+            String query = "SELECT book_id, title, author, genre, imageSrc, quantity FROM Book";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
                 Book book = new Book();
+                book.setId(resultSet.getInt("book_id"));
                 book.setTitle(resultSet.getString("title"));
                 book.setAuthor("By" + " " + resultSet.getString("author"));
                 book.setGenre(resultSet.getString("genre"));
@@ -186,11 +278,20 @@ public class SearchBookController implements Initializable {
     }
 
     private void setChosenBook(Book book) {
+        this.book = book; // Cập nhật đối tượng book hiện tại
         bookTitle.setText(book.getTitle());
         bookAuthor.setText(book.getAuthor());
         bookGenre.setText(book.getGenre());
         image = new Image(getClass().getResourceAsStream(book.getImageSrc()));
         bookImage.setImage(image);
+
+        // Cập nhật id và các thuộc tính khác khi chọn sách
+        id = book.getId();
+        findTitle = book.getTitle();
+        findAuthor = book.getAuthor();
+        findGenre = book.getGenre();
+        findImageSrc = book.getImageSrc();
+        System.out.println("Selected Book ID: " + id); // Debug dòng này
     }
     
 }

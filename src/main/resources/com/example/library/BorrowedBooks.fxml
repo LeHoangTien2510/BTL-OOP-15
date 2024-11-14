@@ -21,7 +21,7 @@
          <right>
             <VBox alignment="TOP_CENTER" prefHeight="656.0" prefWidth="386.0" style="-fx-background-color: #DFDFDF;" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" prefHeight="83.0" prefWidth="398.0" text="Borrowing Book">
+                  <Label alignment="CENTER" prefHeight="83.0" prefWidth="398.0" text="Borrowed Book">
                      <font>
                         <Font name="System Bold" size="36.0" />
                      </font>

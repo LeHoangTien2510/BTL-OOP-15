@@ -101,6 +101,10 @@ public class Book {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void printInfo() {
         System.out.println("Tên sách: " + getTitle() + ", Tác giả: " + getAuthor() +
                 ", Thể loại: " + genre + ", Số sách còn lại: " + getQuantity());

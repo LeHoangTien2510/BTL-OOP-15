@@ -92,7 +92,7 @@ public class UserInterfaceController {
     @FXML
     private void handleBorrowingBookButton(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/library/borrowing_books.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/library/BorrowedBooks.fxml"));
             AnchorPane dashBoardView = fxmlLoader.load();
 
             UserView.getChildren().clear();
@@ -129,7 +129,7 @@ public class UserInterfaceController {
 
             UserView.getChildren().add(dashBoardView);
         } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện Dashboard.");
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện Search.");
             e.printStackTrace();
         }
     }
