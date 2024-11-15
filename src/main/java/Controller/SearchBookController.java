@@ -239,7 +239,7 @@ public class SearchBookController implements Initializable {
                 Book book = new Book();
                 book.setId(resultSet.getInt("book_id"));
                 book.setTitle(resultSet.getString("title"));
-                book.setAuthor("By" + " " + resultSet.getString("author"));
+                book.setAuthor(resultSet.getString("author"));
                 book.setGenre(resultSet.getString("genre"));
                 book.setImageSrc(resultSet.getString("imageSrc"));
                 book.setQuantity(resultSet.getInt("quantity"));

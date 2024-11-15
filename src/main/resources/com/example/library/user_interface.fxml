@@ -21,7 +21,7 @@
                         <Image url="@../../../image/UserInterfaceImage/LibraryIcon.png" />
                      </image>
                   </ImageView>
-                  <Label prefHeight="81.0" prefWidth="178.0" text="LIBRARY">
+                  <Label prefHeight="64.0" prefWidth="185.0" text="LIBRARY">
                      <font>
                         <Font name="System Bold" size="34.0" />
                      </font>
@@ -106,9 +106,9 @@
             </VBox>
          </children>
       </VBox>
-      <HBox layoutX="228.0" prefHeight="32.0" prefWidth="1052.0" style="-fx-background-color: #FFFFFF;" styleClass="white-background" stylesheets="@../../../CssFile/AdminInterface.css">
+      <HBox layoutX="236.0" prefHeight="50.0" prefWidth="1044.0" style="-fx-background-color: #EEEEEE;" styleClass="white-background" stylesheets="@../../../CssFile/AdminInterface.css">
          <children>
-            <HBox alignment="CENTER" prefHeight="46.0" prefWidth="666.0" />
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="620.0" />
             <HBox alignment="CENTER" prefHeight="83.0" prefWidth="385.0">
                <children>
                   <ImageView fitHeight="57.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">

@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9eeca3af-7e77-4e4e-8358-e82ba07f1464" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a1dd8170-7cbe-4036-8465-eab9115602b3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a1dd8170-7cbe-4036-8465-eab9115602b3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library.db" beforeDir="false" afterPath="$PROJECT_DIR$/Library.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/BookCardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/BookCardController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Borrowing_BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Borrowing_BookController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/SearchBookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/SearchBookController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/library/BorrowedBooks.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/library/BorrowedBooks.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/library/user_interface.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/library/user_interface.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +53,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;F:/OOP OASIS/BTL-OOP-15/src/main/resources/image/UserInterfaceImage&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/OOP OASIS/BTL-OOP-15/src/main/resources/image&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -66,8 +73,8 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\OOP OASIS\BTL-OOP-15\src\main\resources\image\UserInterfaceImage" />
       <recent name="F:\OOP OASIS\BTL-OOP-15\src\main\resources\image" />
+      <recent name="F:\OOP OASIS\BTL-OOP-15\src\main\resources\image\UserInterfaceImage" />
     </key>
   </component>
   <component name="RunManager" selected="Application.RunLogin">
@@ -129,7 +136,21 @@
       <workItem from="1730859111896" duration="6406000" />
       <workItem from="1730880695567" duration="6919000" />
       <workItem from="1730905540358" duration="15097000" />
-      <workItem from="1730937949992" duration="666000" />
+      <workItem from="1730937949992" duration="21141000" />
+      <workItem from="1731007725563" duration="96000" />
+      <workItem from="1731037946293" duration="17000" />
+      <workItem from="1731042101154" duration="1254000" />
+      <workItem from="1731044837648" duration="100000" />
+      <workItem from="1731044945610" duration="2873000" />
+      <workItem from="1731177675753" duration="173000" />
+      <workItem from="1731331653258" duration="2798000" />
+      <workItem from="1731377386196" duration="698000" />
+      <workItem from="1731379710370" duration="1211000" />
+      <workItem from="1731431093321" duration="15000" />
+      <workItem from="1731593116054" duration="17400000" />
+      <workItem from="1731613739933" duration="1798000" />
+      <workItem from="1731642784003" duration="21000" />
+      <workItem from="1731647725923" duration="7867000" />
     </task>
     <servers />
   </component>
@@ -146,17 +167,6 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Objects/RunLogin.java</url>
-          <line>25</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

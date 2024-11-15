@@ -39,11 +39,11 @@
                         </ImageView>
                      </children>
                   </VBox>
-                  <VBox prefHeight="189.0" prefWidth="361.0" spacing="10.0">
+                  <VBox prefHeight="189.0" prefWidth="347.0" spacing="10.0">
                      <children>
                         <HBox prefHeight="26.0" prefWidth="275.0">
                            <children>
-                              <Label prefHeight="26.0" prefWidth="90.0" text="Title:">
+                              <Label prefHeight="26.0" prefWidth="120.0" text="Title:">
                                  <font>
                                     <Font name="System Bold" size="16.0" />
                                  </font>
@@ -57,7 +57,7 @@
                         </HBox>
                         <HBox prefHeight="26.0" prefWidth="275.0">
                            <children>
-                              <Label prefHeight="26.0" prefWidth="90.0" text="Author: ">
+                              <Label prefHeight="26.0" prefWidth="120.0" text="Author: ">
                                  <font>
                                     <Font name="System Bold" size="16.0" />
                                  </font>
@@ -71,7 +71,7 @@
                         </HBox>
                         <HBox prefHeight="26.0" prefWidth="275.0">
                            <children>
-                              <Label prefHeight="26.0" prefWidth="90.0" text="Genre:">
+                              <Label prefHeight="26.0" prefWidth="120.0" text="Genre:">
                                  <font>
                                     <Font name="System Bold" size="16.0" />
                                  </font>
@@ -88,7 +88,7 @@
                         <Insets />
                      </HBox.margin>
                      <padding>
-                        <Insets left="20.0" top="20.0" />
+                        <Insets top="20.0" />
                      </padding>
                   </VBox>
                </children>

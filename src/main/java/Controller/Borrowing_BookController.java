@@ -102,7 +102,7 @@ public class Borrowing_BookController implements Initializable {
             while (resultSet.next()) {
                 Book book = new Book();
                 book.setTitle(resultSet.getString("title"));
-                book.setAuthor("By" + " " + resultSet.getString("author"));
+                book.setAuthor(resultSet.getString("author"));
                 book.setGenre(resultSet.getString("genre"));
                 book.setImageSrc(resultSet.getString("imageSrc"));
                 book.setBorrowedDate(resultSet.getString("borrowed_date"));

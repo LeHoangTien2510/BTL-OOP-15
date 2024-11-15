@@ -69,7 +69,7 @@ public class BookCardController {
         hbox.setStyle("-fx-background-color: " + colors[(int) (Math.random() * colors.length)]);
         findTitle = bookTitle.getText();
         id = book.getBookIdFromBookCard(findTitle);
-        findAuthor = author.getText();
+        findAuthor = author.getText().replace("By ", "").trim();
         findGenre = genre.getText();
         findImageSrc = imagePath;
     }
