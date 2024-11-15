@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER_LEFT" onMousePressed="#clickBook" prefHeight="90.0" prefWidth="957.0" spacing="15.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.BookCardVer3Controller">
+   <children>
+      <VBox alignment="CENTER" prefHeight="90.0" prefWidth="79.0">
+         <children>
+            <ImageView fx:id="bookImage" fitHeight="67.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../image/BookCard/JamesStewartCalculus7E.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
+      <Label fx:id="bookTitle" prefHeight="20.0" prefWidth="227.0" text="James Stewart Calculus 7E">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="bookAuthor" prefHeight="20.0" prefWidth="156.0" text="James Stewart">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="bookGenre" prefHeight="20.0" prefWidth="175.0" text="Mathematic TextBook">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="borrowedDate" prefHeight="20.0" prefWidth="96.0" text="14/11/2024">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Button fx:id="returnButton" mnemonicParsing="false" style="-fx-background-color: #61b4b8;" text="RETURN" textFill="WHITE">
+         <graphic>
+            <ImageView fitHeight="41.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../image/UserInterfaceImage/ReturnBook.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+   </children>
+   <padding>
+      <Insets left="20.0" right="20.0" />
+   </padding>
+</HBox>

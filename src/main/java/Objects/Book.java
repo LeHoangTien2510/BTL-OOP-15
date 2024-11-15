@@ -13,6 +13,7 @@ public class Book {
     private int quantity;
     private String ImageSrc;
     private int id;
+    private String borrowedDate;
 
     public Book() {
         this.title = "";
@@ -21,6 +22,7 @@ public class Book {
         this.quantity = 0;
         this.ImageSrc = "";
         this.id = 0;
+        this.borrowedDate = "";
     }
 
     public Book(String title, String author,String genre, int quantity) {
@@ -104,6 +106,10 @@ public class Book {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getBorrowedDate() { return borrowedDate; }
+
+    public void setBorrowedDate(String borrowedDate) { this.borrowedDate = borrowedDate; }
 
     public void printInfo() {
         System.out.println("Tên sách: " + getTitle() + ", Tác giả: " + getAuthor() +

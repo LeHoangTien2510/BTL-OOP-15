@@ -20,6 +20,8 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -73,29 +75,7 @@ public class SearchBookController implements Initializable {
             };
         }
 
-        int column = 0;
-        int row = 1;
-        for (Book book : allBooks) {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/library/BookCardVer2.fxml"));
-                VBox bookCardBox = fxmlLoader.load();
-
-                BookCardVer2Controller bookCardVer2Controller = fxmlLoader.getController();
-                bookCardVer2Controller.setData(book, myListener);
-
-                if (column == 3) {
-                    column = 0;
-                    row++;
-                }
-
-                bookContainer.add(bookCardBox, column++, row);
-                GridPane.setMargin(bookCardBox, new Insets(10, 10, 15, 10));
-
-            } catch (IOException e) {
-                showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải BookCard.");
-                e.printStackTrace();
-            }
-        }
+        displayBooks(allBooks);
     }
 
     public boolean isBookAlreadyBorrowed() throws SQLException {
@@ -129,7 +109,7 @@ public class SearchBookController implements Initializable {
             showAlert(Alert.AlertType.INFORMATION, "Error" , "Not enough books in library");
         }
         else {
-            String insertQuery = "INSERT INTO borrowed_books(user_id, book_id, title, author, genre, imageSrc) VALUES(?, ?, ?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO borrowed_books(user_id, book_id, title, author, genre, imageSrc, borrowed_date) VALUES(?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = conn.prepareStatement(insertQuery)) {
                 // Gán giá trị cho các tham số
                 preparedStatement.setInt(1, currentUser.getIdFromDb());
@@ -138,6 +118,11 @@ public class SearchBookController implements Initializable {
                 preparedStatement.setString(4, findAuthor);
                 preparedStatement.setString(5, findGenre);
                 preparedStatement.setString(6, findImageSrc);
+
+                LocalDate now = LocalDate.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String formattedDate = now.format(formatter);
+                preparedStatement.setString(7, formattedDate);
                 // Thực hiện câu lệnh SQL
                 int result = preparedStatement.executeUpdate();
                 if (result > 0) {
