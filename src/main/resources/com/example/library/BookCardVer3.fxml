@@ -40,7 +40,7 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Button fx:id="returnButton" mnemonicParsing="false" style="-fx-background-color: #61b4b8;" text="RETURN" textFill="WHITE">
+      <Button fx:id="returnButton" mnemonicParsing="false" onAction="#handleReturnButton" style="-fx-background-color: #61b4b8;" text="RETURN" textFill="WHITE">
          <graphic>
             <ImageView fitHeight="41.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
                <image>
