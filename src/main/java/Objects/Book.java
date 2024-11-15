@@ -48,6 +48,15 @@ public class Book {
         this.quantity = quantity;
     }
 
+    public Book(int id, String title, String author, String genre, int quantity, String imgSrc) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.quantity = quantity;
+        this.ImageSrc = imgSrc;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
