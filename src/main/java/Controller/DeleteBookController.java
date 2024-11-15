@@ -29,6 +29,8 @@ public class DeleteBookController {
     private TableColumn<Book, String> genreColumn;
     @FXML
     private TableColumn<Book, Integer> quantityColumn;
+    @FXML
+    private TableColumn<Book, String> imageSrc;
 
     @FXML
     private TableColumn<Book, Void> deleteColumn;
@@ -45,6 +47,7 @@ public class DeleteBookController {
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
         genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        imageSrc.setCellValueFactory(new PropertyValueFactory<>("imageSrc"));
         addDeleteButtonToTable();
         addEditQuantityButtonToTable();
         loadBookData();
@@ -192,9 +195,10 @@ public class DeleteBookController {
                 String author = rs.getString("author");
                 String genre = rs.getString("genre");
                 int quantity = rs.getInt("quantity");
+                String imgSrc = rs.getString("imageSrc");
                 
                 // Thêm sách vào danh sách
-                bookList.add(new Book(id,title, author, genre, quantity));
+                bookList.add(new Book(id,title, author, genre, quantity,imgSrc));
             }
 
             // Đặt danh sách sách vào bảng

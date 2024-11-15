@@ -155,7 +155,6 @@ public class BookCardController {
             } catch (SQLException e) {
                 e.printStackTrace();
                 System.out.println("Failed to add record.");
-
             }
         }
     }
