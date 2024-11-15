@@ -80,6 +80,7 @@ public class Borrowing_BookController implements Initializable {
 
                 BookCardVer3Controller bookCardVer3Controller = fxmlLoader.getController();
                 bookCardVer3Controller.setData(book, myListener);
+                bookCardVer3Controller.setBorrowingBookController(this);
 
                 bookContainer.getChildren().add(bookCardBox);
 
@@ -90,11 +91,16 @@ public class Borrowing_BookController implements Initializable {
         }
     }
 
+    public void refreshBookList() {
+        borrowingBook = getBorrowingBook();
+        displayBooks(borrowingBook);
+    }
+
     public List<Book> getBorrowingBook() {
         List<Book> bookList = new ArrayList<>();
         int id = currentUser.getIdFromDb();
         try (Connection connection = SqliteConnection.Connector()) {
-            String query = "SELECT title, author, genre, imageSrc, borrowed_date FROM borrowed_books WHERE user_id = ?";
+            String query = "SELECT title, author, genre, imageSrc, borrowed_date FROM borrowed_books WHERE user_id = ? ORDER BY borrowed_date DESC";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
@@ -131,4 +137,6 @@ public class Borrowing_BookController implements Initializable {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+
 }

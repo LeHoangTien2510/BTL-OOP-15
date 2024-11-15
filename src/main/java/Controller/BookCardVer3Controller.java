@@ -38,6 +38,13 @@ public class BookCardVer3Controller {
     User currentUser = Login.getCurrentUser();
     String findTitle;
     int id;
+
+    private Borrowing_BookController borrowingBookController;
+
+    public void setBorrowingBookController(Borrowing_BookController borrowingBookController) {
+        this.borrowingBookController = borrowingBookController;
+    }
+
     @FXML
     private void clickBook(Event event) {
         myListener.onClickListener(book);
@@ -69,6 +76,9 @@ public class BookCardVer3Controller {
             int result = preparedStatement.executeUpdate();
             if (result > 0) {
                 showAlert(Alert.AlertType.INFORMATION, "Return Book", "Return " + findTitle + " Successfully");
+                if (borrowingBookController != null) {
+                    borrowingBookController.refreshBookList();
+                }
             } else {
                 showAlert(Alert.AlertType.ERROR, "Return failed", "Return" + findTitle + " Failed");
             }
