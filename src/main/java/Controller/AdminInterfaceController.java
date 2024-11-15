@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -17,6 +18,8 @@ import java.util.Optional;
 
 public class AdminInterfaceController {
 
+    @FXML
+    private AnchorPane AdminView;
     @FXML
     Label addBook;
     @FXML
@@ -83,7 +86,7 @@ public class AdminInterfaceController {
             Scene scene = new Scene(loader.load());
             Stage newStage = new Stage();
             newStage.setScene(scene);
-            newStage.setTitle("Delete Book");
+            newStage.setTitle("Manage Book");
             newStage.initModality(Modality.APPLICATION_MODAL); // Đặt chế độ để chặn tương tác với cửa sổ chính
             newStage.centerOnScreen();
             newStage.show();
@@ -110,4 +113,18 @@ public class AdminInterfaceController {
         }
     }
 
+    @FXML
+    private void handleFullBookButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/library/DashBoard.fxml"));
+            AnchorPane dashBoardView = fxmlLoader.load();
+
+            AdminView.getChildren().clear();
+
+            AdminView.getChildren().add(dashBoardView);
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện Dashboard.");
+            e.printStackTrace();
+        }
+    }
 }
