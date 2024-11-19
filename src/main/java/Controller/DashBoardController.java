@@ -70,6 +70,8 @@ public class DashBoardController implements Initializable {
         } catch (IOException exception) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải sách.");
             exception.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

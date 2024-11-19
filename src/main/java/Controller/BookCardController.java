@@ -55,20 +55,21 @@ public class BookCardController {
     String findGenre;
     String findImageSrc;
 
-    public void setData(Book book) {
+    public void setData(Book book) throws SQLException {
         this.book = book;
         String imagePath = book.getImageSrc();
         Image image = new Image(getClass().getResourceAsStream(imagePath));
         bookImage.setImage(image);
 
         bookTitle.setText(book.getTitle());
-        author.setText(book.getAuthor());
-        genre.setText(book.getGenre());
-        quantity.setText(String.valueOf(book.getQuantity()) + " " + "remaining");
-
-        hbox.setStyle("-fx-background-color: " + colors[(int) (Math.random() * colors.length)]);
         findTitle = bookTitle.getText();
         id = book.getBookIdFromBookCard(findTitle);
+        int count = BookCount(id);
+        author.setText(book.getAuthor());
+        genre.setText(book.getGenre());
+        quantity.setText(String.valueOf(book.getQuantity() - count) + " " + "remaining");
+
+        hbox.setStyle("-fx-background-color: " + colors[(int) (Math.random() * colors.length)]);
         findAuthor = author.getText().replace("By ", "").trim();
         findGenre = genre.getText();
         findImageSrc = imagePath;
@@ -87,6 +88,20 @@ public class BookCardController {
             }
         }
         return false;
+    }
+
+    public int BookCount(int id) throws SQLException {
+        String query = "SELECT COUNT(*) FROM borrowed_books WHERE book_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count ;
+            }
+        }
+        return 0;
     }
 
     public boolean notEnoughBooks() throws SQLException {
