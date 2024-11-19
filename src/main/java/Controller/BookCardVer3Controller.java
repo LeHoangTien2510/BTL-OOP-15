@@ -12,6 +12,8 @@ import javafx.scene.image.ImageView;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class BookCardVer3Controller {
     @FXML
@@ -67,6 +69,33 @@ public class BookCardVer3Controller {
 
     @FXML
     private void handleReturnButton(Event event) throws SQLException {
+
+        String updateQuery = "UPDATE history SET return_date = ?, status = ? WHERE user_id = ? AND book_id = ? AND status = 'borrowed'";
+        try (PreparedStatement preparedStatement = conn.prepareStatement(updateQuery)) {
+            // Lấy ngày hiện tại
+            LocalDate now = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String formattedDate = now.format(formatter);
+
+            // Gán giá trị cho các tham số
+            preparedStatement.setString(1, formattedDate);
+            preparedStatement.setString(2, "returned");
+            preparedStatement.setInt(3, currentUser.getIdFromDb());
+            preparedStatement.setInt(4, id);
+
+            // Thực hiện câu lệnh SQL
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                System.out.println("Cập nhật thành công ngày trả sách!");
+            } else {
+                System.out.println("Không tìm thấy bản ghi để cập nhật.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Failed to update return date.");
+        }
+
         String deleteBorrowedBooksQuery = "DELETE FROM borrowed_books WHERE user_id = ? AND book_id = ?";
         try (PreparedStatement preparedStatement = conn.prepareStatement(deleteBorrowedBooksQuery)) {
             // Gán giá trị cho các tham số

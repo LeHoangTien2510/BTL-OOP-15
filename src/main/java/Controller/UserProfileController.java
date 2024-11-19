@@ -1,7 +1,9 @@
 package Controller;
 
 import Objects.Book;
+import Objects.Login;
 import Objects.SqliteConnection;
+import Objects.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,10 +13,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class UserProfileController {
 
@@ -31,7 +30,8 @@ public class UserProfileController {
     @FXML
     private TableColumn<Book, String> returnDate;
     private ObservableList<Book> bookList = FXCollections.observableArrayList();
-
+    User currentUser = Login.getCurrentUser();
+    Connection conn = SqliteConnection.Connector();
 
     public void initialize() {
         // Thiết lập các cột
@@ -45,21 +45,23 @@ public class UserProfileController {
     }
 
     private void loadBookData() {
-        String query = "SELECT * FROM history";
-        try (Connection conn = SqliteConnection.Connector();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+        String query = "SELECT title, author, genre, borrow_date, return_date FROM history WHERE user_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, currentUser.getIdFromDb());
+
+            ResultSet rs = stmt.executeQuery();
+
             while (rs.next()) {
                 String title = rs.getString("title");
                 String author = rs.getString("author");
                 String genre = rs.getString("genre");
+                String borrowedDate = rs.getString("borrow_date");
+                String returnedDate = rs.getString("return_date");
+
                 // Thêm sách vào danh sách
-                bookList.add(new Book(title,author,genre));
+                bookList.add(new Book(title, author, genre, borrowedDate, returnedDate));
             }
-
-            // Đặt danh sách sách vào bảng
             bookTable.setItems(bookList);
-
         } catch (Exception e) {
             e.printStackTrace();
         }

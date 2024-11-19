@@ -14,6 +14,7 @@ public class Book {
     private String ImageSrc;
     private int id;
     private String borrowedDate;
+    private String returnDate;
 
     public Book() {
         this.title = "";
@@ -24,6 +25,15 @@ public class Book {
         this.id = 0;
         this.borrowedDate = "";
     }
+
+    public Book(String title, String autor, String genre, String borrowedDate, String returnDate) {
+        this.title = title;
+        this.author = autor;
+        this.genre = genre;
+        this.borrowedDate = borrowedDate;
+        this.returnDate = returnDate;
+    }
+
 
     public Book(String title, String author,String genre, int quantity) {
         this.title = title;

@@ -146,6 +146,29 @@ public class BookCardController {
             showAlert(Alert.AlertType.INFORMATION, "Error" , "Not enough books in library");
         }
         else {
+            String historyQuery = "INSERT INTO history(user_id, book_id, title, author, genre, borrow_date, return_date,status) VALUES(?, ?, ?, ?, ?, ?, ?,?)";
+            try (PreparedStatement preparedStatement = conn.prepareStatement(historyQuery)) {
+                // Gán giá trị cho các tham số
+                preparedStatement.setInt(1, currentUser.getIdFromDb());
+                preparedStatement.setInt(2, id);
+                preparedStatement.setString(3, findTitle);
+                preparedStatement.setString(4, findAuthor);
+                preparedStatement.setString(5, findGenre);
+
+                LocalDate now = LocalDate.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String formattedDate = now.format(formatter);
+                preparedStatement.setString(6, formattedDate);
+                preparedStatement.setString(7, null);
+                preparedStatement.setString(8, "borrowed");
+                // Thực hiện câu lệnh SQL
+                int result1 = preparedStatement.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("Failed to add record.");
+            }
+
             String insertQuery = "INSERT INTO borrowed_books(user_id, book_id, title, author, genre, imageSrc, borrowed_date) VALUES(?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = conn.prepareStatement(insertQuery)) {
                 // Gán giá trị cho các tham số
