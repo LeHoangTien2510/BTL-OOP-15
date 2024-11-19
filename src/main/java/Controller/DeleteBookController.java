@@ -2,9 +2,11 @@ package Controller;
 
 import Objects.Book;
 import Objects.SqliteConnection;
+import Objects.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.sql.Connection;
@@ -48,9 +50,11 @@ public class DeleteBookController {
         genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         imageSrc.setCellValueFactory(new PropertyValueFactory<>("imageSrc"));
+        bookTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         addDeleteButtonToTable();
         addEditQuantityButtonToTable();
         loadBookData();
+        alignColumnsCenter();
     }
 
     private void addDeleteButtonToTable() {
@@ -83,6 +87,28 @@ public class DeleteBookController {
         };
 
         deleteColumn.setCellFactory(cellFactory);
+    }
+
+    private void alignColumnsCenter() {
+        // Xác định các cột cần căn giữa
+        TableColumn<User, Object>[] columnsToCenter = new TableColumn[]{idColumn,titleColumn, authorColumn, genreColumn, quantityColumn, imageSrc};
+
+        for (TableColumn<User, Object> column : columnsToCenter) {
+            column.setCellFactory(col -> {
+                return new TableCell<User, Object>() {
+                    @Override
+                    protected void updateItem(Object item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || item == null) {
+                            setText(null); // Không hiển thị nội dung nếu ô trống
+                        } else {
+                            setText(item.toString()); // Hiển thị nội dung của cột
+                        }
+                        setAlignment(Pos.CENTER); // Căn giữa nội dung
+                    }
+                };
+            });
+        }
     }
 
     private void addEditQuantityButtonToTable() {
