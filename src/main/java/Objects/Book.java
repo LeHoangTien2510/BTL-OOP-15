@@ -57,6 +57,12 @@ public class Book {
         this.ImageSrc = imgSrc;
     }
 
+    public Book(String title, String author, String genre) {
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

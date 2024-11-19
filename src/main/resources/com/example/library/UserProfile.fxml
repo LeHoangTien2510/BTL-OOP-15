@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="660.0" prefWidth="1051.0" style="-fx-background-color: #EEEEEE;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UserProfileController">
+<AnchorPane prefHeight="660.0" prefWidth="1051.0" style="-fx-background-color: #EEEEEE;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UserProfileController">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="52.0" layoutY="51.0" prefHeight="367.0" prefWidth="384.0" spacing="20.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 40;">
          <children>
@@ -70,13 +70,13 @@
             <HBox prefHeight="35.0" prefWidth="245.0" />
          </children>
       </VBox>
-      <TableView layoutX="471.0" layoutY="18.0" prefHeight="607.0" prefWidth="555.0">
+      <TableView fx:id="bookTable" layoutX="471.0" layoutY="18.0" prefHeight="607.0" prefWidth="555.0">
         <columns>
-          <TableColumn fx:id="bookTitle" prefWidth="238.6666259765625" text="Title" />
-          <TableColumn fx:id="bookAuthor" minWidth="7.9998779296875" prefWidth="57.3333740234375" text="Author" />
-            <TableColumn fx:id="bookGenre" prefWidth="58.933349609375" text="Genre" />
-            <TableColumn fx:id="borrowDate" prefWidth="97.59991455078125" text="Borrow Date" />
-            <TableColumn fx:id="returnDate" prefWidth="105.86663818359375" text="Return Date" />
+          <TableColumn fx:id="titleColumn" prefWidth="238.6666259765625" text="Title" />
+          <TableColumn fx:id="authorColumn" minWidth="7.9998779296875" prefWidth="57.3333740234375" text="Author" />
+            <TableColumn fx:id="genreColumn" prefWidth="58.933349609375" text="Genre" />
+            <TableColumn fx:id="borrowDate" minWidth="0.0" prefWidth="71.3333740234375" text="Borrow Date" />
+            <TableColumn fx:id="returnDate" prefWidth="125.99995930989587" text="Return Date" />
         </columns>
       </TableView>
    </children>
