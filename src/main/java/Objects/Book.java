@@ -136,6 +136,9 @@ public class Book {
 
     public void setBorrowedDate(String borrowedDate) { this.borrowedDate = borrowedDate; }
 
+    public String getReturnDate() { return returnDate; }
+    public void setReturnDate(String returnDate) { this.returnDate = returnDate; }
+
     public void printInfo() {
         System.out.println("Tên sách: " + getTitle() + ", Tác giả: " + getAuthor() +
                 ", Thể loại: " + genre + ", Số sách còn lại: " + getQuantity());

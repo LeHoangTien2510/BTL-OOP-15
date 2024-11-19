@@ -39,7 +39,7 @@ public class UserProfileController {
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
         genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
         borrowDate.setCellValueFactory(new PropertyValueFactory<>("BorrowedDate"));
-        returnDate.setCellValueFactory(new PropertyValueFactory<>("ReturnedDate"));
+        returnDate.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
         bookTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         loadBookData();
     }
