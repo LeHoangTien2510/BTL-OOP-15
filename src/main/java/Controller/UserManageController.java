@@ -9,10 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Optional;
 
 public class UserManageController {
@@ -30,6 +27,8 @@ public class UserManageController {
     private TableColumn<User, String> userTypeColumn;
     @FXML
     private TableColumn<User, Void> deleteColumn;
+    @FXML
+    private TableColumn<User, Void> editColumn;
 
     private ObservableList<User> userList = FXCollections.observableArrayList();
 
@@ -43,6 +42,7 @@ public class UserManageController {
         userTypeColumn.setCellValueFactory(new PropertyValueFactory<>("userType"));
         userTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         addDeleteButtonToTable();
+        addEditButtonToTable();
         alignColumnsCenter();
         loadUserData();
     }
@@ -90,6 +90,34 @@ public class UserManageController {
                     setGraphic(null);
                 } else {
                     setGraphic(deleteButton);
+                }
+            }
+        });
+    }
+
+    private void addEditButtonToTable() {
+        editColumn.setCellFactory(param -> new TableCell<>() {
+            private final Button editButton = new Button("Edit Password");
+
+            {
+                editButton.setOnAction(event -> {
+                    User user = getTableView().getItems().get(getIndex());
+                    try {
+                        editPassword(user);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                editButton.setStyle("-fx-background-color: #ff4d4d; -fx-text-fill: white; -fx-font-size: 12px;");
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(editButton);
                 }
             }
         });
@@ -155,6 +183,37 @@ public class UserManageController {
             }
         } else {
             showAlert(Alert.AlertType.INFORMATION, "Hủy bỏ", "Người dùng không bị xóa.");
+        }
+    }
+
+    private void editPassword(User user) throws SQLException {
+        TextInputDialog dialog = new TextInputDialog(String.valueOf(user.getPassword()));
+        dialog.setTitle("Đổi mật khẩu");
+        dialog.setHeaderText("Đổi mật khẩu");
+        dialog.setContentText("Nhập mật khẩu mới:");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            try {
+                String newPassword = result.get();
+                if (newPassword == "") {
+                    showAlert(Alert.AlertType.WARNING, "Lỗi", "Phải điền mật khẩu");
+                    return;
+                }
+                String query = "UPDATE user SET password = ? WHERE id = ?";
+                try (Connection conn = SqliteConnection.Connector();
+                     PreparedStatement pstmt = conn.prepareStatement(query)) {
+                    pstmt.setString(1, newPassword);
+                    pstmt.setInt(2, user.getIdFromDb());
+                    pstmt.executeUpdate();
+                }
+                user.setPassword(newPassword);
+                userTable.refresh();
+                showAlert(Alert.AlertType.INFORMATION, "Password updated", "Password updated");
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

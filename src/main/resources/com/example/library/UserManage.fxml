@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="450.0" prefWidth="650.0" style="-fx-background-color: #f4f2ec;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UserManageController">
+<AnchorPane prefHeight="453.0" prefWidth="723.0" style="-fx-background-color: #f4f2ec;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UserManageController">
     <children>
         <!-- Tiêu đề -->
         <Label layoutX="20.0" layoutY="10.0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333333;" text="Quản Lý Người Dùng" />
@@ -21,11 +21,12 @@
             <!-- Cột -->
             <columns>
                 <TableColumn fx:id="idColumn" prefWidth="84.0" text="ID" />
-                <TableColumn fx:id="nameColumn" prefWidth="177.33331298828125" text="Name" />
-                <TableColumn fx:id="usernameColumn" prefWidth="73.3333740234375" text="Username" />
-                <TableColumn fx:id="passwordColumn" prefWidth="131.33331298828125" text="Password" />
-                <TableColumn fx:id="userTypeColumn" prefWidth="78.0" text="User Type" />
-                <TableColumn fx:id="deleteColumn" prefWidth="76.0" text="Delete" />
+                <TableColumn fx:id="nameColumn" prefWidth="165.33331298828125" text="Name" />
+                <TableColumn fx:id="usernameColumn" prefWidth="102.6666259765625" text="Username" />
+                <TableColumn fx:id="passwordColumn" prefWidth="102.666748046875" text="Password" />
+                <TableColumn fx:id="userTypeColumn" prefWidth="90.6666259765625" text="User Type" />
+                <TableColumn fx:id="deleteColumn" prefWidth="63.333251953125" text="Delete" />
+            <TableColumn fx:id="editColumn" prefWidth="84.0001220703125" text="Edit Password" />
             </columns>
         </TableView>
     </children>
