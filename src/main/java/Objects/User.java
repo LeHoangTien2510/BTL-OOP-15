@@ -1,5 +1,7 @@
 package Objects;
 
+import org.sqlite.SQLiteConnection;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -50,7 +52,7 @@ public class User {
     public int getIdFromDb(){
         String query = "SELECT id FROM user WHERE username = ?";
         int userId = -1;
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:Library.db");
+        try (Connection conn = SqliteConnection.Connector();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, username);
