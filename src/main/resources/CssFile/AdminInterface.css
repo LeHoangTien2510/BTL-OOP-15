@@ -11,5 +11,9 @@
 }
 
 .mouse-moved:hover {
-    -fx-background-color: #43616D;
+    -fx-background-color: #FFFFFF;
+}
+
+.custom-button:hover {
+    -fx-background-color: #FFD700;
 }

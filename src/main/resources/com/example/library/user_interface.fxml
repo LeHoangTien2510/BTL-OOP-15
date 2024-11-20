@@ -10,85 +10,84 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #EEEEEE;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UserInterfaceController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #EEEEEE;" styleClass="radius" stylesheets="@../../../CssFile/UserInterface.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UserInterfaceController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="-1.0" layoutY="2.0" prefHeight="718.0" prefWidth="233.0" spacing="10.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0;">
+      <VBox alignment="TOP_CENTER" layoutX="-1.0" layoutY="-1.0" prefHeight="721.0" prefWidth="234.0" spacing="10.0" style="-fx-background-color: #0e3746; -fx-background-radius: 0;">
          <children>
-            <HBox prefHeight="68.0" prefWidth="274.0">
+            <HBox alignment="CENTER" prefHeight="77.0" prefWidth="234.0">
                <children>
-                  <ImageView fitHeight="64.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="47.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../image/UserInterfaceImage/LibraryIcon.png" />
                      </image>
                   </ImageView>
-                  <Label prefHeight="64.0" prefWidth="185.0" text="LIBRARY">
-                     <font>
-                        <Font name="System Bold" size="34.0" />
-                     </font>
-                  </Label>
+                  <Label alignment="CENTER" prefHeight="39.0" prefWidth="142.0" style="-fx-font-size: 28px; -fx-font-weight: bold;" text="LIBRARY" textFill="#f4f2ec" />
                </children>
             </HBox>
             <VBox alignment="CENTER" prefHeight="466.0" prefWidth="234.0" spacing="20.0">
                <children>
-                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="193.0">
-                     <children>
-                        <Button fx:id="DashBoardButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleDashBoardButtonAction" prefHeight="38.0" prefWidth="163.0" style="-fx-background-color: #8474A1;" styleClass="mouse-moved" stylesheets="@../../../CssFile/UserInterface.css" text="DASHBOARD" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="29.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../image/UserInterfaceImage/DashBoardIcon.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="193.0">
-                     <children>
-                        <Button fx:id="searchButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleSearchBookButtonAction" prefHeight="38.0" prefWidth="163.0" style="-fx-background-color: #8474A1;" text="SEARCH" textFill="WHITE">
-                           <graphic>
-                              <ImageView fitHeight="29.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../image/UserInterfaceImage/SearchIcon.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="193.0">
-                     <children>
-                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleBorrowingBookButton" prefHeight="38.0" prefWidth="162.0" style="-fx-background-color: #8474A1;" text="BORROWED BOOKS" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="29.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../image/UserInterfaceImage/BorrowBookIcon.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleUserProfileButtonAction" prefHeight="38.0" prefWidth="163.0" style="-fx-background-color: #8474A1;" text="PROFILE" textFill="WHITE">
+                  <Button fx:id="DashBoardButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleDashBoardButtonAction" prefHeight="38.0" prefWidth="250.0" style="-fx-background-color: #0e3746;" stylesheets="@../../../CssFile/UserInterface.css" text="DASHBOARD" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                      <graphic>
-                        <ImageView fitHeight="29.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="40.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../image/UserInterfaceImage/ProfileIcon2.png" />
+                              <Image url="@../../../image/UserInterfaceImage/dashboard.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </Button>
+                  <Button fx:id="searchButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleSearchBookButtonAction" prefHeight="38.0" prefWidth="250.0" style="-fx-background-color: #0e3746;" styleClass="mouse-moved" stylesheets="@../../../CssFile/UserInterface.css" text="SEARCH" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../image/UserInterfaceImage/search.png" />
                            </image>
                         </ImageView>
                      </graphic>
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </Button>
+                  <Button fx:id="borrowedBooksButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleBorrowingBookButton" prefHeight="38.0" prefWidth="250.0" style="-fx-background-color: #0e3746;" styleClass="mouse-moved" stylesheets="@../../../CssFile/UserInterface.css" text="BORROWED BOOKS" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../image/UserInterfaceImage/borrow.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </Button>
+                  <Button fx:id="profileButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleUserProfileButtonAction" prefHeight="38.0" prefWidth="250.0" style="-fx-background-color: #0e3746;" styleClass="mouse-moved" stylesheets="@../../../CssFile/UserInterface.css" text="PROFILE" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../image/UserInterfaceImage/profile.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
                   </Button>
                </children>
                <padding>
@@ -106,24 +105,25 @@
             </VBox>
          </children>
       </VBox>
-      <HBox layoutX="236.0" prefHeight="50.0" prefWidth="1044.0" style="-fx-background-color: #EEEEEE;" styleClass="white-background" stylesheets="@../../../CssFile/AdminInterface.css">
+      <HBox alignment="CENTER_RIGHT" layoutX="237.0" prefHeight="63.0" prefWidth="1043.0" style="-fx-background-color: #EEEEEE;" styleClass="white-background" stylesheets="@../../../CssFile/AdminInterface.css">
          <children>
-            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="620.0" />
-            <HBox alignment="CENTER" prefHeight="83.0" prefWidth="385.0">
-               <children>
+            <Button fx:id="UserProfileDisplayNameButton" mnemonicParsing="false" onAction="#handleUserProfileButtonAction" prefHeight="58.0" prefWidth="198.0" style="-fx-background-color: #EEEEEE;" text="Profile">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <graphic>
                   <ImageView fitHeight="57.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../image/UserInterfaceImage/UserIcon.png" />
+                        <Image url="@../../../image/UserInterfaceImage/user.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="UserProfileDisplayNameButton" mnemonicParsing="false" onAction="#handleUserProfileButtonAction" prefHeight="34.0" prefWidth="165.0" style="-fx-background-color: #FFFFF;" text="Profile">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font></Button>
-               </children>
-            </HBox>
+               </graphic>
+               <HBox.margin>
+                  <Insets bottom="5.0" />
+               </HBox.margin>
+            </Button>
          </children>
       </HBox>
-      <AnchorPane fx:id="UserView" layoutX="241.0" layoutY="52.0" prefHeight="660.0" prefWidth="1051.0" />
+      <AnchorPane fx:id="UserView" layoutX="241.0" layoutY="66.0" prefHeight="646.0" prefWidth="1051.0" />
    </children>
 </AnchorPane>

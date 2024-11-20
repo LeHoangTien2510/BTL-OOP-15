@@ -100,7 +100,7 @@ public class Borrowing_BookController implements Initializable {
         List<Book> bookList = new ArrayList<>();
         int id = currentUser.getIdFromDb();
         try (Connection connection = SqliteConnection.Connector()) {
-            String query = "SELECT title, author, genre, imageSrc, borrowed_date FROM borrowed_books WHERE user_id = ? ORDER BY borrowed_date DESC";
+            String query = "SELECT title, author, genre, imageSrc, borrowed_date FROM borrowed_books WHERE user_id = ? ORDER BY borrowed_date DESC;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);

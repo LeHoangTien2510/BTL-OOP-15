@@ -1,5 +1,6 @@
 .mouse-moved:hover {
-    -fx-background-color: #EEEEEE;
+    -fx-background-color: #1e4f5f;
+    -fx-text-fill: #FFFFFF;
 }
 
 .transparent {
@@ -7,5 +8,10 @@
 }
 
 .radius {
-    -fx-background-radius: 10;
+    -fx-background-radius: 40 40 40;
+}
+
+.button:hover {
+    -fx-background-color: #1e4f5f;
+
 }

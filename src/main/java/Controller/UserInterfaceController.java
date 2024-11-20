@@ -1,5 +1,6 @@
 package Controller;
 
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,14 +26,56 @@ public class UserInterfaceController {
     User currentUser = Login.getCurrentUser();
 
     @FXML
+    private Button DashBoardButton;
+
+    @FXML
+    private Button borrowedBooksButton;
+
+    @FXML
+    private Button handleLogOutButton;
+
+    @FXML
+    private Button profileButton;
+
+    @FXML
+    private Button searchButton;
+
+    @FXML
     private void initialize() {
         if (currentUser != null) {
             UserProfileDisplayNameButton.setText(currentUser.getName());
         }
-    }
 
-    @FXML
-    private Button searchButton;
+        DashBoardButton.styleProperty().bind(
+                Bindings.when(DashBoardButton.hoverProperty())
+                        .then("-fx-background-color: #1e4f5f; -fx-text-fill: #FFFFFF;") // Màu nền khi hover và màu chữ
+                        .otherwise("-fx-background-color: #0e3746; -fx-text-fill: #FFFFFF;") // Màu nền mặc định và màu chữ
+        );
+
+        searchButton.styleProperty().bind(
+                Bindings.when(searchButton.hoverProperty())
+                        .then("-fx-background-color: #1e4f5f; -fx-text-fill: #FFFFFF;") // Màu nền khi hover và màu chữ
+                        .otherwise("-fx-background-color: #0e3746; -fx-text-fill: #FFFFFF;") // Màu nền mặc định và màu chữ
+        );
+
+        searchButton.styleProperty().bind(
+                Bindings.when(searchButton.hoverProperty())
+                        .then("-fx-background-color: #1e4f5f; -fx-text-fill: #FFFFFF;") // Màu nền khi hover và màu chữ
+                        .otherwise("-fx-background-color: #0e3746; -fx-text-fill: #FFFFFF;") // Màu nền mặc định và màu chữ
+        );
+
+        borrowedBooksButton.styleProperty().bind(
+                Bindings.when(borrowedBooksButton.hoverProperty())
+                        .then("-fx-background-color: #1e4f5f; -fx-text-fill: #FFFFFF;") // Màu nền khi hover và màu chữ
+                        .otherwise("-fx-background-color: #0e3746; -fx-text-fill: #FFFFFF;") // Màu nền mặc định và màu chữ
+        );
+
+        profileButton.styleProperty().bind(
+                Bindings.when(profileButton.hoverProperty())
+                        .then("-fx-background-color: #1e4f5f; -fx-text-fill: #FFFFFF;") // Màu nền khi hover và màu chữ
+                        .otherwise("-fx-background-color: #0e3746; -fx-text-fill: #FFFFFF;") // Màu nền mặc định và màu chữ
+        );
+    }
 
     @FXML
     private void handleLogOutButtonAction(ActionEvent event) {

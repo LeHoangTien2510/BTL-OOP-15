@@ -1,5 +1,6 @@
 package Controller;
 
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,8 +21,42 @@ public class AdminInterfaceController {
 
     @FXML
     private AnchorPane AdminView;
+
     @FXML
     Label addBook;
+
+    @FXML
+    private Button addBookButton;
+
+    @FXML
+    private Button handleLogOutButton;
+
+    @FXML
+    private Button manageUserButton;
+
+    @FXML
+    private Button updateBookButton;
+
+    @FXML
+    private void initialize() {
+        addBookButton.styleProperty().bind(
+                Bindings.when(addBookButton.hoverProperty())
+                        .then("-fx-background-color: #1e4f5f; -fx-text-fill: #FFFFFF;")
+                        .otherwise("-fx-background-color: #0e3746; -fx-text-fill: #FFFFFF;")
+        );
+
+        updateBookButton.styleProperty().bind(
+                Bindings.when(updateBookButton.hoverProperty())
+                        .then("-fx-background-color: #1e4f5f; -fx-text-fill: #FFFFFF;")
+                        .otherwise("-fx-background-color: #0e3746; -fx-text-fill: #FFFFFF;")
+        );
+
+        manageUserButton.styleProperty().bind(
+                Bindings.when(manageUserButton.hoverProperty())
+                        .then("-fx-background-color: #1e4f5f; -fx-text-fill: #FFFFFF;")
+                        .otherwise("-fx-background-color: #0e3746; -fx-text-fill: #FFFFFF;")
+        );
+    }
     @FXML
     private void handleLogOutButtonAction(ActionEvent event) {
         try {
@@ -65,14 +100,12 @@ public class AdminInterfaceController {
     @FXML
     private void handleAddBookButtonAction(ActionEvent event){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/AddBook.fxml"));
-            Scene scene = new Scene(loader.load());
-            Stage newStage = new Stage();
-            newStage.setScene(scene);
-            newStage.setTitle("Add Book");
-            newStage.initModality(Modality.APPLICATION_MODAL); // Đặt chế độ để chặn tương tác với cửa sổ chính
-            newStage.centerOnScreen();
-            newStage.show();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/library/AddBook.fxml"));
+            AnchorPane dashBoardView = fxmlLoader.load();
+
+            AdminView.getChildren().clear();
+
+            AdminView.getChildren().add(dashBoardView);
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện.");
             e.printStackTrace();
@@ -82,14 +115,12 @@ public class AdminInterfaceController {
     @FXML
     private void handleDeleteBookButtonAction(ActionEvent event){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/DeleteBook.fxml"));
-            Scene scene = new Scene(loader.load());
-            Stage newStage = new Stage();
-            newStage.setScene(scene);
-            newStage.setTitle("Manage Book");
-            newStage.initModality(Modality.APPLICATION_MODAL); // Đặt chế độ để chặn tương tác với cửa sổ chính
-            newStage.centerOnScreen();
-            newStage.show();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/library/UpdateBook.fxml"));
+            AnchorPane dashBoardView = fxmlLoader.load();
+
+            AdminView.getChildren().clear();
+
+            AdminView.getChildren().add(dashBoardView);
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện.");
             e.printStackTrace();
@@ -99,14 +130,12 @@ public class AdminInterfaceController {
     @FXML
     private void handleUserManageButtonAction(ActionEvent event){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/UserManage.fxml"));
-            Scene scene = new Scene(loader.load());
-            Stage newStage = new Stage();
-            newStage.setScene(scene);
-            newStage.setTitle("Manage User");
-            newStage.initModality(Modality.APPLICATION_MODAL); // Đặt chế độ để chặn tương tác với cửa sổ chính
-            newStage.centerOnScreen();
-            newStage.show();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/library/UserManage.fxml"));
+            AnchorPane dashBoardView = fxmlLoader.load();
+
+            AdminView.getChildren().clear();
+
+            AdminView.getChildren().add(dashBoardView);
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện.");
             e.printStackTrace();

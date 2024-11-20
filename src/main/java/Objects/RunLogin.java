@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -17,6 +18,8 @@ public class RunLogin extends Application {
         scene = new Scene(root,705, 500);
         stage.setTitle("Thư viện");
         stage.setScene(scene);
+        Image image = new Image(getClass().getResource("/image/LibraryIcon2.png").toExternalForm());
+        stage.getIcons().add(image);
         stage.show();
     }
 
