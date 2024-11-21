@@ -1,14 +1,14 @@
 package Controller;
 
-import Objects.*;
+import Objects.Book;
+import Objects.MyListener;
+import Objects.SqliteConnection;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -19,14 +19,15 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class SearchBookController implements Initializable {
+public class BookListController implements Initializable {
     @FXML
     private TextField searchField;
 
@@ -46,21 +47,19 @@ public class SearchBookController implements Initializable {
     private Label bookGenre;
 
     @FXML
-    private Button borrowButton;
+    private Label bookQuantity;
 
     private List<Book> allBooks;
     private MyListener myListener;
     Image image;
 
-    Connection conn = SqliteConnection.Connector();
     private Book book;
-    User currentUser = Login.getCurrentUser();
-
     String findTitle;
     int id;
     String findAuthor;
     String findGenre;
     String findImageSrc;
+    String findQuantity;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -77,122 +76,6 @@ public class SearchBookController implements Initializable {
         }
 
         displayBooks(allBooks, 0, 1);
-    }
-
-    public boolean isBookAlreadyBorrowed() throws SQLException {
-        String query = "SELECT COUNT(*) FROM borrowed_books WHERE user_id = ? AND book_id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, currentUser.getIdFromDb());
-            stmt.setInt(2, id);
-
-            ResultSet resultSet = stmt.executeQuery();
-            if (resultSet.next()) {
-                int count = resultSet.getInt(1);
-                return count > 0;
-            }
-        }
-        return false;
-    }
-
-    @FXML
-    private void handleBorrowButtonAction(ActionEvent event) throws SQLException {
-        if (book != null) {
-            id = book.getId();
-            findTitle = book.getTitle();
-            findAuthor = book.getAuthor();
-            findGenre = book.getGenre();
-            findImageSrc = book.getImageSrc();
-        }
-        if(isBookAlreadyBorrowed()) {
-            showAlert(Alert.AlertType.INFORMATION, "Error" , "You have already borrowed this book");
-        }
-        else if (notEnoughBooks()) {
-            showAlert(Alert.AlertType.INFORMATION, "Error" , "Not enough books in library");
-        }
-        else {
-            String historyQuery = "INSERT INTO history(user_id, book_id, title, author, genre, borrow_date, return_date,status) VALUES(?, ?, ?, ?, ?, ?, ?,?)";
-            try (PreparedStatement preparedStatement = conn.prepareStatement(historyQuery)) {
-                // Gán giá trị cho các tham số
-                preparedStatement.setInt(1, currentUser.getIdFromDb());
-                preparedStatement.setInt(2, id);
-                preparedStatement.setString(3, findTitle);
-                preparedStatement.setString(4, findAuthor);
-                preparedStatement.setString(5, findGenre);
-
-                LocalDate now = LocalDate.now();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                String formattedDate = now.format(formatter);
-                preparedStatement.setString(6, formattedDate);
-                preparedStatement.setString(7, null);
-                preparedStatement.setString(8, "borrowed");
-                // Thực hiện câu lệnh SQL
-                int result1 = preparedStatement.executeUpdate();
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.out.println("Failed to add record.");
-            }
-
-            String insertQuery = "INSERT INTO borrowed_books(user_id, book_id, title, author, genre, imageSrc, borrowed_date) VALUES(?, ?, ?, ?, ?, ?, ?)";
-            try (PreparedStatement preparedStatement = conn.prepareStatement(insertQuery)) {
-                // Gán giá trị cho các tham số
-                preparedStatement.setInt(1, currentUser.getIdFromDb());
-                preparedStatement.setInt(2, id);
-                preparedStatement.setString(3, findTitle);
-                preparedStatement.setString(4, findAuthor);
-                preparedStatement.setString(5, findGenre);
-                preparedStatement.setString(6, findImageSrc);
-
-                LocalDate now = LocalDate.now();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                String formattedDate = now.format(formatter);
-                preparedStatement.setString(7, formattedDate);
-                // Thực hiện câu lệnh SQL
-                int result = preparedStatement.executeUpdate();
-                if (result > 0) {
-                    showAlert(Alert.AlertType.INFORMATION, "Borrowed Book", "Borrowed " + findTitle + " Successfully");
-                } else {
-                    showAlert(Alert.AlertType.ERROR, "Borrowed Book", "Lỗi, không mượn được sách");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.out.println("Failed to add record.");
-
-            }
-        }
-    }
-
-    public boolean notEnoughBooks() throws SQLException {
-        String query = "SELECT COUNT(*) FROM borrowed_books WHERE book_id = ?";
-        int count = 0;
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, id);
-
-            ResultSet resultSet = stmt.executeQuery();
-            if (resultSet.next()) {
-                count = resultSet.getInt(1);
-            }
-            if (count >= getBookQuantity()) {
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-    }
-
-    public int getBookQuantity() throws SQLException {
-        String query = "SELECT quantity FROM book WHERE book_id = ?";
-        int quantity = -1;
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, id);
-
-            ResultSet resultSet = stmt.executeQuery();
-            if (resultSet.next()) {
-                quantity = resultSet.getInt("quantity");
-            }
-        }
-        return quantity;
     }
 
     @FXML
@@ -289,6 +172,7 @@ public class SearchBookController implements Initializable {
         bookAuthor.setText(book.getAuthor());
         bookGenre.setText(book.getGenre());
         image = new Image(getClass().getResourceAsStream(book.getImageSrc()));
+        bookQuantity.setText(book.getQuantity() + "");
         bookImage.setImage(image);
 
         // Cập nhật id và các thuộc tính khác khi chọn sách
@@ -297,7 +181,6 @@ public class SearchBookController implements Initializable {
         findAuthor = book.getAuthor();
         findGenre = book.getGenre();
         findImageSrc = book.getImageSrc();
-        System.out.println("Selected Book ID: " + id); // Debug dòng này
+        findQuantity = book.getQuantity() + "";
     }
-    
 }

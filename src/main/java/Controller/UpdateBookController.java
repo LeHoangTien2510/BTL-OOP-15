@@ -18,7 +18,7 @@ import java.util.Optional;
 
 import javafx.util.Callback;
 
-public class DeleteBookController {
+public class UpdateBookController {
 
     @FXML
     private TableView<Book> bookTable;

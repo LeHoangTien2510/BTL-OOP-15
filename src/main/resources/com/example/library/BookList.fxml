@@ -15,36 +15,83 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="646.0" prefWidth="1051.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.library.BookList">
+<AnchorPane prefHeight="646.0" prefWidth="1051.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.BookListController">
    <children>
       <AnchorPane layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1051.0" style="-fx-background-color: #EEEEEE;">
          <children>
             <VBox alignment="TOP_CENTER" layoutX="646.0" layoutY="-1.0" prefHeight="662.0" prefWidth="405.0" style="-fx-background-color: #DFDFDF;">
                <children>
-                  <Label alignment="CENTER" prefHeight="91.0" prefWidth="406.0" text="SEARCH BOOK">
-                     <font>
-                        <Font name="System Bold" size="36.0" />
-                     </font>
-                  </Label>
-                  <HBox alignment="CENTER" prefHeight="79.0" prefWidth="343.0" />
-                  <VBox alignment="CENTER" prefHeight="427.0" prefWidth="326.0" style="-fx-background-color: #467495; -fx-background-radius: 40;">
+                  <HBox alignment="CENTER" prefHeight="111.0" prefWidth="406.0" />
+                  <VBox alignment="CENTER" prefHeight="513.0" prefWidth="346.0" style="-fx-background-color: #018786; -fx-background-radius: 40;">
                      <children>
                         <ImageView fx:id="bookImage" fitHeight="250.0" fitWidth="206.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../../image/BookCard/JamesStewartCalculus7E.jpg" />
                            </image>
                         </ImageView>
-                        <Label fx:id="bookTitle" alignment="CENTER" prefHeight="25.0" prefWidth="270.0" text="James Stewart Calculus 7E" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="16.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="bookAuthor" alignment="CENTER" prefHeight="18.0" prefWidth="115.0" text="By James Stewart" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="bookGenre" alignment="CENTER" prefHeight="8.0" prefWidth="116.0" text="Mathematic TextBook" textFill="WHITE" />
+                        <VBox alignment="CENTER_LEFT" prefHeight="145.0" prefWidth="346.0">
+                           <children>
+                              <HBox prefHeight="30.0" prefWidth="346.0">
+                                 <children>
+                                    <Label prefHeight="20.0" prefWidth="75.0" text="Title">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="bookTitle" prefHeight="26.0" prefWidth="221.0" text="James Stewart Calculus 7E" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="30.0" prefWidth="346.0">
+                                 <children>
+                                    <Label prefWidth="75.0" text="Author">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="bookAuthor" prefHeight="20.0" prefWidth="200.0" text="By James Stewart" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="30.0" prefWidth="346.0">
+                                 <children>
+                                    <Label prefHeight="20.0" prefWidth="75.0" text="Genre">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="bookGenre" prefHeight="20.0" prefWidth="214.0" text="Mathematic TextBook" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="30.0" prefWidth="346.0">
+                                 <children>
+                                    <Label prefHeight="20.0" prefWidth="75.0" text="Quantity">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="bookQuantity" prefHeight="20.0" prefWidth="150.0" text="10" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="40.0" />
+                           </VBox.margin>
+                        </VBox>
                      </children>
                      <VBox.margin>
                         <Insets left="30.0" right="30.0" />
@@ -61,6 +108,9 @@
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
                   <ScrollPane prefHeight="575.0" prefWidth="647.0" style="-fx-background-color: #EEEEEE;">
                      <content>

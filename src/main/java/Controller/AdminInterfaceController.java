@@ -39,6 +39,9 @@ public class AdminInterfaceController {
     private Button updateBookButton;
 
     @FXML
+    private Button bookListButton;
+
+    @FXML
     private MediaView media;
 
     @FXML
@@ -57,6 +60,12 @@ public class AdminInterfaceController {
 
         manageUserButton.styleProperty().bind(
                 Bindings.when(manageUserButton.hoverProperty())
+                        .then("-fx-background-color: #1e4f5f; -fx-text-fill: #FFFFFF;")
+                        .otherwise("-fx-background-color: #0e3746; -fx-text-fill: #FFFFFF;")
+        );
+
+        bookListButton.styleProperty().bind(
+                Bindings.when(bookListButton.hoverProperty())
                         .then("-fx-background-color: #1e4f5f; -fx-text-fill: #FFFFFF;")
                         .otherwise("-fx-background-color: #0e3746; -fx-text-fill: #FFFFFF;")
         );
@@ -149,12 +158,12 @@ public class AdminInterfaceController {
     @FXML
     private void handleFullBookButtonAction(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/library/DashBoard.fxml"));
-            AnchorPane dashBoardView = fxmlLoader.load();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/library/BookList.fxml"));
+            AnchorPane bookList = fxmlLoader.load();
 
             AdminView.getChildren().clear();
 
-            AdminView.getChildren().add(dashBoardView);
+            AdminView.getChildren().add(bookList);
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện Dashboard.");
             e.printStackTrace();
