@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #EEEEEE;" styleClass="radius" stylesheets="@../../../CssFile/UserInterface.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UserInterfaceController">
@@ -24,6 +25,11 @@
                   <Label alignment="CENTER" prefHeight="39.0" prefWidth="142.0" style="-fx-font-size: 28px; -fx-font-weight: bold;" text="LIBRARY" textFill="#f4f2ec" />
                </children>
             </HBox>
+            <VBox alignment="CENTER" prefHeight="145.0" prefWidth="181.0">
+               <children>
+                  <MediaView fx:id="media" fitHeight="150.0" fitWidth="150.0" />
+               </children>
+            </VBox>
             <VBox alignment="CENTER" prefHeight="466.0" prefWidth="234.0" spacing="20.0">
                <children>
                   <Button fx:id="DashBoardButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleDashBoardButtonAction" prefHeight="38.0" prefWidth="250.0" style="-fx-background-color: #0e3746;" stylesheets="@../../../CssFile/UserInterface.css" text="DASHBOARD" textFill="WHITE">
@@ -94,7 +100,7 @@
                   <Insets top="40.0" />
                </padding>
             </VBox>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+            <VBox alignment="CENTER" prefHeight="159.0" prefWidth="234.0">
                <children>
                   <Button fx:id="handleLogOutButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleLogOutButtonAction" style="-fx-background-color: #be2623;" text="LOG OUT" textFill="#f4f2ec">
                      <font>

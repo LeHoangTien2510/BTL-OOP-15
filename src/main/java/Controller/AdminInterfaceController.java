@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.MediaView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -36,6 +37,9 @@ public class AdminInterfaceController {
 
     @FXML
     private Button updateBookButton;
+
+    @FXML
+    private MediaView media;
 
     @FXML
     private void initialize() {

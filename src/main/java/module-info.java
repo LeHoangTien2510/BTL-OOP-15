@@ -11,6 +11,7 @@ module com.example.library {
     requires java.sql;
     requires org.xerial.sqlitejdbc;
     requires jdk.compiler;
+    requires javafx.media;
     opens com.example.library to javafx.fxml;
     exports Objects;
     opens Objects to javafx.fxml;

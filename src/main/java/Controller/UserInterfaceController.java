@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import Objects.User;
 import Objects.Login;
@@ -39,6 +40,9 @@ public class UserInterfaceController {
 
     @FXML
     private Button searchButton;
+
+    @FXML
+    private MediaView media;
 
     @FXML
     private void initialize() {
