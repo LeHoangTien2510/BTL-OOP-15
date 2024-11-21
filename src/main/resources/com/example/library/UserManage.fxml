@@ -5,17 +5,17 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="453.0" prefWidth="723.0" style="-fx-background-color: #f4f2ec;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UserManageController">
+<AnchorPane prefHeight="646.0" prefWidth="1051.0" style="-fx-background-color: #f4f2ec;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UserManageController">
     <children>
         <!-- Tiêu đề -->
-        <Label layoutX="20.0" layoutY="10.0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333333;" text="Quản Lý Người Dùng" />
+        <Label layoutX="20.0" layoutY="10.0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333333;" text="USER MANAGEMENT" />
 
         <!-- Bảng -->
-        <TableView fx:id="userTable" prefHeight="380.0" prefWidth="621.0" style="-fx-background-radius: 10; -fx-border-color: #d9d9d9; -fx-border-radius: 10; -fx-border-width: 1;">
+        <TableView fx:id="userTable" prefHeight="576.0" prefWidth="695.0" stylesheets="@../../../CssFile/AdminInterface.css">
             <!-- Neo bảng để co dãn toàn bộ màn hình -->
             <AnchorPane.topAnchor>50.0</AnchorPane.topAnchor>
             <AnchorPane.leftAnchor>20.0</AnchorPane.leftAnchor>
-            <AnchorPane.rightAnchor>9.0</AnchorPane.rightAnchor>
+            <AnchorPane.rightAnchor>336.0</AnchorPane.rightAnchor>
             <AnchorPane.bottomAnchor>20.0</AnchorPane.bottomAnchor>
 
             <!-- Cột -->

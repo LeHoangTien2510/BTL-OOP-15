@@ -6,6 +6,7 @@ import Objects.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -50,9 +51,17 @@ public class DeleteBookController {
         genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         imageSrc.setCellValueFactory(new PropertyValueFactory<>("imageSrc"));
-        bookTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        //bookTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        bookTable.setPadding(Insets.EMPTY);
+        bookTable.setStyle("-fx-padding: 0;");
+
+        bookTable.setColumnResizePolicy((param) -> {
+            return true;
+        });
+
         addDeleteButtonToTable();
         addEditQuantityButtonToTable();
+
         loadBookData();
         alignColumnsCenter();
     }
