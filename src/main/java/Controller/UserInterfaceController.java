@@ -95,7 +95,7 @@ public class UserInterfaceController {
 
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 // Tải giao diện đăng nhập
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/login.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/Login.fxml"));
                 Parent loginRoot = loader.load();
 
                 stage.setScene(new Scene(loginRoot));

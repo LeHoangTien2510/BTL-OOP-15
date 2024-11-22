@@ -14,9 +14,9 @@ public class RunLogin extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/com/example/library/login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/library/Login.fxml"));
         scene = new Scene(root,705, 500);
-        stage.setTitle("Thư viện");
+        stage.setTitle("Library");
         stage.setScene(scene);
         Image image = new Image(getClass().getResource("/image/LibraryIcon2.png").toExternalForm());
         stage.getIcons().add(image);

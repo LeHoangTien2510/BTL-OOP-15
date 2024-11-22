@@ -9,11 +9,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SignUpController">
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SignUpController">
    <children>
       <AnchorPane prefHeight="500.0" prefWidth="705.0" style="-fx-background-color: #fff;">
          <children>
-            <Button layoutX="189.0" layoutY="407.0" mnemonicParsing="false" onAction="#handleCancelButtonAction" style="-fx-background-color: transperent;" text="Đã có tài khoản? Đăng nhập" textFill="#3f95ce" />
+            <Button layoutX="93.0" layoutY="391.0" mnemonicParsing="false" onAction="#handleCancelButtonAction" style="-fx-background-color: transperent;" text="Have an account? Login" textFill="#3f95ce" />
             <TextField fx:id="usernameField" layoutX="107.0" layoutY="210.0" promptText="User Name" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
             <PasswordField fx:id="passwordField" layoutX="107.0" layoutY="250.0" promptText="Password" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
             <ImageView fitHeight="31.0" fitWidth="29.0" layoutX="68.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
@@ -26,7 +26,10 @@
                   <Image url="@../../../image/key.png" />
                </image>
             </ImageView>
-            <Button layoutX="144.0" layoutY="350.0" mnemonicParsing="false" onAction="#handleSignupButtonAction" prefHeight="37.0" prefWidth="76.0" style="-fx-background-color: #0598ff;" text="Sign Up" textFill="WHITE" />
+            <Button layoutX="93.0" layoutY="339.0" mnemonicParsing="false" onAction="#handleSignupButtonAction" prefHeight="38.0" prefWidth="142.0" style="-fx-background-color: #0598ff; -fx-background-radius: 20;" text="Sign Up" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
             <AnchorPane layoutX="360.0" prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #0598ff;">
                <children>
                   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">

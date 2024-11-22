@@ -39,49 +39,49 @@ public class SignUpController {
         String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
         if (username.isEmpty() || fullName.isEmpty() || studentIdStr.isEmpty() || password.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Lỗi", "Vui lòng điền đầy đủ thông tin.");
+            showAlert(Alert.AlertType.ERROR, "Error", "Please fill in all the information.");
             return;
         }
 
         if (!password.equals(confirmPassword)) {
-            showAlert(Alert.AlertType.ERROR, "Lỗi", "Mật khẩu không khớp.");
+            showAlert(Alert.AlertType.ERROR, "Error", "Passwords do not match.");
             return;
         }
 
-        long studentId= Long.parseLong(studentIdStr);
-        // Kiểm tra nếu ID đã tồn tại
+        long studentId = Long.parseLong(studentIdStr);
+        // Check if the ID already exists
         if (loginService.isIdExists(studentId)) {
-            showAlert(Alert.AlertType.ERROR, "Lỗi", "Sinh viên này đã có tài khoản.");
+            showAlert(Alert.AlertType.ERROR, "Error", "This student already has an account.");
             return;
         }
         if (loginService.isUsernameExists(username)) {
-            showAlert(Alert.AlertType.ERROR, "Lỗi", "Tài khoản đã tồn tại.");
+            showAlert(Alert.AlertType.ERROR, "Error", "Username already exists.");
             return;
         }
-        // Đăng ký người dùng
-        boolean isRegistered = loginService.register(username,fullName, password, studentId, "student");
+        // Register user
+        boolean isRegistered = loginService.register(username, fullName, password, studentId, "student");
 
         if (isRegistered) {
-            showAlert(Alert.AlertType.INFORMATION, "Thành công", "Đăng ký thành công!");
-            // Quay lại giao diện đăng nhập nếu cần
+            showAlert(Alert.AlertType.INFORMATION, "Success", "Registration successful!");
+            // Go back to the login scene if needed
             loadLoginScene();
             closeWindow();
         } else {
-            showAlert(Alert.AlertType.ERROR, "Lỗi", "Tên đăng nhập đã tồn tại.");
+            showAlert(Alert.AlertType.ERROR, "Error", "Username already exists.");
         }
     }
 
     @FXML
     private void handleCancelButtonAction() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/Login.fxml"));
             Parent loginRoot = loader.load();
             Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.setScene(new Scene(loginRoot));
-            stage.setTitle("Đăng nhập");
+            stage.setTitle("Login");
             stage.show();
         } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện đăng nhập.");
+            showAlert(Alert.AlertType.ERROR, "Error", "Unable to load the login screen.");
             e.printStackTrace();
         }
         closeWindow();
@@ -104,19 +104,20 @@ public class SignUpController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
     private void loadLoginScene() {
         try {
-            // Tải giao diện đăng nhập
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/login.fxml"));
+            // Load the login scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/Login.fxml"));
             Parent loginRoot = loader.load();
 
-            // Hiển thị giao diện đăng nhập
+            // Show the login scene
             Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.setScene(new Scene(loginRoot));
-            stage.setTitle("Thư viện");
+            stage.setTitle("Library");
             stage.show();
         } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện đăng nhập.");
+            showAlert(Alert.AlertType.ERROR, "Error", "Unable to load the login screen.");
             e.printStackTrace();
         }
     }

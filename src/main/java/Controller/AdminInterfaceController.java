@@ -12,7 +12,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.MediaView;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -87,7 +86,7 @@ public class AdminInterfaceController {
 
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 // Tải giao diện đăng nhập
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/login.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/Login.fxml"));
                 Parent loginRoot = loader.load();
 
                 stage.setScene(new Scene(loginRoot));
