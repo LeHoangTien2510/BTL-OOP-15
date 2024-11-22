@@ -4,6 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -14,11 +15,16 @@ import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import Objects.User;
 import Objects.Login;
-
+import javafx.fxml.Initializable;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import javafx.util.Duration;
+import java.net.URL;
 import java.io.IOException;
 import java.util.*;
 
-public class UserInterfaceController {
+public class UserInterfaceController implements Initializable {
     @FXML
     private AnchorPane UserView;
 
@@ -44,8 +50,10 @@ public class UserInterfaceController {
     @FXML
     private MediaView media;
 
+    private MediaPlayer mediaPlayer;
+
     @FXML
-    private void initialize() {
+    public void initialize(URL location, ResourceBundle resources) {
         if (currentUser != null) {
             UserProfileDisplayNameButton.setText(currentUser.getName());
         }
@@ -79,6 +87,19 @@ public class UserInterfaceController {
                         .then("-fx-background-color: #1e4f5f; -fx-text-fill: #FFFFFF;") // Màu nền khi hover và màu chữ
                         .otherwise("-fx-background-color: #0e3746; -fx-text-fill: #FFFFFF;") // Màu nền mặc định và màu chữ
         );
+        String videoPath = getClass().getResource("/Download.mp4").toExternalForm();
+
+        // Tạo đối tượng Media và MediaPlayer
+        Media mediaFile = new Media(videoPath);
+        mediaPlayer = new MediaPlayer(mediaFile);
+
+        // Gắn MediaPlayer vào MediaView
+        media.setMediaPlayer(mediaPlayer);
+
+        // Tự động phát video ngay lập tức
+        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.play();
+        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
     }
 
     @FXML
@@ -98,6 +119,7 @@ public class UserInterfaceController {
 
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 // Tải giao diện đăng nhập
+                stopMediaPlayer();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/login.fxml"));
                 Parent loginRoot = loader.load();
 
@@ -178,6 +200,19 @@ public class UserInterfaceController {
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện Search.");
             e.printStackTrace();
+        }
+    }
+
+    public void stopMediaPlayer() {
+        if (mediaPlayer != null) {
+            try {
+                mediaPlayer.stop();    // Dừng nhạc
+                mediaPlayer.dispose(); // Giải phóng tài nguyên
+            } catch (IllegalStateException e) {
+                System.err.println("MediaPlayer không ở trạng thái hợp lệ: " + e.getMessage());
+            } finally {
+                mediaPlayer = null; // Đảm bảo không còn tham chiếu
+            }
         }
     }
 }

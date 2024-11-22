@@ -4,6 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -14,11 +15,26 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.MediaView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
-public class AdminInterfaceController {
+public class AdminInterfaceController implements Initializable {
 
     @FXML
     private AnchorPane AdminView;
@@ -44,8 +60,9 @@ public class AdminInterfaceController {
     @FXML
     private MediaView media;
 
+    private MediaPlayer mediaPlayer;
     @FXML
-    private void initialize() {
+    public void initialize(URL location, ResourceBundle resources)  {
         addBookButton.styleProperty().bind(
                 Bindings.when(addBookButton.hoverProperty())
                         .then("-fx-background-color: #1e4f5f; -fx-text-fill: #FFFFFF;")
@@ -69,6 +86,19 @@ public class AdminInterfaceController {
                         .then("-fx-background-color: #1e4f5f; -fx-text-fill: #FFFFFF;")
                         .otherwise("-fx-background-color: #0e3746; -fx-text-fill: #FFFFFF;")
         );
+        String videoPath = getClass().getResource("/shiroko.mp4").toExternalForm();
+
+        // Tạo đối tượng Media và MediaPlayer
+        Media mediaFile = new Media(videoPath);
+        mediaPlayer = new MediaPlayer(mediaFile);
+
+        // Gắn MediaPlayer vào MediaView
+        media.setMediaPlayer(mediaPlayer);
+
+        // Tự động phát video ngay lập tức
+        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.play();
+        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
     }
     @FXML
     private void handleLogOutButtonAction(ActionEvent event) {
@@ -87,6 +117,7 @@ public class AdminInterfaceController {
 
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 // Tải giao diện đăng nhập
+                stopMediaPlayer();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/login.fxml"));
                 Parent loginRoot = loader.load();
 
@@ -167,6 +198,19 @@ public class AdminInterfaceController {
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện Dashboard.");
             e.printStackTrace();
+        }
+    }
+
+    public void stopMediaPlayer() {
+        if (mediaPlayer != null) {
+            try {
+                mediaPlayer.stop();    // Dừng nhạc
+                mediaPlayer.dispose(); // Giải phóng tài nguyên
+            } catch (IllegalStateException e) {
+                System.err.println("MediaPlayer không ở trạng thái hợp lệ: " + e.getMessage());
+            } finally {
+                mediaPlayer = null; // Đảm bảo không còn tham chiếu
+            }
         }
     }
 }
