@@ -187,6 +187,8 @@ public class BookCardController {
                 int result = preparedStatement.executeUpdate();
                 if (result > 0) {
                     showAlert(Alert.AlertType.INFORMATION, "Borrowed Book", "Borrowed " + findTitle + " Successfully");
+                    int updatedQuantity = getBookQuantity() - 1;  // Cập nhật số lượng sách còn lại
+                    quantity.setText(updatedQuantity + " remaining");
                 } else {
                     showAlert(Alert.AlertType.ERROR, "Borrowed Book", "Lỗi, không mượn được sách");
                 }
