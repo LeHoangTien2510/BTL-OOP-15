@@ -119,6 +119,7 @@ public class UserProfileController {
                 pstmt.executeUpdate();
                 showAlert(Alert.AlertType.INFORMATION, "Password updated", "Password updated");
 
+                currentUser.setPassword(newPassText);
             }
         }
     }
