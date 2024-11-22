@@ -11,7 +11,6 @@ public class User {
     private String password;
     private String userType;
     private int id;
-    ArrayList<Book> borrowedBooks = new ArrayList<>();
 
     public User(String name, String username, String password, String userType) {
         this.name = name;
@@ -74,40 +73,6 @@ public class User {
         updateUserInDatabase("password", password);
     }
 
-
-    public boolean borrowedBook(Book book) {
-        if (borrowedBooks.contains(book)) {
-            System.out.println("Bạn đã mượn quyển sách này rồi");
-            return false;
-        } else {
-            borrowedBooks.add(book);
-            System.out.println("Mượn sách thành công");
-            return true;
-        }
-    }
-
-    public void returnBook(Book book){
-        if(borrowedBooks.contains(book)) {
-            borrowedBooks.remove(book);
-            System.out.println("Đã trả sách");
-        }
-        else{
-            System.out.println("Bạn chưa mượn cuốn sách này");
-        }
-    }
-
-    public void printUserInfo() {
-        int numberOfBooks = borrowedBooks.size();
-        if (numberOfBooks == 0) {
-            System.out.println("Bạn chưa mượn cuốn sách nào");
-        } else {
-            System.out.println("Tên: " + name);
-            System.out.println("Sách đã mượn:");
-            for (Book b : borrowedBooks) {
-                b.printInfo();
-            }
-        }
-    }
     private void updateUserInDatabase(String column, String value) {
         Connection conn = null;
         PreparedStatement stmt = null;

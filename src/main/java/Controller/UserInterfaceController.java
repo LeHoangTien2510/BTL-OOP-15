@@ -33,9 +33,6 @@ public class UserInterfaceController {
     private Button borrowedBooksButton;
 
     @FXML
-    private Button handleLogOutButton;
-
-    @FXML
     private Button profileButton;
 
     @FXML

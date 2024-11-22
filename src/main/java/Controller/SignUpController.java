@@ -54,6 +54,10 @@ public class SignUpController {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Sinh viên này đã có tài khoản.");
             return;
         }
+        if (loginService.isUsernameExists(username)) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Tài khoản đã tồn tại.");
+            return;
+        }
         // Đăng ký người dùng
         boolean isRegistered = loginService.register(username,fullName, password, studentId, "student");
 
