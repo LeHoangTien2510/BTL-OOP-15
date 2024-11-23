@@ -12,6 +12,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import static Objects.ShowAlert.showAlert;
+
 public class SignUpController {
 
     @FXML
@@ -94,15 +96,6 @@ public class SignUpController {
         } else {
             System.out.println("Stage is null. Unable to close the window.");
         }
-    }
-
-
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     private void loadLoginScene() {

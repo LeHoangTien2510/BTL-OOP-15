@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static Objects.ShowAlert.showAlert;
+
 public class SearchBookController implements Initializable {
     @FXML
     private TextField searchField;
@@ -273,14 +275,6 @@ public class SearchBookController implements Initializable {
         }
 
         return bookList;
-    }
-
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     private void setChosenBook(Book book) {

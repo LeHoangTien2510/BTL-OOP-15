@@ -23,6 +23,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static Objects.ShowAlert.showAlert;
+
 public class Borrowing_BookController implements Initializable {
     @FXML
     private VBox bookContainer;
@@ -129,14 +131,5 @@ public class Borrowing_BookController implements Initializable {
         bookImage.setImage(image);
         borrowedDate.setText(book.getBorrowedDate());
     }
-
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
 
 }

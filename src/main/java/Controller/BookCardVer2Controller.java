@@ -37,17 +37,6 @@ public class BookCardVer2Controller {
     private Book book;
     private MyListener myListener;
 
-    Connection conn = SqliteConnection.Connector();
-    User currentUser = Login.getCurrentUser();
-
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
     public void setData(Book book, MyListener myListener) {
         this.book = book;
         this.myListener = myListener;

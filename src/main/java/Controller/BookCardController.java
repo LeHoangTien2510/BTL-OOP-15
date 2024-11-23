@@ -19,6 +19,8 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import static Objects.ShowAlert.showAlert;
+
 public class BookCardController {
     @FXML
     private HBox hbox;
@@ -200,11 +202,4 @@ public class BookCardController {
         }
     }
 
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 }

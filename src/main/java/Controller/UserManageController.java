@@ -12,6 +12,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.sql.*;
 import java.util.Optional;
 
+import static Objects.ShowAlert.showAlert;
+
 public class UserManageController {
     @FXML
     private TableView<User> userTable;
@@ -148,44 +150,47 @@ public class UserManageController {
     }
 
     private void deleteUser(User user) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Xác nhận xóa");
-        alert.setHeaderText("Bạn có chắc chắn muốn xóa người dùng này?");
-        alert.setContentText("Tên: " + user.getName() + "\nTài khoản: " + user.getUsername());
-
-        // Lấy kết quả xác nhận từ người dùng
-        Optional<ButtonType> result = alert.showAndWait();
-
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            String deleteBorrowedBooksQuery = "DELETE FROM borrowed_books WHERE user_id = ?";
-            String deleteUserQuery  = "DELETE FROM user WHERE id = ?";
-            try (Connection conn = SqliteConnection.Connector()) {
-                // Xóa thông tin trong bảng borrowed_books
-                try (PreparedStatement pstmt = conn.prepareStatement(deleteBorrowedBooksQuery)) {
-                    pstmt.setInt(1, user.getId());
-                    pstmt.executeUpdate();
-                }
-
-                // Xóa người dùng trong bảng user
-                try (PreparedStatement pstmt = conn.prepareStatement(deleteUserQuery)) {
-                    pstmt.setInt(1, user.getId());
-                    pstmt.executeUpdate();
-                }
-
-                // Xóa người dùng khỏi TableView
-                userList.remove(user);
-
-                showAlert(Alert.AlertType.INFORMATION, "Thành công", "Người dùng đã được xóa thành công!");
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể xóa người dùng. Vui lòng thử lại!");
-            }
+        if (user.getName().equals("admin")) {
+            showAlert(Alert.AlertType.WARNING,"Error","You can't delete yourself.");
         } else {
-            showAlert(Alert.AlertType.INFORMATION, "Hủy bỏ", "Người dùng không bị xóa.");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirm removing user?");
+            alert.setHeaderText("Are you sure to delete this user?");
+            alert.setContentText("Name: " + user.getName() + "\nAccount: " + user.getUsername());
+
+            // Lấy kết quả xác nhận từ người dùng
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                String deleteBorrowedBooksQuery = "DELETE FROM borrowed_books WHERE user_id = ?";
+                String deleteUserQuery = "DELETE FROM user WHERE id = ?";
+                try (Connection conn = SqliteConnection.Connector()) {
+                    // Xóa thông tin trong bảng borrowed_books
+                    try (PreparedStatement pstmt = conn.prepareStatement(deleteBorrowedBooksQuery)) {
+                        pstmt.setInt(1, user.getId());
+                        pstmt.executeUpdate();
+                    }
+
+                    // Xóa người dùng trong bảng user
+                    try (PreparedStatement pstmt = conn.prepareStatement(deleteUserQuery)) {
+                        pstmt.setInt(1, user.getId());
+                        pstmt.executeUpdate();
+                    }
+
+                    // Xóa người dùng khỏi TableView
+                    userList.remove(user);
+
+                    showAlert(Alert.AlertType.INFORMATION, "Thành công", "Người dùng đã được xóa thành công!");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể xóa người dùng. Vui lòng thử lại!");
+                }
+            } else {
+                showAlert(Alert.AlertType.INFORMATION, "Hủy bỏ", "Người dùng không bị xóa.");
+            }
         }
     }
-
     private void editPassword(User user) throws SQLException {
         TextInputDialog dialog = new TextInputDialog(String.valueOf(user.getPassword()));
         dialog.setTitle("Đổi mật khẩu");
@@ -217,11 +222,4 @@ public class UserManageController {
         }
     }
 
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 }

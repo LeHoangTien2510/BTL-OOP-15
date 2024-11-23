@@ -11,7 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-
+import static Objects.ShowAlert.showAlert;
 import java.io.IOException;
 
 public class LoginController {
@@ -51,14 +51,6 @@ public class LoginController {
     @FXML
     private void handleRegisterButtonAction() {
         loadScene("/com/example/library/SignUp.fxml", "Sign Up");
-    }
-
-    private void showAlert(AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     private void loadScene(String fxmlPath, String title) {

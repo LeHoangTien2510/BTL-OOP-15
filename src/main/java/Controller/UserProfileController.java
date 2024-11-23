@@ -4,20 +4,19 @@ import Objects.Book;
 import Objects.Login;
 import Objects.SqliteConnection;
 import Objects.User;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.*;
+
+import static Objects.ShowAlert.showAlert;
 
 public class UserProfileController {
 
@@ -122,14 +121,6 @@ public class UserProfileController {
                 currentUser.setPassword(newPassText);
             }
         }
-    }
-
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     private void loadBarChartData() {

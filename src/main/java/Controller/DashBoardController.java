@@ -21,6 +21,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static Objects.ShowAlert.showAlert;
+
 public class DashBoardController implements Initializable {
     @FXML
     private HBox BookCardLayout;
@@ -73,14 +75,6 @@ public class DashBoardController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     private List<Book> getBookFromDatabase() {
