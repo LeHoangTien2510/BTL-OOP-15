@@ -16,7 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.*;
 
-import static Objects.ShowAlert.showAlert;
+import static Objects.Utilities.showAlert;
 
 public class UserProfileController {
 

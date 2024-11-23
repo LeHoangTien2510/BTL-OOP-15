@@ -18,7 +18,7 @@ import java.util.Optional;
 
 import javafx.util.Callback;
 
-import static Objects.ShowAlert.showAlert;
+import static Objects.Utilities.showAlert;
 
 public class UpdateBookController {
 
