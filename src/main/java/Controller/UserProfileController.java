@@ -4,12 +4,16 @@ import Objects.Book;
 import Objects.Login;
 import Objects.SqliteConnection;
 import Objects.User;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -45,6 +49,8 @@ public class UserProfileController {
     @FXML
     private PasswordField confirmPass;
 
+    @FXML
+    private BarChart<String, Number> barChart;
 
     private ObservableList<Book> bookList = FXCollections.observableArrayList();
     User currentUser = Login.getCurrentUser();
@@ -62,6 +68,8 @@ public class UserProfileController {
         returnDate.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
         bookTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         loadBookData();
+
+        loadBarChartData();
     }
 
     private void loadBookData() {
@@ -111,6 +119,7 @@ public class UserProfileController {
                 pstmt.executeUpdate();
                 showAlert(Alert.AlertType.INFORMATION, "Password updated", "Password updated");
 
+                currentUser.setPassword(newPassText);
             }
         }
     }
@@ -122,4 +131,41 @@ public class UserProfileController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    private void loadBarChartData() {
+        String totalBooksQuery = "SELECT COUNT(status) as total FROM history WHERE user_id = ?";
+        String returnedBooksQuery = "SELECT COUNT(status) as returned FROM history WHERE user_id = ? AND status = 'returned'";
+
+        int totalBooks = 0;
+        int returnedBooks = 0;
+
+        try (PreparedStatement totalStmt = conn.prepareStatement(totalBooksQuery);
+             PreparedStatement returnedStmt = conn.prepareStatement(returnedBooksQuery)) {
+            totalStmt.setInt(1, currentUser.getIdFromDb());
+            returnedStmt.setInt(1, currentUser.getIdFromDb());
+
+            ResultSet totalRs = totalStmt.executeQuery();
+            if (totalRs.next()) {
+                totalBooks = totalRs.getInt("total");
+            }
+
+            ResultSet returnedRs = returnedStmt.executeQuery();
+            if (returnedRs.next()) {
+                returnedBooks = returnedRs.getInt("returned");
+            }
+
+            // Chuẩn bị dữ liệu cho BarChart
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            series.setName("Books");
+            series.getData().add(new XYChart.Data<>("Total Borrowed", totalBooks));
+            series.getData().add(new XYChart.Data<>("Total Returned", returnedBooks));
+
+            barChart.getData().clear();
+            barChart.getData().add(series);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

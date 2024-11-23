@@ -10,7 +10,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -30,28 +29,28 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
         if (username.isEmpty() || password.isEmpty()) {
-            showAlert(AlertType.ERROR, "Lỗi", "Vui lòng nhập tên đăng nhập và mật khẩu.");
+            showAlert(AlertType.ERROR, "Error", "Please enter your username and password.");
             return;
         }
         User user = loginService.login(username, password);
 
         if (user != null) {
-            showAlert(AlertType.INFORMATION, "Đăng nhập thành công", "Chào mừng " + user.getName());
+            showAlert(AlertType.INFORMATION, "Login Successful", "Welcome " + user.getName());
 
-            // Kiểm tra loại người dùng (admin hoặc student)
+            // Check user type (admin or student)
             if (user.getUserType().equalsIgnoreCase("admin")) {
-                loadScene("/com/example/library/admin_interface.fxml", "Quản lý thư viện(admin)");
+                loadScene("/com/example/library/AdminInterface.fxml", "Library Management (admin)");
             } else {
-                loadScene("/com/example/library/user_interface.fxml", "Quản lý thư viện(user");
+                loadScene("/com/example/library/UserInterface.fxml", "Library Management (user)");
             }
         } else {
-            showAlert(AlertType.ERROR, "Đăng nhập thất bại", "Tên đăng nhập hoặc mật khẩu không đúng");
+            showAlert(AlertType.ERROR, "Login Failed", "Incorrect username or password.");
         }
     }
 
     @FXML
     private void handleRegisterButtonAction() {
-        loadScene("/com/example/library/signup.fxml", "Đăng ký");
+        loadScene("/com/example/library/SignUp.fxml", "Sign Up");
     }
 
     private void showAlert(AlertType alertType, String title, String message) {
@@ -72,7 +71,7 @@ public class LoginController {
             stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
-            showAlert(AlertType.ERROR, "Lỗi", "Không thể tải giao diện.");
+            showAlert(AlertType.ERROR, "Error", "Unable to load the interface.");
             e.printStackTrace();
         }
     }
