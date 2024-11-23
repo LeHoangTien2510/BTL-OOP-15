@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
 
 import static Objects.Utilities.showAlert;
 
-public class SearchBookController implements Initializable {
+public class SearchBookController extends Utilities implements Initializable {
 
     @FXML
     private TextField searchField;
@@ -62,15 +62,6 @@ public class SearchBookController implements Initializable {
     private MyListener myListener;
     private Image image;
 
-    private Connection conn = SqliteConnection.Connector();
-    private Book book;
-    private User currentUser = Login.getCurrentUser();
-
-    private String findTitle;
-    private int id;
-    private String findAuthor;
-    private String findGenre;
-    private String findImageSrc;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -100,35 +91,6 @@ public class SearchBookController implements Initializable {
         });
 
         new Thread(loadBooksTask).start();
-    }
-
-    public boolean isBookAlreadyBorrowed() throws SQLException {
-        String query = "SELECT COUNT(*) FROM borrowed_books WHERE user_id = ? AND book_id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, currentUser.getIdFromDb());
-            stmt.setInt(2, id);
-            ResultSet resultSet = stmt.executeQuery();
-            return resultSet.next() && resultSet.getInt(1) > 0;
-        }
-    }
-
-    public boolean notEnoughBooks() throws SQLException {
-        String query = "SELECT COUNT(*) FROM borrowed_books WHERE book_id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, id);
-            ResultSet resultSet = stmt.executeQuery();
-            int count = resultSet.next() ? resultSet.getInt(1) : 0;
-            return count >= getBookQuantity();
-        }
-    }
-
-    public int getBookQuantity() throws SQLException {
-        String query = "SELECT quantity FROM book WHERE book_id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, id);
-            ResultSet resultSet = stmt.executeQuery();
-            return resultSet.next() ? resultSet.getInt("quantity") : -1;
-        }
     }
 
     @FXML

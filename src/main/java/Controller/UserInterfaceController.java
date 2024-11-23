@@ -1,5 +1,6 @@
 package Controller;
 
+import Objects.Utilities;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
@@ -28,7 +29,7 @@ import java.util.ResourceBundle;
 
 import static Objects.Utilities.showAlert;
 
-public class UserInterfaceController implements Initializable {
+public class UserInterfaceController extends Utilities implements Initializable {
 
     @FXML
     private AnchorPane UserView;
@@ -55,7 +56,6 @@ public class UserInterfaceController implements Initializable {
     @FXML
     private MediaView media;
 
-    private MediaPlayer mediaPlayer;
 
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
@@ -170,18 +170,5 @@ public class UserInterfaceController implements Initializable {
                 showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện " + componentName)));
 
         new Thread(loadTask).start();
-    }
-
-    public void stopMediaPlayer() {
-        if (mediaPlayer != null) {
-            try {
-                mediaPlayer.stop();    // Dừng nhạc
-                mediaPlayer.dispose(); // Giải phóng tài nguyên
-            } catch (IllegalStateException e) {
-                System.err.println("MediaPlayer không ở trạng thái hợp lệ: " + e.getMessage());
-            } finally {
-                mediaPlayer = null; // Đảm bảo không còn tham chiếu
-            }
-        }
     }
 }

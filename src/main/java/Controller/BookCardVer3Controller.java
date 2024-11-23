@@ -38,10 +38,10 @@ public class BookCardVer3Controller {
 
     private Book book;
     private MyListener myListener;
-    Connection conn = SqliteConnection.Connector();
-    User currentUser = Login.getCurrentUser();
-    String findTitle;
-    int id;
+    private Connection conn = SqliteConnection.Connector();
+    private User currentUser = Login.getCurrentUser();
+    private String findTitle;
+    private int id;
 
     private Borrowing_BookController borrowingBookController;
 

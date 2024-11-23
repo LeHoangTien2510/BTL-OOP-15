@@ -1,5 +1,6 @@
 package Controller;
 
+import Objects.Utilities;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,7 +26,7 @@ import java.util.ResourceBundle;
 
 import static Objects.Utilities.showAlert;
 
-public class AdminInterfaceController implements Initializable {
+public class AdminInterfaceController extends Utilities implements Initializable {
 
     @FXML
     private AnchorPane AdminView;
@@ -51,7 +52,6 @@ public class AdminInterfaceController implements Initializable {
     @FXML
     private MediaView media;
 
-    private MediaPlayer mediaPlayer;
     @FXML
     public void initialize(URL location, ResourceBundle resources)  {
         addBookButton.styleProperty().bind(

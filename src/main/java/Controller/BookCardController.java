@@ -1,9 +1,6 @@
 package Controller;
 
-import Objects.Book;
-import Objects.Login;
-import Objects.SqliteConnection;
-import Objects.User;
+import Objects.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -19,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 
 import static Objects.Utilities.showAlert;
 
-public class BookCardController {
+public class BookCardController extends Utilities {
     @FXML
     private HBox hbox;
 
@@ -44,17 +41,10 @@ public class BookCardController {
     @FXML
     private Button borrowButton;
 
-    Connection conn = SqliteConnection.Connector();
     private Book book;
 
-    User currentUser = Login.getCurrentUser();
     private String[] colors = {"#0C5776", "#2D99AE", "#557B83", "#A2D5AB"};
 
-    String findTitle;
-    int id;
-    String findAuthor;
-    String findGenre;
-    String findImageSrc;
 
     public void setData(Book book) throws SQLException {
         this.book = book;
@@ -76,21 +66,6 @@ public class BookCardController {
         findImageSrc = imagePath;
     }
 
-    public boolean isBookAlreadyBorrowed() throws SQLException {
-        String query = "SELECT COUNT(*) FROM borrowed_books WHERE user_id = ? AND book_id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, currentUser.getIdFromDb());
-            stmt.setInt(2, id);
-
-            ResultSet resultSet = stmt.executeQuery();
-            if (resultSet.next()) {
-                int count = resultSet.getInt(1);
-                return count > 0;
-            }
-        }
-        return false;
-    }
-
     public int BookCount(int id) throws SQLException {
         String query = "SELECT COUNT(*) FROM borrowed_books WHERE book_id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -103,39 +78,6 @@ public class BookCardController {
             }
         }
         return 0;
-    }
-
-    public boolean notEnoughBooks() throws SQLException {
-        String query = "SELECT COUNT(*) FROM borrowed_books WHERE book_id = ?";
-        int count = 0;
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, id);
-
-            ResultSet resultSet = stmt.executeQuery();
-            if (resultSet.next()) {
-                count = resultSet.getInt(1);
-            }
-            if (count >= getBookQuantity()) {
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-    }
-
-    public int getBookQuantity() throws SQLException {
-        String query = "SELECT quantity FROM book WHERE book_id = ?";
-        int quantity = -1;
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, id);
-
-            ResultSet resultSet = stmt.executeQuery();
-            if (resultSet.next()) {
-                quantity = resultSet.getInt("quantity");
-            }
-        }
-        return quantity;
     }
 
     @FXML
