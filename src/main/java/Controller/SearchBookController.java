@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -18,7 +18,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
@@ -51,6 +54,9 @@ public class SearchBookController implements Initializable {
 
     @FXML
     private Button borrowButton;
+
+    @FXML
+    private Hyperlink hyperLinkChatGPT;
 
     private List<Book> allBooks;
     private MyListener myListener;
@@ -283,5 +289,19 @@ public class SearchBookController implements Initializable {
         findAuthor = book.getAuthor();
         findGenre = book.getGenre();
         findImageSrc = book.getImageSrc();
+    }
+
+    @FXML
+    private void handleAskHyperlinkAction(ActionEvent event) {
+        try {
+            String bookName = bookTitle.getText();
+            String url = "https://chat.openai.com/?q=" + "Tell+me+about+" + bookName.replace(" ", "+");
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                Desktop.getDesktop().browse(new URI(url));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to open ChatGPT.");
+        }
     }
 }
