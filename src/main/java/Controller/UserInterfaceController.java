@@ -15,16 +15,14 @@ import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import Objects.User;
 import Objects.Login;
-import javafx.fxml.Initializable;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 import java.net.URL;
 import java.io.IOException;
 import java.util.*;
 
-import static Objects.ShowAlert.showAlert;
+import static Objects.Utilities.showAlert;
 
 public class UserInterfaceController implements Initializable {
     @FXML

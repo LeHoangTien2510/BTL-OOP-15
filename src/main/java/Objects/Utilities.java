@@ -2,7 +2,7 @@ package Objects;
 
 import javafx.scene.control.Alert;
 
-public class ShowAlert {
+public class Utilities {
     public static void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -10,4 +10,5 @@ public class ShowAlert {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
 }

@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static Objects.ShowAlert.showAlert;
+import static Objects.Utilities.showAlert;
 
 public class BookListController implements Initializable {
     @FXML

@@ -12,14 +12,12 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static Objects.ShowAlert.showAlert;
+import static Objects.Utilities.showAlert;
 
 public class BookCardController {
     @FXML

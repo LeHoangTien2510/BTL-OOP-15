@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static Objects.ShowAlert.showAlert;
+import static Objects.Utilities.showAlert;
 
 public class BookCardVer3Controller {
     @FXML

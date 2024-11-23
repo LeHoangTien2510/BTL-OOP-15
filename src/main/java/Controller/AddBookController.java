@@ -15,7 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static Objects.ShowAlert.showAlert;
+import static Objects.Utilities.showAlert;
 
 public class AddBookController {
 

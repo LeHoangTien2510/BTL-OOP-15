@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static Objects.ShowAlert.showAlert;
+import static Objects.Utilities.showAlert;
 
 public class DashBoardController implements Initializable {
     @FXML
