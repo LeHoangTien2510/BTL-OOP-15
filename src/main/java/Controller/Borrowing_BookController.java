@@ -1,6 +1,8 @@
 package Controller;
 
 import Objects.*;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -22,6 +24,7 @@ import java.util.ResourceBundle;
 import static Objects.Utilities.showAlert;
 
 public class Borrowing_BookController implements Initializable {
+
     @FXML
     private VBox bookContainer;
 
@@ -43,89 +46,119 @@ public class Borrowing_BookController implements Initializable {
     @FXML
     private Button returnButton;
 
-    private List<Book> borrowingBook ;
+    private List<Book> borrowingBook;
     private MyListener myListener;
     private Image image;
 
-    User currentUser = Login.getCurrentUser();
-    Connection conn = SqliteConnection.Connector();
+    private User currentUser = Login.getCurrentUser();
+    private Connection conn = SqliteConnection.Connector();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        borrowingBook = new ArrayList<>(getBorrowingBook());
+        // Tải dữ liệu sách đã mượn trong luồng nền
+        Task<List<Book>> loadBooksTask = new Task<>() {
+            @Override
+            protected List<Book> call() {
+                return getBorrowingBook();
+            }
+        };
 
-        if (borrowingBook.size() > 0) {
-            setChosenBook(borrowingBook.get(0));
-            myListener = new MyListener() {
-                @Override
-                public void onClickListener(Book book) {
-                    setChosenBook(book);
-                }
-            };
-        }
+        loadBooksTask.setOnSucceeded(event -> {
+            borrowingBook = loadBooksTask.getValue();
+            if (borrowingBook != null && !borrowingBook.isEmpty()) {
+                setChosenBook(borrowingBook.get(0));
+                myListener = book -> setChosenBook(book);
+                displayBooks(borrowingBook);
+            }
+        });
 
-        displayBooks(borrowingBook);
+        loadBooksTask.setOnFailed(event -> {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load borrowed books.");
+        });
+
+        new Thread(loadBooksTask).start();
     }
 
     private void displayBooks(List<Book> books) {
-        bookContainer.getChildren().clear();
+        Platform.runLater(() -> {
+            bookContainer.getChildren().clear();
 
-        for (Book book : books) {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("/com/example/library/BookCardVer3.fxml"));
-                HBox bookCardBox = fxmlLoader.load();
+            for (Book book : books) {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    fxmlLoader.setLocation(getClass().getResource("/com/example/library/BookCardVer3.fxml"));
+                    HBox bookCardBox = fxmlLoader.load();
 
-                BookCardVer3Controller bookCardVer3Controller = fxmlLoader.getController();
-                bookCardVer3Controller.setData(book, myListener);
-                bookCardVer3Controller.setBorrowingBookController(this);
+                    BookCardVer3Controller bookCardVer3Controller = fxmlLoader.getController();
+                    bookCardVer3Controller.setData(book, myListener);
+                    bookCardVer3Controller.setBorrowingBookController(this);
 
-                bookContainer.getChildren().add(bookCardBox);
+                    bookContainer.getChildren().add(bookCardBox);
 
-            } catch (IOException e) {
-                showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải BookCard.");
-                e.printStackTrace();
+                } catch (IOException e) {
+                    showAlert(Alert.AlertType.ERROR, "Error", "Unable to load book card.");
+                    e.printStackTrace();
+                }
             }
-        }
+        });
     }
 
     public void refreshBookList() {
-        borrowingBook = getBorrowingBook();
-        displayBooks(borrowingBook);
+        Task<List<Book>> refreshTask = new Task<>() {
+            @Override
+            protected List<Book> call() {
+                return getBorrowingBook();
+            }
+        };
+
+        refreshTask.setOnSucceeded(event -> {
+            borrowingBook = refreshTask.getValue();
+            displayBooks(borrowingBook);
+        });
+
+        refreshTask.setOnFailed(event -> {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to refresh book list.");
+        });
+
+        new Thread(refreshTask).start();
     }
 
     public List<Book> getBorrowingBook() {
         List<Book> bookList = new ArrayList<>();
-        int id = currentUser.getIdFromDb();
+        int userId = currentUser.getIdFromDb();
+
         try (Connection connection = SqliteConnection.Connector()) {
             String query = "SELECT title, author, genre, imageSrc, borrowed_date FROM borrowed_books WHERE user_id = ? ORDER BY borrowed_date DESC;";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setInt(1, userId);
+                ResultSet resultSet = preparedStatement.executeQuery();
 
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Book book = new Book();
-                book.setTitle(resultSet.getString("title"));
-                book.setAuthor(resultSet.getString("author"));
-                book.setGenre(resultSet.getString("genre"));
-                book.setImageSrc(resultSet.getString("imageSrc"));
-                book.setBorrowedDate(resultSet.getString("borrowed_date"));
-                bookList.add(book);
+                while (resultSet.next()) {
+                    Book book = new Book();
+                    book.setTitle(resultSet.getString("title"));
+                    book.setAuthor(resultSet.getString("author"));
+                    book.setGenre(resultSet.getString("genre"));
+                    book.setImageSrc(resultSet.getString("imageSrc"));
+                    book.setBorrowedDate(resultSet.getString("borrowed_date"));
+                    bookList.add(book);
+                }
             }
         } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể lấy dữ liệu sách từ SQLite.");
+            Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, "Error", "Failed to fetch borrowed books from database."));
             e.printStackTrace();
         }
+
         return bookList;
     }
 
     private void setChosenBook(Book book) {
-        bookTitle.setText(book.getTitle());
-        bookAuthor.setText(book.getAuthor());
-        bookGenre.setText(book.getGenre());
-        image = new Image(getClass().getResourceAsStream(book.getImageSrc()));
-        bookImage.setImage(image);
-        borrowedDate.setText(book.getBorrowedDate());
+        Platform.runLater(() -> {
+            bookTitle.setText(book.getTitle());
+            bookAuthor.setText(book.getAuthor());
+            bookGenre.setText(book.getGenre());
+            image = new Image(getClass().getResourceAsStream(book.getImageSrc()));
+            bookImage.setImage(image);
+            borrowedDate.setText(book.getBorrowedDate());
+        });
     }
-
 }

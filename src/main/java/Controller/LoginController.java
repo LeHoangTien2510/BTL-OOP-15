@@ -2,15 +2,19 @@ package Controller;
 
 import Objects.Login;
 import Objects.User;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+
 import static Objects.Utilities.showAlert;
+
 import java.io.IOException;
 
 public class LoginController {
@@ -27,24 +31,47 @@ public class LoginController {
     private void handleLogin(ActionEvent event) {
         String username = usernameField.getText();
         String password = passwordField.getText();
+
+        // Kiểm tra thông tin nhập
         if (username.isEmpty() || password.isEmpty()) {
             showAlert(AlertType.ERROR, "Error", "Please enter your username and password.");
             return;
         }
-        User user = loginService.login(username, password);
 
-        if (user != null) {
-            showAlert(AlertType.INFORMATION, "Login Successful", "Welcome " + user.getName());
-
-            // Check user type (admin or student)
-            if (user.getUserType().equalsIgnoreCase("admin")) {
-                loadScene("/com/example/library/AdminInterface.fxml", "Library Management (admin)");
-            } else {
-                loadScene("/com/example/library/UserInterface.fxml", "Library Management (user)");
+        // Sử dụng Task để xử lý đăng nhập trong luồng nền
+        Task<User> loginTask = new Task<>() {
+            @Override
+            protected User call() {
+                return loginService.login(username, password); // Gọi phương thức đăng nhập
             }
-        } else {
-            showAlert(AlertType.ERROR, "Login Failed", "Incorrect username or password.");
-        }
+        };
+
+        // Khi Task thành công
+        loginTask.setOnSucceeded(workerStateEvent -> {
+            User user = loginTask.getValue();
+            if (user != null) {
+                // Hiển thị thông báo thành công
+                Platform.runLater(() -> showAlert(AlertType.INFORMATION, "Login Successful", "Welcome " + user.getName()));
+
+                // Điều hướng giao diện
+                if (user.getUserType().equalsIgnoreCase("admin")) {
+                    loadScene("/com/example/library/AdminInterface.fxml", "Library Management (admin)");
+                } else {
+                    loadScene("/com/example/library/UserInterface.fxml", "Library Management (user)");
+                }
+            } else {
+                // Hiển thị thông báo lỗi
+                Platform.runLater(() -> showAlert(AlertType.ERROR, "Login Failed", "Incorrect username or password."));
+            }
+        });
+
+        // Khi Task thất bại
+        loginTask.setOnFailed(workerStateEvent -> {
+            Platform.runLater(() -> showAlert(AlertType.ERROR, "Error", "Unable to complete login. Please try again."));
+        });
+
+        // Chạy Task trên luồng nền
+        new Thread(loginTask).start();
     }
 
     @FXML

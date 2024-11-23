@@ -1,6 +1,8 @@
 package Controller;
 
 import Objects.Login;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -40,6 +42,8 @@ public class SignUpController {
         String studentIdStr = studentIdField.getText();
         String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
+
+        // Kiểm tra các trường có trống không
         if (username.isEmpty() || fullName.isEmpty() || studentIdStr.isEmpty() || password.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Error", "Please fill in all the information.");
             return;
@@ -50,26 +54,46 @@ public class SignUpController {
             return;
         }
 
-        long studentId = Long.parseLong(studentIdStr);
-        // Check if the ID already exists
-        if (loginService.isIdExists(studentId)) {
-            showAlert(Alert.AlertType.ERROR, "Error", "This student already has an account.");
-            return;
-        }
-        if (loginService.isUsernameExists(username)) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Username already exists.");
-            return;
-        }
-        // Register user
-        boolean isRegistered = loginService.register(username, fullName, password, studentId, "student");
+        try {
+            long studentId = Long.parseLong(studentIdStr);
 
-        if (isRegistered) {
-            showAlert(Alert.AlertType.INFORMATION, "Success", "Registration successful!");
-            // Go back to the login scene if needed
-            loadLoginScene();
-            closeWindow();
-        } else {
-            showAlert(Alert.AlertType.ERROR, "Error", "Username already exists.");
+            // Tạo Task để kiểm tra và đăng ký trên luồng nền
+            Task<Boolean> signUpTask = new Task<>() {
+                @Override
+                protected Boolean call() throws Exception {
+                    // Kiểm tra ID đã tồn tại hay chưa
+                    if (loginService.isIdExists(studentId)) {
+                        Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, "Error", "This student already has an account."));
+                        return false;
+                    }
+
+                    // Kiểm tra tên người dùng đã tồn tại hay chưa
+                    if (loginService.isUsernameExists(username)) {
+                        Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, "Error", "Username already exists."));
+                        return false;
+                    }
+
+                    // Đăng ký người dùng
+                    return loginService.register(username, fullName, password, studentId, "student");
+                }
+            };
+
+            signUpTask.setOnSucceeded(event -> {
+                if (signUpTask.getValue()) {
+                    // Đăng ký thành công
+                    showAlert(Alert.AlertType.INFORMATION, "Success", "Registration successful!");
+                    loadLoginScene(); // Chuyển về giao diện đăng nhập
+                }
+            });
+
+            signUpTask.setOnFailed(event -> {
+                showAlert(Alert.AlertType.ERROR, "Error", "Registration failed. Please try again.");
+            });
+
+            new Thread(signUpTask).start(); // Chạy Task trong luồng nền
+
+        } catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Student ID must be a number.");
         }
     }
 

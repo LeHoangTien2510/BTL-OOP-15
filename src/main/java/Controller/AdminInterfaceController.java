@@ -133,7 +133,7 @@ public class AdminInterfaceController implements Initializable {
             AdminView.getChildren().clear();
 
             AdminView.getChildren().add(dashBoardView);
-        } catch (IOException e) {
+           } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện.");
             e.printStackTrace();
         }

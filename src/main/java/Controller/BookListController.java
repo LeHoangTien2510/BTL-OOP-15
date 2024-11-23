@@ -3,6 +3,7 @@ package Controller;
 import Objects.Book;
 import Objects.MyListener;
 import Objects.SqliteConnection;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -51,33 +53,50 @@ public class BookListController implements Initializable {
     @FXML
     private Label bookQuantity;
 
+    @FXML
+    private ProgressBar progressBar;
+
     private List<Book> allBooks;
     private MyListener myListener;
-    Image image;
-
-    private Book book;
-    String findTitle;
-    int id;
-    String findAuthor;
-    String findGenre;
-    String findImageSrc;
-    String findQuantity;
+    private Image image;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        allBooks = new ArrayList<>(getAllBooks());
+        // Tải danh sách sách bằng luồng nền
+        loadBooksInBackground();
+    }
 
-        if (allBooks.size() > 0) {
-            setChosenBook(allBooks.get(0));
-            myListener = new MyListener() {
-                @Override
-                public void onClickListener(Book book) {
-                    setChosenBook(book);
-                }
-            };
-        }
+    private void loadBooksInBackground() {
+        // Tạo một Task để tải dữ liệu từ cơ sở dữ liệu
+        Task<List<Book>> loadBooksTask = new Task<>() {
+            @Override
+            protected List<Book> call() throws Exception {
+                return getAllBooks();
+            }
+        };
 
-        displayBooks(allBooks, 0, 1);
+        // Xử lý khi Task hoàn thành thành công
+        loadBooksTask.setOnSucceeded(event -> {
+            allBooks = loadBooksTask.getValue();
+            if (allBooks.size() > 0) {
+                setChosenBook(allBooks.get(0));
+                myListener = book -> setChosenBook(book);
+                displayBooks(allBooks, 0, 1);
+            }
+            progressBar.setVisible(false); // Ẩn progress bar khi hoàn tất
+        });
+
+        // Xử lý khi Task thất bại
+        loadBooksTask.setOnFailed(event -> {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải dữ liệu sách.");
+            progressBar.setVisible(false); // Ẩn progress bar
+        });
+
+        // Hiển thị progress bar và khởi chạy Task
+        progressBar.setVisible(true);
+        Thread thread = new Thread(loadBooksTask);
+        thread.setDaemon(true); // Đảm bảo dừng thread khi ứng dụng đóng
+        thread.start();
     }
 
     @FXML
@@ -97,7 +116,6 @@ public class BookListController implements Initializable {
     // Filter books by search keywords.
     private List<Book> filterBooks(String searchQuery) {
         List<Book> filteredBooks = new ArrayList<>();
-
         for (Book book : allBooks) {
             if (book.getTitle().toLowerCase().contains(searchQuery) ||
                     book.getAuthor().toLowerCase().contains(searchQuery) ||
@@ -110,7 +128,6 @@ public class BookListController implements Initializable {
 
     private void displayBooks(List<Book> books, int column, int row) {
         bookContainer.getChildren().clear();
-
         for (Book book : books) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/library/BookCardVer2.fxml"));
@@ -151,30 +168,19 @@ public class BookListController implements Initializable {
                 book.setQuantity(resultSet.getInt("quantity"));
                 bookList.add(book);
             }
-
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể lấy dữ liệu sách từ SQLite.");
             e.printStackTrace();
         }
-
         return bookList;
     }
 
     private void setChosenBook(Book book) {
-        this.book = book; // Cập nhật đối tượng book hiện tại
         bookTitle.setText(book.getTitle());
         bookAuthor.setText(book.getAuthor());
         bookGenre.setText(book.getGenre());
         image = new Image(getClass().getResourceAsStream(book.getImageSrc()));
         bookQuantity.setText(book.getQuantity() + "");
         bookImage.setImage(image);
-
-        // Cập nhật id và các thuộc tính khác khi chọn sách
-        id = book.getId();
-        findTitle = book.getTitle();
-        findAuthor = book.getAuthor();
-        findGenre = book.getGenre();
-        findImageSrc = book.getImageSrc();
-        findQuantity = book.getQuantity() + "";
     }
 }

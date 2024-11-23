@@ -2,21 +2,22 @@ package Controller;
 
 import Objects.Book;
 import Objects.SqliteConnection;
-import Objects.User;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Optional;
-
-import javafx.util.Callback;
 
 import static Objects.Utilities.showAlert;
 
@@ -53,105 +54,120 @@ public class UpdateBookController {
         genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         imageSrc.setCellValueFactory(new PropertyValueFactory<>("imageSrc"));
-        //bookTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
         bookTable.setPadding(Insets.EMPTY);
         bookTable.setStyle("-fx-padding: 0;");
 
-        bookTable.setColumnResizePolicy((param) -> {
-            return true;
-        });
+        bookTable.setColumnResizePolicy((param) -> true);
 
         addDeleteButtonToTable();
         addEditQuantityButtonToTable();
 
-        loadBookData();
         alignColumnsCenter();
+
+        loadBookData(); // Tải dữ liệu sách từ cơ sở dữ liệu
     }
 
     private void addDeleteButtonToTable() {
-        Callback<TableColumn<Book, Void>, TableCell<Book, Void>> cellFactory = new Callback<>() {
-            @Override
-            public TableCell<Book, Void> call(final TableColumn<Book, Void> param) {
-                return new TableCell<>() {
+        deleteColumn.setCellFactory(param -> new TableCell<>() {
+            private final Button deleteButton = new Button("Delete");
 
-                    private final Button deleteButton = new Button("Delete");
-
-                    {
-                        deleteButton.setOnAction(event -> {
-                            Book book = getTableView().getItems().get(getIndex());
-                            deleteBook(book);
-                        });
-                        deleteButton.setStyle("-fx-background-color: #ff4d4d; -fx-text-fill: white; -fx-font-size: 12px;");
-                    }
-
-                    @Override
-                    public void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(deleteButton);
-                        }
-                    }
-                };
+            {
+                deleteButton.setOnAction(event -> {
+                    Book book = getTableView().getItems().get(getIndex());
+                    deleteBook(book); // Gọi phương thức xóa sách
+                });
+                deleteButton.setStyle("-fx-background-color: #ff4d4d; -fx-text-fill: white; -fx-font-size: 12px;");
             }
-        };
 
-        deleteColumn.setCellFactory(cellFactory);
+            @Override
+            public void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(deleteButton);
+                }
+            }
+        });
+    }
+
+    private void addEditQuantityButtonToTable() {
+        editQuantityColumn.setCellFactory(param -> new TableCell<>() {
+            private final Button editButton = new Button("Edit");
+
+            {
+                editButton.setOnAction(event -> {
+                    Book book = getTableView().getItems().get(getIndex());
+                    editBookQuantity(book); // Gọi phương thức chỉnh sửa số lượng sách
+                });
+                editButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 12px;");
+            }
+
+            @Override
+            public void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(editButton);
+                }
+            }
+        });
     }
 
     private void alignColumnsCenter() {
-        // Xác định các cột cần căn giữa
-        TableColumn<User, Object>[] columnsToCenter = new TableColumn[]{idColumn,titleColumn, authorColumn, genreColumn, quantityColumn, imageSrc};
+        TableColumn<Book, Object>[] columnsToCenter = new TableColumn[]{idColumn, titleColumn, authorColumn, genreColumn, quantityColumn, imageSrc};
 
-        for (TableColumn<User, Object> column : columnsToCenter) {
-            column.setCellFactory(col -> {
-                return new TableCell<User, Object>() {
-                    @Override
-                    protected void updateItem(Object item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty || item == null) {
-                            setText(null); // Không hiển thị nội dung nếu ô trống
-                        } else {
-                            setText(item.toString()); // Hiển thị nội dung của cột
-                        }
-                        setAlignment(Pos.CENTER); // Căn giữa nội dung
+        for (TableColumn<Book, Object> column : columnsToCenter) {
+            column.setCellFactory(col -> new TableCell<>() {
+                @Override
+                protected void updateItem(Object item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                    } else {
+                        setText(item.toString());
                     }
-                };
+                    setAlignment(Pos.CENTER);
+                }
             });
         }
     }
 
-    private void addEditQuantityButtonToTable() {
-        Callback<TableColumn<Book, Void>, TableCell<Book, Void>> cellFactory = new Callback<>() {
+    private void loadBookData() {
+        Task<ObservableList<Book>> loadTask = new Task<>() {
             @Override
-            public TableCell<Book, Void> call(final TableColumn<Book, Void> param) {
-                return new TableCell<>() {
+            protected ObservableList<Book> call() throws Exception {
+                ObservableList<Book> tempList = FXCollections.observableArrayList();
+                String query = "SELECT * FROM book";
+                try (Connection conn = SqliteConnection.Connector();
+                     Statement stmt = conn.createStatement();
+                     ResultSet rs = stmt.executeQuery(query)) {
 
-                    private final Button editButton = new Button("Edit");
+                    while (rs.next()) {
+                        int id = rs.getInt("book_id");
+                        String title = rs.getString("title");
+                        String author = rs.getString("author");
+                        String genre = rs.getString("genre");
+                        int quantity = rs.getInt("quantity");
+                        String imgSrc = rs.getString("imageSrc");
 
-                    {
-                        editButton.setOnAction(event -> {
-                            Book book = getTableView().getItems().get(getIndex());
-                            editBookQuantity(book); // Gọi phương thức chỉnh sửa số lượng
-                        });
-                        editButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 12px;");
+                        tempList.add(new Book(id, title, author, genre, quantity, imgSrc));
                     }
-
-                    @Override
-                    public void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(editButton);
-                        }
-                    }
-                };
+                }
+                return tempList;
             }
         };
 
-        editQuantityColumn.setCellFactory(cellFactory);
+        loadTask.setOnSucceeded(e -> {
+            bookList = loadTask.getValue();
+            bookTable.setItems(bookList);
+        });
+
+        loadTask.setOnFailed(e -> showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải dữ liệu sách."));
+
+        new Thread(loadTask).start();
     }
 
     private void editBookQuantity(Book book) {
@@ -169,81 +185,66 @@ public class UpdateBookController {
                     return;
                 }
 
-                // Cập nhật cơ sở dữ liệu
-                String query = "UPDATE book SET quantity = ? WHERE book_id = ?";
-                try (Connection conn = SqliteConnection.Connector();
-                     PreparedStatement pstmt = conn.prepareStatement(query)) {
-                    pstmt.setInt(1, newQuantity);
-                    pstmt.setInt(2, book.getId());
-                    pstmt.executeUpdate();
-                }
+                Task<Void> updateTask = new Task<>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        String query = "UPDATE book SET quantity = ? WHERE book_id = ?";
+                        try (Connection conn = SqliteConnection.Connector();
+                             PreparedStatement pstmt = conn.prepareStatement(query)) {
+                            pstmt.setInt(1, newQuantity);
+                            pstmt.setInt(2, book.getId());
+                            pstmt.executeUpdate();
+                        }
+                        return null;
+                    }
+                };
 
-                // Cập nhật số lượng trong TableView
-                book.setQuantity(newQuantity);
-                bookTable.refresh(); // Làm mới bảng
+                updateTask.setOnSucceeded(e -> {
+                    book.setQuantity(newQuantity);
+                    bookTable.refresh();
+                    showAlert(Alert.AlertType.INFORMATION, "Thành công", "Số lượng sách đã được cập nhật!");
+                });
 
-                showAlert(Alert.AlertType.INFORMATION, "Thành công", "Số lượng sách đã được cập nhật!");
+                updateTask.setOnFailed(e -> showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể cập nhật số lượng."));
+
+                new Thread(updateTask).start();
 
             } catch (NumberFormatException e) {
                 showAlert(Alert.AlertType.ERROR, "Lỗi", "Vui lòng nhập một số hợp lệ!");
-            } catch (Exception e) {
-                e.printStackTrace();
-                showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể cập nhật số lượng. Vui lòng thử lại!");
             }
         }
     }
-
 
     private void deleteBook(Book book) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Xác nhận xóa");
         alert.setHeaderText("Bạn có chắc chắn muốn xóa sách này?");
         alert.setContentText("Sách: " + book.getTitle() + "\nTác giả: " + book.getAuthor());
+
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            // Xóa sách khỏi cơ sở dữ liệu
-            String query = "DELETE FROM book WHERE title = ? AND author = ?";
-            try (Connection conn = SqliteConnection.Connector();
-                 PreparedStatement pstmt = conn.prepareStatement(query)) {
-                pstmt.setString(1, book.getTitle());
-                pstmt.setString(2, book.getAuthor());
-                pstmt.executeUpdate();
-                // Xóa sách khỏi TableView
+            Task<Void> deleteTask = new Task<>() {
+                @Override
+                protected Void call() throws Exception {
+                    String query = "DELETE FROM book WHERE title = ? AND author = ?";
+                    try (Connection conn = SqliteConnection.Connector();
+                         PreparedStatement pstmt = conn.prepareStatement(query)) {
+                        pstmt.setString(1, book.getTitle());
+                        pstmt.setString(2, book.getAuthor());
+                        pstmt.executeUpdate();
+                    }
+                    return null;
+                }
+            };
+
+            deleteTask.setOnSucceeded(e -> {
                 bookList.remove(book);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        else {
-            showAlert(Alert.AlertType.INFORMATION, "Hủy bỏ", "Sách không bị xóa.");
-        }
-    }
+                showAlert(Alert.AlertType.INFORMATION, "Thành công", "Sách đã được xóa thành công!");
+            });
 
-    private void loadBookData() {
-        String query = "SELECT * FROM book";
+            deleteTask.setOnFailed(e -> showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể xóa sách."));
 
-        try (Connection conn = SqliteConnection.Connector();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            while (rs.next()) {
-                int id = rs.getInt("book_id");
-                String title = rs.getString("title");
-                String author = rs.getString("author");
-                String genre = rs.getString("genre");
-                int quantity = rs.getInt("quantity");
-                String imgSrc = rs.getString("imageSrc");
-                
-                // Thêm sách vào danh sách
-                bookList.add(new Book(id,title, author, genre, quantity,imgSrc));
-            }
-
-            // Đặt danh sách sách vào bảng
-            bookTable.setItems(bookList);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            new Thread(deleteTask).start();
         }
     }
-
 }

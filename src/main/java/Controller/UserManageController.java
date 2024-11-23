@@ -2,8 +2,10 @@ package Controller;
 
 import Objects.SqliteConnection;
 import Objects.User;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -50,28 +52,25 @@ public class UserManageController {
     }
 
     private void alignColumnsCenter() {
-        // Xác định các cột cần căn giữa
-        TableColumn<User, Object>[] columnsToCenter = new TableColumn[]{idColumn,nameColumn, userTypeColumn, usernameColumn, passwordColumn};
+        TableColumn<User, Object>[] columnsToCenter = new TableColumn[]{idColumn, nameColumn, userTypeColumn, usernameColumn, passwordColumn};
 
         for (TableColumn<User, Object> column : columnsToCenter) {
             column.setCellFactory(col -> {
-                return new TableCell<User, Object>() {
+                return new TableCell<>() {
                     @Override
                     protected void updateItem(Object item, boolean empty) {
                         super.updateItem(item, empty);
                         if (empty || item == null) {
-                            setText(null); // Không hiển thị nội dung nếu ô trống
+                            setText(null);
                         } else {
-                            setText(item.toString()); // Hiển thị nội dung của cột
+                            setText(item.toString());
                         }
-                        setAlignment(Pos.CENTER); // Căn giữa nội dung
+                        setAlignment(Pos.CENTER);
                     }
                 };
             });
         }
     }
-
-
 
     private void addDeleteButtonToTable() {
         deleteColumn.setCellFactory(param -> new TableCell<>() {
@@ -104,11 +103,7 @@ public class UserManageController {
             {
                 editButton.setOnAction(event -> {
                     User user = getTableView().getItems().get(getIndex());
-                    try {
-                        editPassword(user);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
+                    editPassword(user);
                 });
                 editButton.setStyle("-fx-background-color: #ff4d4d; -fx-text-fill: white; -fx-font-size: 12px;");
             }
@@ -126,100 +121,121 @@ public class UserManageController {
     }
 
     private void loadUserData() {
-        String query = "SELECT id, name, username, password, userType FROM user";
+        Task<ObservableList<User>> task = new Task<>() {
+            @Override
+            protected ObservableList<User> call() throws Exception {
+                ObservableList<User> tempList = FXCollections.observableArrayList();
+                String query = "SELECT id, name, username, password, userType FROM user";
 
-        try (Connection conn = SqliteConnection.Connector();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+                try (Connection conn = SqliteConnection.Connector();
+                     Statement stmt = conn.createStatement();
+                     ResultSet rs = stmt.executeQuery(query)) {
 
-            while (rs.next()) {
-                userList.add(new User(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("username"),
-                        rs.getString("password"),
-                        rs.getString("userType")
-                ));
+                    while (rs.next()) {
+                        tempList.add(new User(
+                                rs.getInt("id"),
+                                rs.getString("name"),
+                                rs.getString("username"),
+                                rs.getString("password"),
+                                rs.getString("userType")
+                        ));
+                    }
+                }
+                return tempList;
             }
+        };
 
+        task.setOnSucceeded(e -> {
+            userList = task.getValue();
             userTable.setItems(userList);
+        });
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        task.setOnFailed(e -> showAlert(Alert.AlertType.ERROR, "Error", "Failed to load user data"));
+
+        new Thread(task).start();
     }
 
     private void deleteUser(User user) {
         if (user.getName().equals("admin")) {
-            showAlert(Alert.AlertType.WARNING,"Error","You can't delete yourself.");
+            showAlert(Alert.AlertType.WARNING, "Error", "You can't delete yourself.");
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirm removing user?");
             alert.setHeaderText("Are you sure to delete this user?");
             alert.setContentText("Name: " + user.getName() + "\nAccount: " + user.getUsername());
 
-            // Lấy kết quả xác nhận từ người dùng
             Optional<ButtonType> result = alert.showAndWait();
 
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                String deleteBorrowedBooksQuery = "DELETE FROM borrowed_books WHERE user_id = ?";
-                String deleteUserQuery = "DELETE FROM user WHERE id = ?";
-                try (Connection conn = SqliteConnection.Connector()) {
-                    // Xóa thông tin trong bảng borrowed_books
-                    try (PreparedStatement pstmt = conn.prepareStatement(deleteBorrowedBooksQuery)) {
-                        pstmt.setInt(1, user.getId());
-                        pstmt.executeUpdate();
-                    }
+                Task<Void> task = new Task<>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        String deleteBorrowedBooksQuery = "DELETE FROM borrowed_books WHERE user_id = ?";
+                        String deleteUserQuery = "DELETE FROM user WHERE id = ?";
 
-                    // Xóa người dùng trong bảng user
-                    try (PreparedStatement pstmt = conn.prepareStatement(deleteUserQuery)) {
-                        pstmt.setInt(1, user.getId());
-                        pstmt.executeUpdate();
-                    }
+                        try (Connection conn = SqliteConnection.Connector()) {
+                            try (PreparedStatement pstmt = conn.prepareStatement(deleteBorrowedBooksQuery)) {
+                                pstmt.setInt(1, user.getId());
+                                pstmt.executeUpdate();
+                            }
 
-                    // Xóa người dùng khỏi TableView
+                            try (PreparedStatement pstmt = conn.prepareStatement(deleteUserQuery)) {
+                                pstmt.setInt(1, user.getId());
+                                pstmt.executeUpdate();
+                            }
+                        }
+                        return null;
+                    }
+                };
+
+                task.setOnSucceeded(e -> {
                     userList.remove(user);
+                    showAlert(Alert.AlertType.INFORMATION, "Success", "User has been successfully deleted!");
+                });
 
-                    showAlert(Alert.AlertType.INFORMATION, "Thành công", "Người dùng đã được xóa thành công!");
+                task.setOnFailed(e -> showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete user."));
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể xóa người dùng. Vui lòng thử lại!");
-                }
-            } else {
-                showAlert(Alert.AlertType.INFORMATION, "Hủy bỏ", "Người dùng không bị xóa.");
+                new Thread(task).start();
             }
         }
     }
-    private void editPassword(User user) throws SQLException {
-        TextInputDialog dialog = new TextInputDialog(String.valueOf(user.getPassword()));
-        dialog.setTitle("Đổi mật khẩu");
-        dialog.setHeaderText("Đổi mật khẩu");
-        dialog.setContentText("Nhập mật khẩu mới:");
+
+    private void editPassword(User user) {
+        TextInputDialog dialog = new TextInputDialog(user.getPassword());
+        dialog.setTitle("Change Password");
+        dialog.setHeaderText("Change Password");
+        dialog.setContentText("Enter new password:");
 
         Optional<String> result = dialog.showAndWait();
-        if (result.isPresent()) {
-            try {
-                String newPassword = result.get();
-                if (newPassword == "") {
-                    showAlert(Alert.AlertType.WARNING, "Lỗi", "Phải điền mật khẩu");
-                    return;
+        result.ifPresent(newPassword -> {
+            if (newPassword.isEmpty()) {
+                showAlert(Alert.AlertType.WARNING, "Error", "Password cannot be empty.");
+                return;
+            }
+
+            Task<Void> task = new Task<>() {
+                @Override
+                protected Void call() throws Exception {
+                    String query = "UPDATE user SET password = ? WHERE id = ?";
+                    try (Connection conn = SqliteConnection.Connector();
+                         PreparedStatement pstmt = conn.prepareStatement(query)) {
+                        pstmt.setString(1, newPassword);
+                        pstmt.setInt(2, user.getIdFromDb());
+                        pstmt.executeUpdate();
+                    }
+                    return null;
                 }
-                String query = "UPDATE user SET password = ? WHERE id = ?";
-                try (Connection conn = SqliteConnection.Connector();
-                     PreparedStatement pstmt = conn.prepareStatement(query)) {
-                    pstmt.setString(1, newPassword);
-                    pstmt.setInt(2, user.getIdFromDb());
-                    pstmt.executeUpdate();
-                }
+            };
+
+            task.setOnSucceeded(e -> {
                 user.setPassword(newPassword);
                 userTable.refresh();
-                showAlert(Alert.AlertType.INFORMATION, "Password updated", "Password updated");
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Password has been updated!");
+            });
 
+            task.setOnFailed(e -> showAlert(Alert.AlertType.ERROR, "Error", "Failed to update password."));
+
+            new Thread(task).start();
+        });
+    }
 }
