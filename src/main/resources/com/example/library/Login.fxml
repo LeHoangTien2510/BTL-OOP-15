@@ -6,48 +6,51 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
-   <left>
-      <AnchorPane prefHeight="500.0" prefWidth="851.0" style="-fx-background-color: #0598ff;" BorderPane.alignment="CENTER">
+<AnchorPane fx:id="slideInLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
+   <children>
+      <HBox layoutY="1.0" prefHeight="500.0" prefWidth="700.0">
          <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../image/open-book.png" />
-               </image>
-            </ImageView>
-            <Text fill="WHITE" layoutX="100.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Library Management" wrappingWidth="155.7403793334961">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Text>
+            <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #0598ff;">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../image/open-book.png" />
+                     </image>
+                  </ImageView>
+                  <Text fill="WHITE" layoutX="100.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Library Management" wrappingWidth="155.7403793334961">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="639.0" prefWidth="350.0" style="-fx-background-color: #fff;">
+               <children>
+                  <Button fx:id="handleRegisterButton" layoutX="175.0" layoutY="357.0" mnemonicParsing="false" onAction="#handleRegisterButtonAction" style="-fx-background-color: transperent;" text="Don't have an account? Sign up" textFill="#3f95ce" />
+                  <TextField fx:id="usernameField" layoutX="100.0" layoutY="182.0" promptText="User Name" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
+                  <PasswordField fx:id="passwordField" layoutX="100.0" layoutY="257.0" promptText="Password" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
+                  <ImageView fitHeight="31.0" fitWidth="29.0" layoutX="68.0" layoutY="191.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../image/user_icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="29.0" fitWidth="25.0" layoutX="72.0" layoutY="258.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../image/key.png" />
+                     </image>
+                  </ImageView>
+                  <Button layoutX="137.0" layoutY="308.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="37.0" prefWidth="76.0" style="-fx-background-color: #0598ff;" text="Login" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
          </children>
-      </AnchorPane>
-   </left>
-   <right>
-      <AnchorPane prefHeight="639.0" prefWidth="390.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
-         <children>
-            <Button layoutX="175.0" layoutY="357.0" mnemonicParsing="false" onAction="#handleRegisterButtonAction" style="-fx-background-color: transperent;" text="Don't have an account? Sign up" textFill="#3f95ce" />
-            <TextField fx:id="usernameField" layoutX="100.0" layoutY="182.0" promptText="User Name" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
-            <PasswordField fx:id="passwordField" layoutX="100.0" layoutY="257.0" promptText="Password" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
-            <ImageView fitHeight="31.0" fitWidth="29.0" layoutX="68.0" layoutY="191.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../image/user_icon.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="29.0" fitWidth="25.0" layoutX="72.0" layoutY="258.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../image/key.png" />
-               </image>
-            </ImageView>
-            <Button layoutX="137.0" layoutY="308.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="37.0" prefWidth="76.0" style="-fx-background-color: #0598ff;" text="Login" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font></Button>
-         </children>
-      </AnchorPane>
-   </right>
-</BorderPane>
+      </HBox>
+   </children>
+</AnchorPane>

@@ -1,6 +1,10 @@
 package Controller;
 
 import Objects.Login;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -10,7 +14,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -98,19 +105,21 @@ public class SignUpController {
     }
 
     @FXML
+    private AnchorPane slideInSignUp;
+
+    @FXML
     private void handleCancelButtonAction() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/Login.fxml"));
-            Parent loginRoot = loader.load();
-            Stage stage = (Stage) usernameField.getScene().getWindow();
-            stage.setScene(new Scene(loginRoot));
-            stage.setTitle("Login");
-            stage.show();
-        } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Unable to load the login screen.");
-            e.printStackTrace();
-        }
-        closeWindow();
+        TranslateTransition slide = new TranslateTransition();
+        slide.setDuration(Duration.seconds(0.7));
+        slide.setNode(slideInSignUp);
+        slide.setToX(-slideInSignUp.getWidth() / 2);
+
+        slide.play();
+        slide.setOnFinished(e -> {
+            loadScene("/com/example/library/Login.fxml", "Login");
+        });
+
+
     }
 
     private void closeWindow() {
@@ -122,19 +131,23 @@ public class SignUpController {
         }
     }
 
-    private void loadLoginScene() {
-        try {
-            // Load the login scene
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/library/Login.fxml"));
-            Parent loginRoot = loader.load();
 
-            // Show the login scene
+
+    private void loadLoginScene() {
+        loadScene("/com/example/library/Login.fxml", "Login");
+    }
+
+    private void loadScene(String fxmlPath, String title) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Scene scene = new Scene(loader.load());
             Stage stage = (Stage) usernameField.getScene().getWindow();
-            stage.setScene(new Scene(loginRoot));
-            stage.setTitle("Library");
+            stage.setScene(scene);
+            stage.setTitle(title);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Unable to load the login screen.");
+            showAlert(Alert.AlertType.ERROR, "Error", "Unable to load the interface.");
             e.printStackTrace();
         }
     }

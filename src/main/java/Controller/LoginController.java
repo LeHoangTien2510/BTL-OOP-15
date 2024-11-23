@@ -2,6 +2,7 @@ package Controller;
 
 import Objects.Login;
 import Objects.User;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -11,7 +12,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import static Objects.Utilities.showAlert;
 
@@ -75,8 +79,20 @@ public class LoginController {
     }
 
     @FXML
+    private AnchorPane slideInLogin;
+
+    @FXML
     private void handleRegisterButtonAction() {
-        loadScene("/com/example/library/SignUp.fxml", "Sign Up");
+        TranslateTransition slide = new TranslateTransition();
+        slide.setDuration(Duration.seconds(0.7));
+        slide.setNode(slideInLogin);
+        slide.setToX(slideInLogin.getWidth() / 2);
+
+        slide.play();
+        slide.setOnFinished(e -> {
+            // Sau khi hiệu ứng trượt hoàn thành, chuyển sang màn hình đăng ký
+            loadScene("/com/example/library/SignUp.fxml", "Sign Up");
+        });
     }
 
     private void loadScene(String fxmlPath, String title) {
