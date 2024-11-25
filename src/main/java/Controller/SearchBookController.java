@@ -58,6 +58,9 @@ public class SearchBookController extends Utilities implements Initializable {
     @FXML
     private Hyperlink hyperLinkChatGPT;
 
+    @FXML
+    private ChoiceBox<String> genreChoiceBox;
+
     private List<Book> allBooks;
     private MyListener myListener;
     private Image image;
@@ -71,6 +74,11 @@ public class SearchBookController extends Utilities implements Initializable {
                 return getAllBooks();
             }
         };
+
+        genreChoiceBox.getItems().add("All");
+        genreChoiceBox.getItems().addAll(getGenresFromDatabase());
+        genreChoiceBox.setValue("All");
+        genreChoiceBox.setOnAction(event -> handleGenreChoiceBoxAction());
 
         loadBooksTask.setOnSucceeded(event -> {
             allBooks = loadBooksTask.getValue();
@@ -265,5 +273,42 @@ public class SearchBookController extends Utilities implements Initializable {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to open ChatGPT.");
         }
+    }
+
+    private List<String> getGenresFromDatabase() {
+        List<String> genres = new ArrayList<>();
+        try (Connection connection = SqliteConnection.Connector();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT DISTINCT genre FROM Book")) {
+
+            while (resultSet.next()) {
+                genres.add(resultSet.getString("genre"));
+            }
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load genres from database.");
+            e.printStackTrace();
+        }
+        return genres;
+    }
+
+    @FXML
+    private void handleGenreChoiceBoxAction() {
+        String selectedGenre = genreChoiceBox.getValue();
+        if (selectedGenre.equals("All")) {
+            displayBooks(allBooks, 0, 1);  // Hiển thị tất cả sách
+        } else {
+            List<Book> filteredBooks = filterBooksByGenre(selectedGenre);
+            displayBooks(filteredBooks, 0, 1);  // Hiển thị sách theo thể loại đã chọn
+        }
+    }
+
+    private List<Book> filterBooksByGenre(String genre) {
+        List<Book> filteredBooks = new ArrayList<>();
+        for (Book book : allBooks) {
+            if (book.getGenre().equalsIgnoreCase(genre)) {
+                filteredBooks.add(book);
+            }
+        }
+        return filteredBooks;
     }
 }

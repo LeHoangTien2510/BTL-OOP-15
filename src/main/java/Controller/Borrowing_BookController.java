@@ -3,6 +3,7 @@ package Controller;
 import Objects.*;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,7 +15,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
@@ -160,5 +163,19 @@ public class Borrowing_BookController implements Initializable {
             bookImage.setImage(image);
             borrowedDate.setText(book.getBorrowedDate());
         });
+    }
+
+    @FXML
+    private void handleAskHyperlinkAction(ActionEvent event) {
+        try {
+            String bookName = bookTitle.getText();
+            String url = "https://chat.openai.com/?q=" + "Tell+me+about+" + bookName.replace(" ", "+");
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                Desktop.getDesktop().browse(new URI(url));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to open ChatGPT.");
+        }
     }
 }
