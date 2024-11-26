@@ -56,6 +56,8 @@ public class UserInterfaceController extends Utilities implements Initializable 
     @FXML
     private MediaView media;
 
+    @FXML
+    private Button muteButton;
 
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
@@ -68,8 +70,8 @@ public class UserInterfaceController extends Utilities implements Initializable 
         applyButtonHoverStyle(borrowedBooksButton);
         applyButtonHoverStyle(profileButton);
 
-        String videoPath = getClass().getResource("/arisu bị câm.mp4").toExternalForm();
-
+        String videoPath = getClass().getResource("/arisu.mp4").toExternalForm();
+        
         // Tạo đối tượng Media và MediaPlayer
         Media mediaFile = new Media(videoPath);
         mediaPlayer = new MediaPlayer(mediaFile);
@@ -81,6 +83,13 @@ public class UserInterfaceController extends Utilities implements Initializable 
         mediaPlayer.setAutoPlay(true);
         mediaPlayer.play();
         mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
+    }
+
+    @FXML
+    private void toggleMute() {
+        boolean isMuted = mediaPlayer.isMute();
+        mediaPlayer.setMute(!isMuted); // Đảo trạng thái tắt tiếng
+        muteButton.setText(isMuted ? "Mute" : "Unmute"); // Cập nhật nhãn nút
     }
 
     private void applyButtonHoverStyle(Button button) {

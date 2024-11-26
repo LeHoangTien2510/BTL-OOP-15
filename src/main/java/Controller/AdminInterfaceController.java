@@ -80,12 +80,6 @@ public class AdminInterfaceController extends Utilities implements Initializable
                         .then("-fx-background-color: #1e4f5f; -fx-text-fill: #FFFFFF;")
                         .otherwise("-fx-background-color: #0e3746; -fx-text-fill: #FFFFFF;")
         );
-
-        signUpButton.styleProperty().bind(
-                Bindings.when(signUpButton.hoverProperty())
-                        .then("-fx-background-color: #1e4f5f; -fx-text-fill: #FFFFFF;")
-                        .otherwise("-fx-background-color: #0e3746; -fx-text-fill: #FFFFFF;")
-        );
         String videoPath = getClass().getResource("/shiroko.mp4").toExternalForm();
 
         // Tạo đối tượng Media và MediaPlayer
