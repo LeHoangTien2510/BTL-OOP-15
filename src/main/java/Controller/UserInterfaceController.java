@@ -68,7 +68,7 @@ public class UserInterfaceController extends Utilities implements Initializable 
         applyButtonHoverStyle(borrowedBooksButton);
         applyButtonHoverStyle(profileButton);
 
-        String videoPath = getClass().getResource("/arisu bị câm.mp4").toExternalForm();
+        String videoPath = getClass().getResource("/arisu.mp4").toExternalForm();
 
         // Tạo đối tượng Media và MediaPlayer
         Media mediaFile = new Media(videoPath);
