@@ -53,6 +53,9 @@ public class AdminInterfaceController extends Utilities implements Initializable
     private MediaView media;
 
     @FXML
+    private Button signUpButton;
+
+    @FXML
     public void initialize(URL location, ResourceBundle resources)  {
         addBookButton.styleProperty().bind(
                 Bindings.when(addBookButton.hoverProperty())
@@ -77,7 +80,13 @@ public class AdminInterfaceController extends Utilities implements Initializable
                         .then("-fx-background-color: #1e4f5f; -fx-text-fill: #FFFFFF;")
                         .otherwise("-fx-background-color: #0e3746; -fx-text-fill: #FFFFFF;")
         );
-        String videoPath = getClass().getResource("/shiroko bị câm.mp4").toExternalForm();
+
+        signUpButton.styleProperty().bind(
+                Bindings.when(signUpButton.hoverProperty())
+                        .then("-fx-background-color: #1e4f5f; -fx-text-fill: #FFFFFF;")
+                        .otherwise("-fx-background-color: #0e3746; -fx-text-fill: #FFFFFF;")
+        );
+        String videoPath = getClass().getResource("/shiroko.mp4").toExternalForm();
 
         // Tạo đối tượng Media và MediaPlayer
         Media mediaFile = new Media(videoPath);
@@ -180,6 +189,21 @@ public class AdminInterfaceController extends Utilities implements Initializable
             AdminView.getChildren().add(bookList);
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện Dashboard.");
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleCreateAccountButtonAction(ActionEvent event){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/library/CreateAccount.fxml"));
+            AnchorPane dashBoardView = fxmlLoader.load();
+
+            AdminView.getChildren().clear();
+
+            AdminView.getChildren().add(dashBoardView);
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải giao diện.");
             e.printStackTrace();
         }
     }
