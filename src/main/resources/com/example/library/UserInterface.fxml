@@ -25,8 +25,7 @@
                   <Label alignment="CENTER" prefHeight="39.0" prefWidth="142.0" style="-fx-font-size: 28px; -fx-font-weight: bold;" text="LIBRARY" textFill="#f4f2ec" />
                </children>
             </HBox>
-            <Button mnemonicParsing="false" onAction="#toggleMute" text="Sound" />
-            <VBox alignment="CENTER" prefHeight="145.0" prefWidth="181.0">
+            <VBox alignment="CENTER" prefHeight="186.0" prefWidth="234.0">
                <children>
                   <MediaView fx:id="media" fitHeight="150.0" fitWidth="150.0" />
                </children>
@@ -102,15 +101,20 @@
                </children>
             </VBox>
             <VBox prefHeight="93.0" prefWidth="234.0" />
-            <VBox alignment="CENTER" prefHeight="151.0" prefWidth="234.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="handleLogOutButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleLogOutButtonAction" style="-fx-background-color: #be2623;" text="LOG OUT" textFill="#f4f2ec">
+                  <Button fx:id="handleLogOutButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleLogOutButtonAction" prefHeight="40.0" style="-fx-background-color: #be2623;" text="LOG OUT" textFill="#f4f2ec">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Button>
+                  <Button fx:id="muteButton" mnemonicParsing="false" onAction="#toggleMute" prefHeight="43.0" prefWidth="79.0" style="-fx-background-color: #018786;" text="Mute" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
                </children>
-            </VBox>
+            </HBox>
          </children>
       </VBox>
       <HBox alignment="CENTER_RIGHT" layoutX="237.0" prefHeight="63.0" prefWidth="1043.0" style="-fx-background-color: #EEEEEE;" styleClass="white-background" stylesheets="@../../../CssFile/AdminInterface.css">

@@ -9,72 +9,53 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreateAccountController">
+<AnchorPane prefHeight="718.0" prefWidth="1067.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreateAccountController">
    <children>
-      <AnchorPane fx:id="slideInSignUp" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0">
+      <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="710.0" prefWidth="1059.0">
          <children>
-            <HBox prefHeight="500.0" prefWidth="700.0">
+            <AnchorPane prefHeight="710.0" prefWidth="334.0" style="-fx-background-color: #fff;">
                <children>
-                  <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #fff;">
-                     <children>
-                        <TextField fx:id="usernameField" layoutX="107.0" layoutY="210.0" promptText="User Name" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
-                        <PasswordField fx:id="passwordField" layoutX="107.0" layoutY="250.0" promptText="Password" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
-                        <ImageView fitHeight="31.0" fitWidth="29.0" layoutX="68.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../image/user_icon.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="29.0" fitWidth="25.0" layoutX="70.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../image/key.png" />
-                           </image>
-                        </ImageView>
-                        <Button layoutX="104.0" layoutY="373.0" mnemonicParsing="false" onAction="#handleSignUpButtonAction" prefHeight="38.0" prefWidth="142.0" style="-fx-background-color: #0598ff; -fx-background-radius: 20;" text="Sign Up" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Button>
-                        <TextField fx:id="studentIdField" layoutX="107.0" layoutY="130.0" promptText="ID" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
-                        <TextField fx:id="fullNameField" layoutX="107.0" layoutY="170.0" promptText="Full Name" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
-                        <PasswordField fx:id="confirmPasswordField" layoutX="107.0" layoutY="290.0" promptText="Re-Password" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
-                        <ImageView fitHeight="31.0" fitWidth="29.0" layoutX="72.0" layoutY="168.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../image/name.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="31.0" fitWidth="29.0" layoutX="70.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../image/student-card.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="29.0" fitWidth="25.0" layoutX="70.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../image/reset-password.png" />
-                           </image>
-                        </ImageView>
-                        <CheckBox fx:id="checkBox2" layoutX="211.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleUserCheckBoxButtonAction" text="user" />
-                        <CheckBox fx:id="checkBox1" layoutX="79.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleAdminCheckBoxButtonAction" text="admin" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #0598ff;">
-                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../image/open-book.png" />
-                           </image>
-                        </ImageView>
-                        <Text fill="WHITE" layoutX="100.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Library Management" wrappingWidth="155.7403793334961">
-                           <font>
-                              <Font size="17.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </AnchorPane>
+                  <TextField fx:id="usernameField" layoutX="107.0" layoutY="210.0" promptText="User Name" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
+                  <PasswordField fx:id="passwordField" layoutX="107.0" layoutY="250.0" promptText="Password" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
+                  <ImageView fitHeight="31.0" fitWidth="29.0" layoutX="68.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../image/user_icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="29.0" fitWidth="25.0" layoutX="70.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../image/key.png" />
+                     </image>
+                  </ImageView>
+                  <Button layoutX="104.0" layoutY="373.0" mnemonicParsing="false" onAction="#handleSignUpButtonAction" prefHeight="38.0" prefWidth="142.0" style="-fx-background-color: #0598ff; -fx-background-radius: 20;" text="Sign Up" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="studentIdField" layoutX="107.0" layoutY="130.0" promptText="ID" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
+                  <TextField fx:id="fullNameField" layoutX="107.0" layoutY="170.0" promptText="Full Name" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
+                  <PasswordField fx:id="confirmPasswordField" layoutX="107.0" layoutY="290.0" promptText="Re-Password" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
+                  <ImageView fitHeight="31.0" fitWidth="29.0" layoutX="72.0" layoutY="168.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../image/name.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="31.0" fitWidth="29.0" layoutX="70.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../image/student-card.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="29.0" fitWidth="25.0" layoutX="70.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../image/reset-password.png" />
+                     </image>
+                  </ImageView>
+                  <CheckBox fx:id="checkBox2" layoutX="211.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleUserCheckBoxButtonAction" text="user" />
+                  <CheckBox fx:id="checkBox1" layoutX="79.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleAdminCheckBoxButtonAction" text="admin" />
                </children>
-            </HBox>
+            </AnchorPane>
          </children>
-      </AnchorPane>
+      </HBox>
    </children>
 </AnchorPane>
