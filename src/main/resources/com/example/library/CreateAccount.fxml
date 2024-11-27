@@ -8,54 +8,83 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="718.0" prefWidth="1067.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreateAccountController">
+<AnchorPane prefHeight="718.0" prefWidth="1067.0" style="-fx-background-color: #EEEEEE;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreateAccountController">
    <children>
-      <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="710.0" prefWidth="1059.0">
+      <VBox alignment="CENTER" layoutX="86.0" layoutY="27.0" prefHeight="658.0" prefWidth="918.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <AnchorPane prefHeight="710.0" prefWidth="334.0" style="-fx-background-color: #fff;">
+            <HBox alignment="CENTER" prefHeight="75.0" prefWidth="758.0">
                <children>
-                  <TextField fx:id="usernameField" layoutX="107.0" layoutY="210.0" promptText="User Name" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
-                  <PasswordField fx:id="passwordField" layoutX="107.0" layoutY="250.0" promptText="Password" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
-                  <ImageView fitHeight="31.0" fitWidth="29.0" layoutX="68.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="58.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../image/user_icon.png" />
+                        <Image url="@../../../image/AdminInterfaceImage/id.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="29.0" fitWidth="25.0" layoutX="70.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
+                  <TextField fx:id="studentIdField" promptText="ID" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="75.0" prefWidth="351.0">
+               <children>
+                  <ImageView fitHeight="59.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../image/key.png" />
+                        <Image url="@../../../image/AdminInterfaceImage/fullname.png" />
                      </image>
                   </ImageView>
-                  <Button layoutX="104.0" layoutY="373.0" mnemonicParsing="false" onAction="#handleSignUpButtonAction" prefHeight="38.0" prefWidth="142.0" style="-fx-background-color: #0598ff; -fx-background-radius: 20;" text="Sign Up" textFill="WHITE">
+                  <TextField fx:id="fullNameField" promptText="Full Name" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="75.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="63.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../image/AdminInterfaceImage/username.png" />
+                     </image>
+                  </ImageView>
+                  <TextField fx:id="usernameField" promptText="User Name" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="75.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../image/AdminInterfaceImage/password.png" />
+                     </image>
+                  </ImageView>
+                  <PasswordField fx:id="passwordField" promptText="Password" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="75.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="52.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../image/AdminInterfaceImage/repeat.png" />
+                     </image>
+                  </ImageView>
+                  <PasswordField fx:id="confirmPasswordField" promptText="Re-Password" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="75.0" prefWidth="200.0" spacing="30.0">
+               <children>
+                  <CheckBox fx:id="checkBox1" mnemonicParsing="false" onAction="#handleAdminCheckBoxButtonAction" text="admin">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
-                  </Button>
-                  <TextField fx:id="studentIdField" layoutX="107.0" layoutY="130.0" promptText="ID" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
-                  <TextField fx:id="fullNameField" layoutX="107.0" layoutY="170.0" promptText="Full Name" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
-                  <PasswordField fx:id="confirmPasswordField" layoutX="107.0" layoutY="290.0" promptText="Re-Password" style="-fx-background-color: transperent; -fx-border-color: #0598ff; -fx-border-width: 0 0 2 0;" />
-                  <ImageView fitHeight="31.0" fitWidth="29.0" layoutX="72.0" layoutY="168.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../image/name.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="31.0" fitWidth="29.0" layoutX="70.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../image/student-card.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="29.0" fitWidth="25.0" layoutX="70.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../image/reset-password.png" />
-                     </image>
-                  </ImageView>
-                  <CheckBox fx:id="checkBox2" layoutX="211.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleUserCheckBoxButtonAction" text="user" />
-                  <CheckBox fx:id="checkBox1" layoutX="79.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleAdminCheckBoxButtonAction" text="admin" />
+                  </CheckBox>
+                  <CheckBox fx:id="checkBox2" mnemonicParsing="false" onAction="#handleUserCheckBoxButtonAction" text="user">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </CheckBox>
                </children>
-            </AnchorPane>
+            </HBox>
+            <Button mnemonicParsing="false" onAction="#handleSignUpButtonAction" prefHeight="38.0" prefWidth="142.0" style="-fx-background-color: #018786; -fx-background-radius: 20;" text="Create" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
          </children>
-      </HBox>
+      </VBox>
    </children>
 </AnchorPane>

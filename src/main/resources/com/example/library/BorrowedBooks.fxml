@@ -29,16 +29,16 @@
                </padding></VBox>
          </content>
       </ScrollPane>
-      <HBox layoutX="-1.0" layoutY="436.0" prefHeight="219.0" prefWidth="1047.0" spacing="10.0">
+      <HBox alignment="CENTER" layoutX="-1.0" layoutY="436.0" prefHeight="219.0" prefWidth="1047.0" spacing="10.0">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="196.0" prefWidth="518.0" style="-fx-background-color: #0F9EA8; -fx-background-radius: 20;">
+            <HBox alignment="CENTER_LEFT" prefHeight="189.0" prefWidth="1191.0" style="-fx-background-color: #0F9EA8; -fx-background-radius: 20;">
                <children>
                   <VBox alignment="CENTER" prefHeight="189.0" prefWidth="217.0">
                      <children>
                         <ImageView fx:id="bookImage" fitHeight="150.0" fitWidth="136.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </VBox>
-                  <VBox prefHeight="189.0" prefWidth="347.0" spacing="10.0">
+                  <VBox prefHeight="189.0" prefWidth="655.0" spacing="10.0">
                      <children>
                         <HBox prefHeight="26.0" prefWidth="275.0">
                            <children>
@@ -46,8 +46,11 @@
                                  <font>
                                     <Font name="System Bold" size="16.0" />
                                  </font>
+                                 <HBox.margin>
+                                    <Insets right="50.0" />
+                                 </HBox.margin>
                               </Label>
-                              <Label fx:id="bookTitle" alignment="TOP_LEFT" prefHeight="11.0" prefWidth="295.0" textFill="WHITE">
+                              <Label fx:id="bookTitle" prefHeight="26.0" prefWidth="480.0" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="16.0" />
                                  </font>
@@ -60,8 +63,11 @@
                                  <font>
                                     <Font name="System Bold" size="16.0" />
                                  </font>
+                                 <HBox.margin>
+                                    <Insets right="50.0" />
+                                 </HBox.margin>
                               </Label>
-                              <Label fx:id="bookAuthor" alignment="TOP_LEFT" prefHeight="11.0" prefWidth="295.0" textFill="WHITE">
+                              <Label fx:id="bookAuthor" prefHeight="26.0" prefWidth="480.0" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="16.0" />
                                  </font>
@@ -74,8 +80,28 @@
                                  <font>
                                     <Font name="System Bold" size="16.0" />
                                  </font>
+                                 <HBox.margin>
+                                    <Insets right="50.0" />
+                                 </HBox.margin>
                               </Label>
-                              <Label fx:id="bookGenre" alignment="TOP_LEFT" prefHeight="11.0" prefWidth="295.0" textFill="WHITE">
+                              <Label fx:id="bookGenre" prefHeight="26.0" prefWidth="480.0" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="248.0" style="-fx-background-color: #0F9EA8; -fx-background-radius: 20;">
+                           <children>
+                              <Label prefHeight="26.0" prefWidth="120.0" text="Borrowed Date:">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="50.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="borrowedDate" prefHeight="26.0" prefWidth="480.0" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="16.0" />
                                  </font>
@@ -90,28 +116,7 @@
                         <Insets top="20.0" />
                      </padding>
                   </VBox>
-               </children>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </HBox>
-            <VBox alignment="TOP_CENTER" prefHeight="134.0" prefWidth="248.0" style="-fx-background-radius: 20;">
-               <children>
-                  <HBox alignment="CENTER" prefHeight="68.0" prefWidth="248.0" style="-fx-background-color: #0F9EA8; -fx-background-radius: 20;">
-                     <children>
-                        <Label prefHeight="18.0" prefWidth="102.0" text="Borrowed Date">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="borrowedDate" prefHeight="18.0" prefWidth="98.0" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font></Label>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="68.0" prefWidth="248.0" style="-fx-background-radius: 20;" />
-                  <HBox alignment="CENTER" prefHeight="68.0" prefWidth="248.0" style="-fx-background-color: #0F9EA8; -fx-background-radius: 20;">
+                  <HBox alignment="CENTER" prefHeight="189.0" prefWidth="99.0" style="-fx-background-color: #0F9EA8; -fx-background-radius: 20;">
                      <children>
                         <Hyperlink fx:id="hyperLinkChatGPT" onAction="#handleAskHyperlinkAction">
                            <graphic>
@@ -124,6 +129,14 @@
                         </Hyperlink>
                      </children>
                   </HBox>
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </HBox>
+            <VBox alignment="TOP_CENTER" prefHeight="134.0" prefWidth="248.0" style="-fx-background-radius: 20;">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="68.0" prefWidth="248.0" style="-fx-background-radius: 20;" />
                </children>
             </VBox>
          </children>
