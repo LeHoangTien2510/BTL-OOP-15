@@ -67,6 +67,11 @@ public class CreateAccountController extends Utilities {
             return;
         }
 
+        if(!checkBox1.isSelected()&&!checkBox2.isSelected()) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Please choose an account type.");
+            return;
+        }
+
         if (!password.equals(confirmPassword)) {
             showAlert(Alert.AlertType.ERROR, "Error", "Passwords do not match.");
             return;
