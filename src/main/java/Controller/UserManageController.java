@@ -10,13 +10,14 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import Utilitie.UserManage;
 
 import java.sql.*;
 import java.util.Optional;
 
 import static Objects.Utilities.showAlert;
 
-public class UserManageController {
+public class UserManageController extends UserManage {
     @FXML
     private TableView<User> userTable;
     @FXML
@@ -153,51 +154,6 @@ public class UserManageController {
         task.setOnFailed(e -> showAlert(Alert.AlertType.ERROR, "Error", "Failed to load user data"));
 
         new Thread(task).start();
-    }
-
-    private void deleteUser(User user) {
-        if (user.getName().equals("admin")) {
-            showAlert(Alert.AlertType.WARNING, "Error", "You can't delete yourself.");
-        } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirm removing user?");
-            alert.setHeaderText("Are you sure to delete this user?");
-            alert.setContentText("Name: " + user.getName() + "\nAccount: " + user.getUsername());
-
-            Optional<ButtonType> result = alert.showAndWait();
-
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                Task<Void> task = new Task<>() {
-                    @Override
-                    protected Void call() throws Exception {
-                        String deleteBorrowedBooksQuery = "DELETE FROM borrowed_books WHERE user_id = ?";
-                        String deleteUserQuery = "DELETE FROM user WHERE id = ?";
-
-                        try (Connection conn = SqliteConnection.Connector()) {
-                            try (PreparedStatement pstmt = conn.prepareStatement(deleteBorrowedBooksQuery)) {
-                                pstmt.setInt(1, user.getId());
-                                pstmt.executeUpdate();
-                            }
-
-                            try (PreparedStatement pstmt = conn.prepareStatement(deleteUserQuery)) {
-                                pstmt.setInt(1, user.getId());
-                                pstmt.executeUpdate();
-                            }
-                        }
-                        return null;
-                    }
-                };
-
-                task.setOnSucceeded(e -> {
-                    userList.remove(user);
-                    showAlert(Alert.AlertType.INFORMATION, "Success", "User has been successfully deleted!");
-                });
-
-                task.setOnFailed(e -> showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete user."));
-
-                new Thread(task).start();
-            }
-        }
     }
 
     private void editPassword(User user) {
