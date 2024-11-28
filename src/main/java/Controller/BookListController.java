@@ -83,17 +83,12 @@ public class BookListController implements Initializable {
                 myListener = book -> setChosenBook(book);
                 displayBooks(allBooks, 0, 1);
             }
-            progressBar.setVisible(false); // Ẩn progress bar khi hoàn tất
         });
 
         // Xử lý khi Task thất bại
         loadBooksTask.setOnFailed(event -> {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải dữ liệu sách.");
-            progressBar.setVisible(false); // Ẩn progress bar
         });
-
-        // Hiển thị progress bar và khởi chạy Task
-        progressBar.setVisible(true);
         Thread thread = new Thread(loadBooksTask);
         thread.setDaemon(true); // Đảm bảo dừng thread khi ứng dụng đóng
         thread.start();

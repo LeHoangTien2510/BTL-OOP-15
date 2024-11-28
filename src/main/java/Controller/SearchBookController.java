@@ -172,12 +172,18 @@ public class SearchBookController extends Utilities implements Initializable {
         executeSearchTask();
     }
 
+    @FXML
+    private void handleGenreChoiceBoxAction() {
+        executeSearchTask();
+    }
+
     private void executeSearchTask() {
         String searchQuery = searchField.getText().toLowerCase();
+        String selectedGenre = genreChoiceBox.getValue().toLowerCase();
         Task<List<Book>> searchTask = new Task<>() {
             @Override
             protected List<Book> call() throws Exception {
-                return filterBooks(searchQuery);
+                return filterBooks(searchQuery, selectedGenre);
             }
         };
 
@@ -187,16 +193,27 @@ public class SearchBookController extends Utilities implements Initializable {
         new Thread(searchTask).start();
     }
 
-    private List<Book> filterBooks(String searchQuery) {
+    private List<Book> filterBooks(String searchQuery,String selectedGenre) {
         List<Book> filteredBooks = new ArrayList<>();
+        if (selectedGenre.equals("All")) {
+            for (Book book : allBooks) {
+                if (book.getTitle().toLowerCase().contains(searchQuery) ||
+                        book.getAuthor().toLowerCase().contains(searchQuery) ||
+                        book.getGenre().toLowerCase().contains(searchQuery)) {
+                    filteredBooks.add(book);
+                }
+            }
+            return filteredBooks;
+        }
         for (Book book : allBooks) {
-            if (book.getTitle().toLowerCase().contains(searchQuery) ||
-                    book.getAuthor().toLowerCase().contains(searchQuery) ||
-                    book.getGenre().toLowerCase().contains(searchQuery)) {
+            if ((book.getTitle().toLowerCase().contains(searchQuery) ||
+                    book.getAuthor().toLowerCase().contains(searchQuery)) &&
+                    book.getGenre().toLowerCase().contains(selectedGenre)) {
                 filteredBooks.add(book);
             }
         }
         return filteredBooks;
+
     }
 
     private void displayBooks(List<Book> books, int column, int row) {
@@ -289,17 +306,6 @@ public class SearchBookController extends Utilities implements Initializable {
             e.printStackTrace();
         }
         return genres;
-    }
-
-    @FXML
-    private void handleGenreChoiceBoxAction() {
-        String selectedGenre = genreChoiceBox.getValue();
-        if (selectedGenre.equals("All")) {
-            displayBooks(allBooks, 0, 1);  // Hiển thị tất cả sách
-        } else {
-            List<Book> filteredBooks = filterBooksByGenre(selectedGenre);
-            displayBooks(filteredBooks, 0, 1);  // Hiển thị sách theo thể loại đã chọn
-        }
     }
 
     private List<Book> filterBooksByGenre(String genre) {
