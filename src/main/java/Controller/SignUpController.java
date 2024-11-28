@@ -1,10 +1,12 @@
 package Controller;
 
 import Objects.Login;
+import Objects.Utilities;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -23,7 +25,7 @@ import java.io.IOException;
 
 import static Objects.Utilities.showAlert;
 
-public class SignUpController {
+public class SignUpController extends Utilities {
 
     @FXML
     private TextField usernameField;
@@ -77,6 +79,12 @@ public class SignUpController {
                     // Kiểm tra tên người dùng đã tồn tại hay chưa
                     if (loginService.isUsernameExists(username)) {
                         Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, "Error", "Username already exists."));
+                        return false;
+                    }
+
+                    // Kiểm tra mật khẩu đủ mạnh chưa
+                    if(!isStrongPassword(password)) {
+                        Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, "Error", "Password is not strong enough. It must be at least 8 characters long, with uppercase, lowercase, digit, and special character."));
                         return false;
                     }
 
