@@ -4,7 +4,6 @@ import Objects.Book;
 import Objects.Login;
 import Objects.SqliteConnection;
 import Objects.User;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;

@@ -2,6 +2,7 @@ package Controller;
 
 import Objects.Book;
 import Objects.SqliteConnection;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,10 +19,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Optional;
+import Utilitie.UpdateBook;
 
 import static Objects.Utilities.showAlert;
 
-public class UpdateBookController {
+public class UpdateBookController extends UpdateBook {
 
     @FXML
     private TableView<Book> bookTable;
@@ -43,8 +45,6 @@ public class UpdateBookController {
 
     @FXML
     private TableColumn<Book, Void> editQuantityColumn;
-
-    private ObservableList<Book> bookList = FXCollections.observableArrayList();
 
     public void initialize() {
         // Thiết lập các cột
@@ -212,39 +212,6 @@ public class UpdateBookController {
             } catch (NumberFormatException e) {
                 showAlert(Alert.AlertType.ERROR, "Lỗi", "Vui lòng nhập một số hợp lệ!");
             }
-        }
-    }
-
-    private void deleteBook(Book book) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Xác nhận xóa");
-        alert.setHeaderText("Bạn có chắc chắn muốn xóa sách này?");
-        alert.setContentText("Sách: " + book.getTitle() + "\nTác giả: " + book.getAuthor());
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            Task<Void> deleteTask = new Task<>() {
-                @Override
-                protected Void call() throws Exception {
-                    String query = "DELETE FROM book WHERE title = ? AND author = ?";
-                    try (Connection conn = SqliteConnection.Connector();
-                         PreparedStatement pstmt = conn.prepareStatement(query)) {
-                        pstmt.setString(1, book.getTitle());
-                        pstmt.setString(2, book.getAuthor());
-                        pstmt.executeUpdate();
-                    }
-                    return null;
-                }
-            };
-
-            deleteTask.setOnSucceeded(e -> {
-                bookList.remove(book);
-                showAlert(Alert.AlertType.INFORMATION, "Thành công", "Sách đã được xóa thành công!");
-            });
-
-            deleteTask.setOnFailed(e -> showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể xóa sách."));
-
-            new Thread(deleteTask).start();
         }
     }
 }
