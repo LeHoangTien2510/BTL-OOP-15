@@ -1,6 +1,9 @@
 package Controller;
 
 import Objects.*;
+import Utilitie.BookCardVer3;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -17,7 +20,7 @@ import java.time.format.DateTimeFormatter;
 
 import static Objects.Utilities.showAlert;
 
-public class BookCardVer3Controller {
+public class BookCardVer3Controller extends BookCardVer3 {
     @FXML
     private Label bookAuthor;
 
@@ -38,13 +41,7 @@ public class BookCardVer3Controller {
 
     private Book book;
     private MyListener myListener;
-    private Connection conn = SqliteConnection.Connector();
-    private User currentUser = Login.getCurrentUser();
-    private String findTitle;
-    private int id;
-
     private Borrowing_BookController borrowingBookController;
-
     public void setBorrowingBookController(Borrowing_BookController borrowingBookController) {
         this.borrowingBookController = borrowingBookController;
     }
@@ -70,53 +67,33 @@ public class BookCardVer3Controller {
     }
 
     @FXML
-    private void handleReturnButton(Event event) throws SQLException {
+    private void handleReturnButton(Event event) {
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws SQLException {
+                try {
+                    // Cập nhật bảng history
+                    updateReturnDate();
 
-        String updateQuery = "UPDATE history SET return_date = ?, status = ? WHERE user_id = ? AND book_id = ? AND status = 'borrowed'";
-        try (PreparedStatement preparedStatement = conn.prepareStatement(updateQuery)) {
-            // Lấy ngày hiện tại
-            LocalDate now = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            String formattedDate = now.format(formatter);
+                    // Xóa bản ghi trong bảng borrowed_books
+                    deleteBorrowedBookRecord();
 
-            // Gán giá trị cho các tham số
-            preparedStatement.setString(1, formattedDate);
-            preparedStatement.setString(2, "returned");
-            preparedStatement.setInt(3, currentUser.getIdFromDb());
-            preparedStatement.setInt(4, id);
-
-            // Thực hiện câu lệnh SQL
-            int rowsUpdated = preparedStatement.executeUpdate();
-
-            if (rowsUpdated > 0) {
-                System.out.println("Cập nhật thành công ngày trả sách!");
-            } else {
-                System.out.println("Không tìm thấy bản ghi để cập nhật.");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Failed to update return date.");
-        }
-
-        String deleteBorrowedBooksQuery = "DELETE FROM borrowed_books WHERE user_id = ? AND book_id = ?";
-        try (PreparedStatement preparedStatement = conn.prepareStatement(deleteBorrowedBooksQuery)) {
-            // Gán giá trị cho các tham số
-            preparedStatement.setInt(1, currentUser.getIdFromDb());
-            preparedStatement.setInt(2, id);
-
-            int result = preparedStatement.executeUpdate();
-            if (result > 0) {
-                showAlert(Alert.AlertType.INFORMATION, "Return Book", "Return " + findTitle + " Successfully");
-                if (borrowingBookController != null) {
-                    borrowingBookController.refreshBookList();
+                    Platform.runLater(() -> {
+                        showAlert(Alert.AlertType.INFORMATION, "Return Book", "Return " + findTitle + " Successfully");
+                        if (borrowingBookController != null) {
+                            borrowingBookController.refreshBookList();
+                        }
+                    });
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to return book."));
                 }
-            } else {
-                showAlert(Alert.AlertType.ERROR, "Return failed", "Return" + findTitle + " Failed");
+                return null;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Failed to return book.");
-        }
+        };
+
+        // Chạy task trên luồng nền
+        new Thread(task).start();
     }
 
 }
