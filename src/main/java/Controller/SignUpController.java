@@ -130,16 +130,6 @@ public class SignUpController extends Utilities {
 
     }
 
-    private void closeWindow() {
-        Stage stage = (Stage) usernameField.getScene().getWindow();
-        if (stage != null) {
-            stage.close();
-        } else {
-            System.out.println("Stage is null. Unable to close the window.");
-        }
-    }
-
-
 
     private void loadLoginScene() {
         loadScene("/com/example/library/Login.fxml", "Login");

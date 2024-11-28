@@ -1,6 +1,7 @@
 package Controller;
 
 import Objects.*;
+import Utilitie.Borrowing_Book;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -26,7 +27,7 @@ import java.util.ResourceBundle;
 
 import static Objects.Utilities.showAlert;
 
-public class Borrowing_BookController implements Initializable {
+public class Borrowing_BookController extends Borrowing_Book implements Initializable {
 
     @FXML
     private VBox bookContainer;
@@ -48,13 +49,6 @@ public class Borrowing_BookController implements Initializable {
 
     @FXML
     private Button returnButton;
-
-    private List<Book> borrowingBook;
-    private MyListener myListener;
-    private Image image;
-
-    private User currentUser = Login.getCurrentUser();
-    private Connection conn = SqliteConnection.Connector();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -126,33 +120,7 @@ public class Borrowing_BookController implements Initializable {
         new Thread(refreshTask).start();
     }
 
-    public List<Book> getBorrowingBook() {
-        List<Book> bookList = new ArrayList<>();
-        int userId = currentUser.getIdFromDb();
 
-        try (Connection connection = SqliteConnection.Connector()) {
-            String query = "SELECT title, author, genre, imageSrc, borrowed_date FROM borrowed_books WHERE user_id = ? ORDER BY borrowed_date DESC;";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setInt(1, userId);
-                ResultSet resultSet = preparedStatement.executeQuery();
-
-                while (resultSet.next()) {
-                    Book book = new Book();
-                    book.setTitle(resultSet.getString("title"));
-                    book.setAuthor(resultSet.getString("author"));
-                    book.setGenre(resultSet.getString("genre"));
-                    book.setImageSrc(resultSet.getString("imageSrc"));
-                    book.setBorrowedDate(resultSet.getString("borrowed_date"));
-                    bookList.add(book);
-                }
-            }
-        } catch (SQLException e) {
-            Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, "Error", "Failed to fetch borrowed books from database."));
-            e.printStackTrace();
-        }
-
-        return bookList;
-    }
 
     private void setChosenBook(Book book) {
         Platform.runLater(() -> {

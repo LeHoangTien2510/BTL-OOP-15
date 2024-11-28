@@ -3,6 +3,7 @@ package Controller;
 import Objects.Book;
 import Objects.MyListener;
 import Objects.SqliteConnection;
+import Utilitie.BookList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,7 +32,7 @@ import java.util.ResourceBundle;
 
 import static Objects.Utilities.showAlert;
 
-public class BookListController implements Initializable {
+public class BookListController extends BookList implements Initializable {
     @FXML
     private TextField searchField;
 
@@ -56,9 +57,6 @@ public class BookListController implements Initializable {
     @FXML
     private ProgressBar progressBar;
 
-    private List<Book> allBooks;
-    private MyListener myListener;
-    private Image image;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -102,19 +100,6 @@ public class BookListController implements Initializable {
     }
 
 
-    // Filter books by search keywords.
-    private List<Book> filterBooks(String searchQuery) {
-        List<Book> filteredBooks = new ArrayList<>();
-        for (Book book : allBooks) {
-            if (book.getTitle().toLowerCase().contains(searchQuery) ||
-                    book.getAuthor().toLowerCase().contains(searchQuery) ||
-                    book.getGenre().toLowerCase().contains(searchQuery)) {
-                filteredBooks.add(book);
-            }
-        }
-        return filteredBooks;
-    }
-
     private void displayBooks(List<Book> books, int column, int row) {
         bookContainer.getChildren().clear();
         for (Book book : books) {
@@ -140,29 +125,6 @@ public class BookListController implements Initializable {
         }
     }
 
-    private List<Book> getAllBooks() {
-        List<Book> bookList = new ArrayList<>();
-        try (Connection connection = SqliteConnection.Connector()) {
-            String query = "SELECT book_id, title, author, genre, imageSrc, quantity FROM Book";
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-
-            while (resultSet.next()) {
-                Book book = new Book();
-                book.setId(resultSet.getInt("book_id"));
-                book.setTitle(resultSet.getString("title"));
-                book.setAuthor(resultSet.getString("author"));
-                book.setGenre(resultSet.getString("genre"));
-                book.setImageSrc(resultSet.getString("imageSrc"));
-                book.setQuantity(resultSet.getInt("quantity"));
-                bookList.add(book);
-            }
-        } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể lấy dữ liệu sách từ SQLite.");
-            e.printStackTrace();
-        }
-        return bookList;
-    }
 
     private void setChosenBook(Book book) {
         bookTitle.setText(book.getTitle());

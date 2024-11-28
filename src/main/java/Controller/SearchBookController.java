@@ -1,6 +1,7 @@
 package Controller;
 
 import Objects.*;
+import Utilitie.SearchBook;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -32,7 +33,7 @@ import java.util.ResourceBundle;
 
 import static Objects.Utilities.showAlert;
 
-public class SearchBookController extends Utilities implements Initializable {
+public class SearchBookController extends SearchBook implements Initializable {
 
     @FXML
     private TextField searchField;
@@ -61,9 +62,7 @@ public class SearchBookController extends Utilities implements Initializable {
     @FXML
     private ChoiceBox<String> genreChoiceBox;
 
-    private List<Book> allBooks;
-    private MyListener myListener;
-    private Image image;
+
 
 
     @Override
@@ -129,46 +128,8 @@ public class SearchBookController extends Utilities implements Initializable {
         new Thread(borrowTask).start();
     }
 
-    private void borrowBook() throws SQLException {
-        String historyQuery = "INSERT INTO history(user_id, book_id, title, author, genre, borrow_date, return_date, status) VALUES(?, ?, ?, ?, ?, ?, ?,?)";
-        String insertQuery = "INSERT INTO borrowed_books(user_id, book_id, title, author, genre, imageSrc, borrowed_date) VALUES(?, ?, ?, ?, ?, ?, ?)";
-
-        try (PreparedStatement historyStmt = conn.prepareStatement(historyQuery);
-             PreparedStatement borrowStmt = conn.prepareStatement(insertQuery)) {
-
-            LocalDate now = LocalDate.now();
-            String formattedDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-            historyStmt.setInt(1, currentUser.getIdFromDb());
-            historyStmt.setInt(2, id);
-            historyStmt.setString(3, findTitle);
-            historyStmt.setString(4, findAuthor);
-            historyStmt.setString(5, findGenre);
-            historyStmt.setString(6, formattedDate);
-            historyStmt.setString(7, null);
-            historyStmt.setString(8, "borrowed");
-            historyStmt.executeUpdate();
-
-            borrowStmt.setInt(1, currentUser.getIdFromDb());
-            borrowStmt.setInt(2, id);
-            borrowStmt.setString(3, findTitle);
-            borrowStmt.setString(4, findAuthor);
-            borrowStmt.setString(5, findGenre);
-            borrowStmt.setString(6, findImageSrc);
-            borrowStmt.setString(7, formattedDate);
-            borrowStmt.executeUpdate();
-
-            Platform.runLater(() -> showAlert(Alert.AlertType.INFORMATION, "Success", "Borrowed " + findTitle + " successfully!"));
-        }
-    }
-
     @FXML
     private void handleSearchButtonAction(ActionEvent event) {
-        executeSearchTask();
-    }
-
-    @FXML
-    private void handleSearchFieldKeyReleased(KeyEvent event) {
         executeSearchTask();
     }
 
@@ -193,28 +154,7 @@ public class SearchBookController extends Utilities implements Initializable {
         new Thread(searchTask).start();
     }
 
-    private List<Book> filterBooks(String searchQuery,String selectedGenre) {
-        List<Book> filteredBooks = new ArrayList<>();
-        if (selectedGenre.equals("all")) {
-            for (Book book : allBooks) {
-                if (book.getTitle().toLowerCase().contains(searchQuery) ||
-                        book.getAuthor().toLowerCase().contains(searchQuery) ||
-                        book.getGenre().toLowerCase().contains(searchQuery)) {
-                    filteredBooks.add(book);
-                }
-            }
-            return filteredBooks;
-        }
-        for (Book book : allBooks) {
-            if ((book.getTitle().toLowerCase().contains(searchQuery) ||
-                    book.getAuthor().toLowerCase().contains(searchQuery)) &&
-                    book.getGenre().toLowerCase().contains(selectedGenre)) {
-                filteredBooks.add(book);
-            }
-        }
-        return filteredBooks;
 
-    }
 
     private void displayBooks(List<Book> books, int column, int row) {
         bookContainer.getChildren().clear();
@@ -240,28 +180,7 @@ public class SearchBookController extends Utilities implements Initializable {
         }
     }
 
-    private List<Book> getAllBooks() {
-        List<Book> bookList = new ArrayList<>();
-        try (Connection connection = SqliteConnection.Connector();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT book_id, title, author, genre, imageSrc, quantity FROM Book")) {
 
-            while (resultSet.next()) {
-                Book book = new Book();
-                book.setId(resultSet.getInt("book_id"));
-                book.setTitle(resultSet.getString("title"));
-                book.setAuthor(resultSet.getString("author"));
-                book.setGenre(resultSet.getString("genre"));
-                book.setImageSrc(resultSet.getString("imageSrc"));
-                book.setQuantity(resultSet.getInt("quantity"));
-                bookList.add(book);
-            }
-        } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load books from database.");
-            e.printStackTrace();
-        }
-        return bookList;
-    }
 
     private void setChosenBook(Book book) {
         this.book = book;
@@ -292,29 +211,5 @@ public class SearchBookController extends Utilities implements Initializable {
         }
     }
 
-    private List<String> getGenresFromDatabase() {
-        List<String> genres = new ArrayList<>();
-        try (Connection connection = SqliteConnection.Connector();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT DISTINCT genre FROM Book")) {
 
-            while (resultSet.next()) {
-                genres.add(resultSet.getString("genre"));
-            }
-        } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load genres from database.");
-            e.printStackTrace();
-        }
-        return genres;
-    }
-
-    private List<Book> filterBooksByGenre(String genre) {
-        List<Book> filteredBooks = new ArrayList<>();
-        for (Book book : allBooks) {
-            if (book.getGenre().equalsIgnoreCase(genre)) {
-                filteredBooks.add(book);
-            }
-        }
-        return filteredBooks;
-    }
 }

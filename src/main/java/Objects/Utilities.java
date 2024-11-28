@@ -22,53 +22,11 @@ public class Utilities {
     protected String findImageSrc;
     protected MediaPlayer mediaPlayer;
 
-    public boolean isBookAlreadyBorrowed() throws SQLException {
-        String query = "SELECT COUNT(*) FROM borrowed_books WHERE user_id = ? AND book_id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, currentUser.getIdFromDb());
-            stmt.setInt(2, id);
 
-            ResultSet resultSet = stmt.executeQuery();
-            if (resultSet.next()) {
-                int count = resultSet.getInt(1);
-                return count > 0;
-            }
-        }
-        return false;
-    }
 
-    public int getBookQuantity() throws SQLException {
-        String query = "SELECT quantity FROM book WHERE book_id = ?";
-        int quantity = -1;
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, id);
 
-            ResultSet resultSet = stmt.executeQuery();
-            if (resultSet.next()) {
-                quantity = resultSet.getInt("quantity");
-            }
-        }
-        return quantity;
-    }
 
-    public boolean notEnoughBooks() throws SQLException {
-        String query = "SELECT COUNT(*) FROM borrowed_books WHERE book_id = ?";
-        int count = 0;
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, id);
 
-            ResultSet resultSet = stmt.executeQuery();
-            if (resultSet.next()) {
-                count = resultSet.getInt(1);
-            }
-            if (count >= getBookQuantity()) {
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-    }
 
     public boolean isStrongPassword(String password) {
         if (password.length() < 8) {
