@@ -101,12 +101,6 @@ public class BookListController implements Initializable {
         displayBooks(filteredBooks, 0, 1);
     }
 
-    @FXML
-    private void handleSearchFieldKeyReleased(KeyEvent event) {
-        String searchQuery = searchField.getText().toLowerCase();
-        List<Book> filteredBooks = filterBooks(searchQuery);
-        displayBooks(filteredBooks, 0, 1);
-    }
 
     // Filter books by search keywords.
     private List<Book> filterBooks(String searchQuery) {
