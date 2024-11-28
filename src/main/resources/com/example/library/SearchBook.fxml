@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1051.0" style="-fx-background-color: #EEEEEE;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SearchBookController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1051.0" style="-fx-background-color: #EEEEEE;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SearchBookController">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="646.0" layoutY="-1.0" prefHeight="662.0" prefWidth="405.0" style="-fx-background-color: #DFDFDF;">
          <children>
@@ -97,7 +97,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <TextField fx:id="searchField" onAction="#handleSearchFieldKeyReleased" onKeyReleased="#handleSearchFieldKeyReleased" prefHeight="26.0" prefWidth="366.0" promptText="Search" style="-fx-background-radius: 20; -fx-background-color: #FFFFFF;">
+                  <TextField fx:id="searchField" prefHeight="26.0" prefWidth="366.0" promptText="Search" style="-fx-background-radius: 20; -fx-background-color: #FFFFFF;">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
