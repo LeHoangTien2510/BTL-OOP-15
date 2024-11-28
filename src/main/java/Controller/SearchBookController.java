@@ -195,7 +195,7 @@ public class SearchBookController extends Utilities implements Initializable {
 
     private List<Book> filterBooks(String searchQuery,String selectedGenre) {
         List<Book> filteredBooks = new ArrayList<>();
-        if (selectedGenre.equals("All")) {
+        if (selectedGenre.equals("all")) {
             for (Book book : allBooks) {
                 if (book.getTitle().toLowerCase().contains(searchQuery) ||
                         book.getAuthor().toLowerCase().contains(searchQuery) ||
