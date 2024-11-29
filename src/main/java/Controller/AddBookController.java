@@ -51,6 +51,10 @@ public class AddBookController extends AddBook {
             showAlert(Alert.AlertType.ERROR,"Error","Something is null");
             return;
         }
+        if(imageSrc == null){
+            showAlert(Alert.AlertType.ERROR,"Error","No image selected");
+            return;
+        }
         // Kiểm tra sách đã tồn tại bằng Task
         Task<Boolean> checkBookTask = checkBookExistsTask(title, author);
         checkBookTask.setOnSucceeded(e -> {

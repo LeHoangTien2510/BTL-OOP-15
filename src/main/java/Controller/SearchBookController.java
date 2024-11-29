@@ -210,6 +210,4 @@ public class SearchBookController extends SearchBook implements Initializable {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to open ChatGPT.");
         }
     }
-
-
 }
